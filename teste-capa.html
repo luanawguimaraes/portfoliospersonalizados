@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Teste da capa | 3 versões</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#121212;--pink:#e91e8c;--cream:#f7efe2;--muted:#c9c0b4}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--cream);font-family:"Poppins",system-ui,sans-serif;padding:32px 16px 60px}
+  h1{font-family:"Montserrat",sans-serif;font-weight:900;font-size:clamp(1.6rem,4vw,2.4rem);text-align:center;margin:0 0 8px}
+  p.lead{text-align:center;color:var(--muted);max-width:640px;margin:0 auto 32px}
+  .grid{display:flex;flex-wrap:wrap;justify-content:center;gap:28px}
+  .opt{width:390px;max-width:100%}
+  .opt h2{font-family:"Montserrat",sans-serif;font-weight:800;font-size:1.1rem;margin:0 0 4px}
+  .opt h2 span{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--pink);color:#fff;margin-right:8px}
+  .opt p{color:var(--muted);font-size:.88rem;margin:0 0 12px;min-height:2.6em}
+  .phone{width:100%;aspect-ratio:390/760;border-radius:28px;overflow:hidden;border:6px solid #2a2a2a;background:#000}
+  .phone iframe{width:100%;height:100%;border:0;display:block}
+  a{color:#ff5fb0}
+</style>
+</head>
+<body>
+  <h1>Teste da capa: 3 tratamentos de foto</h1>
+  <p class="lead">A capa é a mesma nas três. Muda só o tratamento da foto e a força do grão. Role dentro de cada celular para ver o resto do site. Me diga qual letra você prefere.</p>
+  <div class="grid">
+    <div class="opt">
+      <h2><span>A</span>Natural</h2>
+      <p>Foto com as cores originais. O grão fica só no fundo, atrás de você.</p>
+      <div class="phone"><iframe src="index.html?foto=a" title="Versão A, foto natural" loading="lazy"></iframe></div>
+    </div>
+    <div class="opt">
+      <h2><span>B</span>Sombras rosadas</h2>
+      <p>Sombras puxadas para o rosa escuro e grão fino por cima de tudo, como na referência.</p>
+      <div class="phone"><iframe src="index.html?foto=b" title="Versão B, sombras rosadas" loading="lazy"></iframe></div>
+    </div>
+    <div class="opt">
+      <h2><span>C</span>Digitalizado</h2>
+      <p>Cores mais lavadas, pretos suaves e grão mais forte, com cara de foto escaneada.</p>
+      <div class="phone"><iframe src="index.html?foto=c" title="Versão C, efeito digitalizado" loading="lazy"></iframe></div>
+    </div>
+  </div>
+</body>
+</html>
