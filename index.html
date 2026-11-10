@@ -141,7 +141,7 @@
   .bg-word{position:absolute;left:2%;top:2%;z-index:0;font-family:var(--font-title);font-weight:900;font-size:clamp(4.2rem,17vw,8.5rem);line-height:.8;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:2px rgba(247,239,226,.13);pointer-events:none}
   .ring{position:absolute;right:-14%;top:-8%;width:46%;aspect-ratio:1;border-radius:50%;border:clamp(14px,3vw,22px) solid rgba(233,30,140,.28);z-index:0}
   .collage .frame{position:absolute;overflow:hidden;box-shadow:var(--shadow);z-index:1}
-  .collage .frame img{width:100%;height:100%;object-fit:cover;filter:saturate(.75) brightness(.8)}
+  .collage .frame img{width:100%;height:100%;object-fit:cover;object-position:top;filter:brightness(.88)}
   .collage .f1{left:13%;top:5%;width:36%;aspect-ratio:3/4;border:2px solid rgba(247,239,226,.25)}
   .collage .f2{right:3%;top:30%;width:34%;aspect-ratio:3/4;border:5px solid var(--cream)}
   .person{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:86%;width:auto;max-width:none;z-index:2;
@@ -213,7 +213,8 @@
   /* =========================================================
      6. EXEMPLOS E ANTES X DEPOIS
      ========================================================= */
-  .examples{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:80px}
+  .examples{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:0 auto 80px;max-width:920px}
+  .example .media img{object-position:top}
   .example{display:block;text-decoration:none;padding:10px 10px 16px;transition:transform .3s,border-color .3s}
   .example:hover{transform:translateY(-6px);border-color:rgba(233,30,140,.6)}
   .example .media{aspect-ratio:9/16;border-radius:var(--radius-sm);margin-bottom:12px}
@@ -354,7 +355,7 @@
     .step::after{display:none}
   }
   @media (max-width:1024px){
-    .examples,.feedbacks{grid-template-columns:repeat(2,1fr)}
+    .feedbacks{grid-template-columns:repeat(2,1fr)}
     .features{grid-template-columns:repeat(2,1fr)}
   }
   @media (max-width:900px){
@@ -378,7 +379,10 @@
     section{padding:72px 0}
     .container{padding:0 16px}
     .features,.steps{grid-template-columns:1fr}
-    .examples,.feedbacks{gap:12px}
+    .feedbacks{gap:12px}
+    /* No celular os exemplos viram um carrossel que desliza para o lado */
+    .examples{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:72%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 16px;margin-left:-4px;margin-right:-4px;-webkit-overflow-scrolling:touch}
+    .example{scroll-snap-align:center}
     .hero-stats{gap:8px}
     .hero-stat{padding:14px 10px}
     .hero-stat span{font-size:.72rem}
@@ -432,12 +436,12 @@
     <div class="container hero-center">
       <!-- COLAGEM DA CAPA
            img/luana-recorte.webp = sua foto com o fundo recortado
-           img/quadro-1.jpg e img/quadro-2.jpg = fotos das molduras de trás (troque por prints de portfólios, se quiser) -->
+           img/quadro-1.jpg e img/quadro-2.jpg = prints de portfólios que você criou (molduras de trás) -->
       <div class="collage reveal">
         <div class="ring" aria-hidden="true"></div>
         <div class="bg-word" aria-hidden="true">PORT<br>FÓLIO</div>
-        <div class="frame f1"><img src="img/quadro-1.jpg" alt="" loading="eager"></div>
-        <div class="frame f2"><img src="img/quadro-2.jpg" alt="" loading="eager"></div>
+        <div class="frame f1"><img src="img/quadro-1.jpg" alt="Capa de um portfólio criado por Luana" loading="eager"></div>
+        <div class="frame f2"><img src="img/quadro-2.jpg" alt="Capa de outro portfólio criado por Luana" loading="eager"></div>
         <img class="person" src="img/luana-recorte.webp" alt="Luana Guimarães, criadora de portfólios para creators" width="1067" height="1163" fetchpriority="high">
         <div class="toolbar" aria-hidden="true">
           <span><i>▦</i>Modelos</span><span><i>◇</i>Elementos</span><span><i>☁</i>Uploads</span><span><i>T</i>Texto</span><span><i>▣</i>Fotos</span>
@@ -718,10 +722,9 @@ const FEATURES = [
    cover: imagem vertical 9:16 do portfólio (deixe "" para o degradê)
    url:   link do portfólio publicado (deixe "" se não tiver) */
 const EXAMPLES = [
-  { name:"Creator 01", niche:"Nicho da creator", cover:"", url:"" },
-  { name:"Creator 02", niche:"Nicho da creator", cover:"", url:"" },
-  { name:"Creator 03", niche:"Nicho da creator", cover:"", url:"" },
-  { name:"Creator 04", niche:"Nicho da creator", cover:"", url:"" }
+  { name:"Julia Isabela",   niche:"Portfólio UGC",           cover:"img/exemplo-1.jpg", url:"img/exemplo-1-completo.jpg" },
+  { name:"Yasmim Natatizi", niche:"Portfólio UGC",           cover:"img/exemplo-2.jpg", url:"img/exemplo-2-completo.jpg" },
+  { name:"Rayca Drovetti",  niche:"Portfólio e mídia kit",   cover:"img/exemplo-3.jpg", url:"img/exemplo-3-completo.jpg" }
 ];
 
 /* Para quem é */
@@ -861,7 +864,7 @@ $("#features").innerHTML = FEATURES.map(f => `
 /* Exemplos */
 $("#examples").innerHTML = EXAMPLES.map((e, i) => {
   const inner = `${mediaBlock(e.cover, "print do portfólio 9:16", "Portfólio de " + e.name, i % 2 ? "alt" : "")}
-    <h3>${esc(e.name)}</h3><p>${esc(e.niche)}</p>${e.url ? '<span class="see">Clique para ver mais →</span>' : ""}`;
+    <h3>${esc(e.name)}</h3><p>${esc(e.niche)}</p>${e.url ? '<span class="see">Ver o portfólio completo →</span>' : ""}`;
   return e.url
     ? `<a class="example glass reveal" href="${esc(e.url)}" target="_blank" rel="noopener">${inner}</a>`
     : `<article class="example glass reveal">${inner}</article>`;
