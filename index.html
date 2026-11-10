@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#121212">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
   /* =========================================================
      PALETA E VARIÁVEIS (troque as cores aqui, se quiser)
@@ -17,7 +17,8 @@
     --bg:#121212;
     --pink:#e91e8c;
     --pink-soft:#ff5fb0;
-    --lime:#b5e843;
+    --lime:#ff5fb0; /* rosa claro de destaque (o nome ficou do modelo anterior) */
+    --pink-dark:#b8106f; /* rosa escuro para usar em cima do creme */
     --cream:#f7efe2;
     --muted:#c9c0b4;
     --glass:rgba(255,255,255,.06);
@@ -57,7 +58,8 @@
   .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-title);font-weight:700;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:14px}
   .eyebrow::before{content:"";width:22px;height:2px;background:var(--lime);border-radius:2px}
   .section-title{font-size:clamp(1.9rem,4.6vw,3rem);font-weight:900;letter-spacing:-.02em;margin-bottom:16px}
-  .section-title em{font-style:normal;color:var(--pink)}
+  .section-title em,.list-card h2 em{font-family:var(--font-body);font-weight:300;font-style:italic;letter-spacing:-.02em;color:var(--pink)}
+
   .section-title .lime{color:var(--lime)}
   .section-lead{color:var(--muted);max-width:640px;margin-bottom:48px}
 
@@ -67,7 +69,7 @@
   .btn:hover{transform:translateY(-3px)}
   .btn-pink{background:var(--pink);color:#fff;box-shadow:0 10px 30px rgba(233,30,140,.4)}
   .btn-pink:hover{box-shadow:0 14px 40px rgba(233,30,140,.6)}
-  .btn-lime{background:var(--lime);color:#121212;box-shadow:0 10px 30px rgba(181,232,67,.3)}
+  .btn-lime{background:var(--lime);color:#121212;box-shadow:0 10px 30px rgba(247,239,226,.3)}
   .btn-ghost{background:transparent;color:var(--cream);border-color:rgba(247,239,226,.35)}
   .btn-ghost:hover{border-color:var(--lime);color:var(--lime)}
   .btn svg{width:20px;height:20px;flex:none}
@@ -77,10 +79,10 @@
      Para trocar pela imagem real, coloque dentro do bloco:
      <img src="sua-imagem.jpg" alt="descrição da imagem">
      A imagem cobre o bloco inteiro automaticamente. */
-  .media{position:relative;overflow:hidden;border-radius:var(--radius);background:linear-gradient(145deg,#e91e8c 0%,#7a1450 45%,#1d1d1d 75%,#b5e843 140%);display:flex;align-items:flex-end;justify-content:center}
+  .media{position:relative;overflow:hidden;border-radius:var(--radius);background:linear-gradient(145deg,#e91e8c 0%,#7a1450 45%,#1d1d1d 75%,#ff5fb0 140%);display:flex;align-items:flex-end;justify-content:center}
   .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .media .media-label{position:relative;z-index:1;margin:16px;padding:6px 14px;border-radius:999px;background:rgba(18,18,18,.7);border:1px solid var(--border);font-size:.75rem;font-weight:500;letter-spacing:.04em;text-align:center}
-  .media.alt{background:linear-gradient(160deg,#b5e843 -20%,#2b3a12 35%,#1b1b1b 65%,#e91e8c 140%)}
+  .media.alt{background:linear-gradient(160deg,#ff5fb0 -20%,#3a1029 35%,#1b1b1b 65%,#e91e8c 140%)}
   .media.gray{background:linear-gradient(160deg,#4a4540 0%,#2a2724 60%,#1b1b1b 100%)}
 
   /* =========================================================
@@ -106,41 +108,62 @@
   /* =========================================================
      1. CAPA
      ========================================================= */
-  .hero{padding:calc(var(--nav-h) + 56px) 0 70px}
-  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
-  .hero-question{display:inline-block;padding:10px 18px;border-radius:999px;font-size:.92rem;margin-bottom:26px;border-color:rgba(233,30,140,.45)}
+  .hero{padding:calc(var(--nav-h) + 28px) 0 70px;overflow:hidden}
+  .hero-center{text-align:center;max-width:880px;margin:0 auto}
+  .hero-question{display:inline-block;padding:10px 18px;border-radius:999px;font-size:.92rem;margin-bottom:22px;border-color:rgba(233,30,140,.45)}
   .hero-question b{color:var(--pink-soft);font-weight:600}
-  .hero h1{font-size:clamp(2.6rem,7vw,5.2rem);font-weight:900;letter-spacing:-.035em;line-height:.98;margin-bottom:24px}
-  .hero h1 .pink{color:var(--pink)}
-  .hero h1 .lime{color:var(--lime)}
-  .hero-sub{font-size:clamp(1.02rem,1.8vw,1.2rem);color:var(--muted);max-width:540px;margin-bottom:34px}
+  .hero h1{font-size:clamp(2.3rem,6.4vw,4.6rem);font-weight:900;letter-spacing:-.03em;line-height:1.02;margin-bottom:22px}
+  .accent{font-family:var(--font-body);font-weight:300;font-style:italic;letter-spacing:-.02em}
+  .hero h1 .accent{color:var(--pink)}
+  @media (min-width:901px){
+    .hero{padding-top:calc(var(--nav-h) + 40px)}
+    .hero-center{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;text-align:left;max-width:1180px}
+    .hero-center .collage{order:2;margin:0}
+    .hero-sub{margin-left:0}
+    .hero-ctas{align-items:flex-start}
+    .pay-line{justify-content:flex-start}
+    .hero-stats{margin-left:0}
+  }
+  .hero-sub{font-size:clamp(1rem,1.8vw,1.18rem);color:var(--muted);max-width:620px;margin:0 auto 30px}
   .hero-sub strong{color:var(--cream);font-weight:600}
-  .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-  .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:560px;margin-top:40px}
+  .hero-ctas{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .btn-wide{width:100%;max-width:580px;padding:22px 28px;font-size:1rem;border:6px solid rgba(247,239,226,.18);background-clip:padding-box}
+  .btn-wide .arr{font-size:1.2rem;line-height:1}
+  .pay-line{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;margin-top:18px;font-size:.8rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+  .pay-line span{display:inline-flex;align-items:center;gap:6px}
+  .pay-line span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--lime)}
+  .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:580px;margin:34px auto 0;text-align:left}
+
+  /* Colagem de fotos da capa
+     Para usar fotos reais, coloque um <img src="..." alt="..."> dentro de cada bloco .media da colagem */
+  .collage{position:relative;width:min(560px,100%);aspect-ratio:1/1.02;margin:0 auto 6px}
+  .collage::before{content:"";position:absolute;left:50%;top:40%;width:80%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(233,30,140,.4),transparent 65%);z-index:0}
+  .bg-word{position:absolute;left:2%;top:2%;z-index:0;font-family:var(--font-title);font-weight:900;font-size:clamp(4.2rem,17vw,8.5rem);line-height:.8;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:2px rgba(247,239,226,.13);pointer-events:none}
+  .ring{position:absolute;right:-14%;top:-8%;width:46%;aspect-ratio:1;border-radius:50%;border:clamp(14px,3vw,22px) solid rgba(233,30,140,.28);z-index:0}
+  .collage .frame{position:absolute;overflow:hidden;box-shadow:var(--shadow);z-index:1}
+  .collage .frame img{width:100%;height:100%;object-fit:cover;filter:saturate(.75) brightness(.8)}
+  .collage .f1{left:13%;top:5%;width:36%;aspect-ratio:3/4;border:2px solid rgba(247,239,226,.25)}
+  .collage .f2{right:3%;top:30%;width:34%;aspect-ratio:3/4;border:5px solid var(--cream)}
+  .person{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:100%;width:auto;max-width:none;z-index:2;
+    -webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent 99%);mask-image:linear-gradient(to bottom,#000 72%,transparent 99%)}
+  .toolbar{position:absolute;left:0;top:24%;z-index:3;display:flex;flex-direction:column;gap:16px;padding:16px 10px;border-radius:14px;background:rgba(18,18,18,.82);border:1px solid var(--border);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .toolbar span{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.6rem;color:var(--muted)}
+  .toolbar i{font-style:normal;font-size:1.05rem;color:var(--cream);line-height:1}
+  .sel-bar{position:absolute;right:0;top:66%;z-index:3;display:flex;gap:14px;padding:9px 14px;border-radius:12px;background:rgba(18,18,18,.82);border:1px solid var(--border);font-size:.9rem;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .handle{position:absolute;z-index:3;left:9%;top:6%;width:2px;height:18%;background:var(--cream)}
+  .brand-mark{position:relative;z-index:3;margin:-8px 0 22px;line-height:1}
+  .brand-mark b{display:block;font-family:var(--font-title);font-weight:900;font-size:clamp(2.6rem,9vw,3.6rem);letter-spacing:-.04em;color:var(--cream)}
+  .brand-mark span{display:inline-block;margin-top:4px;padding:5px 14px;border-radius:999px;border:2px solid var(--pink);font-family:var(--font-title);font-weight:800;font-size:clamp(.8rem,2.6vw,1rem);letter-spacing:.32em;color:var(--pink-soft)}
+  .handle::before,.handle::after{content:"";position:absolute;left:50%;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;background:var(--cream)}
+  .handle::before{top:-7px}
+  .handle::after{bottom:-7px}
+  .collage-badge{position:absolute;z-index:3;right:6%;top:2%;padding:8px 14px;border-radius:999px;background:var(--pink);color:#fff;font-family:var(--font-title);font-weight:800;font-size:.78rem;box-shadow:0 10px 30px rgba(233,30,140,.45);transform:rotate(4deg)}
   .hero-stat{padding:18px 16px}
   .hero-stat b{display:block;font-family:var(--font-title);font-weight:900;font-size:clamp(1.4rem,2.8vw,1.9rem);color:var(--lime);line-height:1}
   .hero-stat span{font-size:.8rem;color:var(--muted);display:block;margin-top:6px;line-height:1.35}
 
-  /* Mockup do celular com um portfólio (só desenho em CSS) */
-  .mock-wrap{position:relative;justify-self:center;width:min(330px,100%)}
-  .phone{position:relative;aspect-ratio:9/18.5;border-radius:42px;padding:12px;background:#0b0b0b;border:1px solid rgba(255,255,255,.18);box-shadow:0 30px 80px rgba(233,30,140,.3),inset 0 0 0 2px #222}
-  .phone-screen{height:100%;border-radius:32px;overflow:hidden;background:#161616;display:flex;flex-direction:column;gap:10px;padding:34px 14px 14px;position:relative}
-  .phone-screen::before{content:"";position:absolute;top:10px;left:50%;transform:translateX(-50%);width:80px;height:20px;border-radius:999px;background:#0b0b0b}
-  .ps-hero{height:38%;border-radius:18px;background:linear-gradient(150deg,#e91e8c,#7a1450 60%,#2a2a2a);display:flex;flex-direction:column;justify-content:flex-end;padding:14px}
-  .ps-line{height:9px;border-radius:9px;background:rgba(247,239,226,.85);margin-top:6px}
-  .ps-line.s{width:55%;background:rgba(247,239,226,.5)}
-  .ps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;flex:1}
-  .ps-row span{border-radius:12px;background:linear-gradient(170deg,#b5e843 -40%,#2b3a12 40%,#1f1f1f)}
-  .ps-row span:nth-child(2){background:linear-gradient(170deg,#e91e8c -40%,#5a1040 40%,#1f1f1f)}
-  .ps-btn{height:34px;border-radius:999px;background:var(--lime)}
-  .mock-badge{position:absolute;padding:12px 16px;font-size:.82rem;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);background:rgba(30,30,30,.75)}
-  .mock-badge b{font-family:var(--font-title);color:var(--lime)}
-  .mock-badge .ic{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--pink);color:#fff;font-size:.85rem;flex:none}
-  .mock-badge.b1{top:16%;left:-70px}
-  .mock-badge.b2{bottom:14%;right:-60px}
-
   /* Faixa rolando */
-  .ribbon{background:var(--lime);color:#121212;overflow:hidden;padding:14px 0;transform:rotate(-1.2deg);margin:0 -10px;box-shadow:0 10px 40px rgba(181,232,67,.25)}
+  .ribbon{background:var(--lime);color:#121212;overflow:hidden;padding:14px 0;transform:rotate(-1.2deg);margin:0 -10px;box-shadow:0 10px 40px rgba(247,239,226,.25)}
   .ribbon.pink{background:var(--pink);color:#fff;transform:rotate(1deg)}
   .ribbon-track{display:flex;width:max-content;animation:marquee 38s linear infinite}
   .ribbon-track span{font-family:var(--font-title);font-weight:800;font-size:.95rem;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center}
@@ -156,7 +179,7 @@
   .list-card.pains h2 em{font-style:normal;color:var(--pink)}
   .list-card.dreams h2 em{font-style:normal;color:var(--lime)}
   .list-card.pains{border-color:rgba(233,30,140,.35)}
-  .list-card.dreams{border-color:rgba(181,232,67,.35)}
+  .list-card.dreams{border-color:rgba(247,239,226,.35)}
   .check-list{display:grid;gap:12px}
   .check-list li{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:var(--radius-sm);background:rgba(18,18,18,.55);border:1px solid var(--border)}
   .check-list .mark{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:.85rem;margin-top:1px}
@@ -181,9 +204,9 @@
      ========================================================= */
   .features{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
   .feature{padding:30px 26px;position:relative;overflow:hidden;transition:transform .3s,border-color .3s}
-  .feature:hover{transform:translateY(-6px);border-color:rgba(181,232,67,.55)}
+  .feature:hover{transform:translateY(-6px);border-color:rgba(247,239,226,.55)}
   .feature::after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-60px;top:-60px;background:radial-gradient(circle,rgba(233,30,140,.32),transparent 70%)}
-  .feature .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:rgba(181,232,67,.12);border:1px solid rgba(181,232,67,.4);font-size:1.4rem;margin-bottom:18px}
+  .feature .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:rgba(247,239,226,.12);border:1px solid rgba(247,239,226,.4);font-size:1.4rem;margin-bottom:18px}
   .feature h3{font-size:1.15rem;font-weight:800;margin-bottom:8px}
   .feature p{color:var(--muted);font-size:.92rem}
 
@@ -241,12 +264,12 @@
      ========================================================= */
   .packages{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch;margin-bottom:40px}
   .package{padding:40px 28px 30px;position:relative;display:flex;flex-direction:column;transition:transform .3s,border-color .3s}
-  .package:hover{transform:translateY(-6px);border-color:rgba(181,232,67,.55)}
+  .package:hover{transform:translateY(-6px);border-color:rgba(247,239,226,.55)}
   .package.featured{border:2px solid var(--pink);box-shadow:0 30px 80px rgba(233,30,140,.25);background:rgba(30,20,26,.7)}
   .package.featured:hover{border-color:var(--pink)}
   .pkg-flag{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--lime);color:#121212;font-family:var(--font-title);font-weight:900;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:999px;white-space:nowrap}
   .pkg-tag{align-self:flex-start;font-family:var(--font-title);font-weight:800;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;border-radius:999px;background:rgba(233,30,140,.15);border:1px solid rgba(233,30,140,.5);color:var(--pink-soft);margin-bottom:16px}
-  .package:nth-child(2) .pkg-tag{background:rgba(181,232,67,.12);border-color:rgba(181,232,67,.5);color:var(--lime)}
+  .package:nth-child(2) .pkg-tag{background:rgba(247,239,226,.12);border-color:rgba(247,239,226,.5);color:var(--lime)}
   .package h3{font-size:1.45rem;font-weight:900;margin-bottom:8px}
   .pkg-sub{color:var(--muted);font-size:.92rem;margin-bottom:22px}
   .pkg-highlight{font-size:.85rem;font-weight:600;color:#121212;background:var(--lime);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:20px}
@@ -262,7 +285,7 @@
   .pay-option{padding:14px 16px;border-radius:var(--radius-sm);background:rgba(18,18,18,.55);border:1px solid var(--border);margin-top:10px}
   .pay-option b{display:block;font-family:var(--font-title);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--lime);margin-bottom:2px}
   .pay-option span{color:var(--muted);font-size:.92rem}
-  .canva-box{border-color:rgba(181,232,67,.45)}
+  .canva-box{border-color:rgba(247,239,226,.45)}
   .canva-box h3 .ic{background:var(--lime);color:#121212}
   .canva-box p{color:var(--muted);font-size:.92rem}
 
@@ -281,7 +304,7 @@
      12. CHAMADA FINAL
      ========================================================= */
   .final{padding:64px 48px;text-align:center;position:relative;overflow:hidden}
-  .final::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;left:-160px;bottom:-200px;background:radial-gradient(circle,rgba(181,232,67,.25),transparent 70%);pointer-events:none}
+  .final::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;left:-160px;bottom:-200px;background:radial-gradient(circle,rgba(247,239,226,.25),transparent 70%);pointer-events:none}
   .final::after{content:"";position:absolute;width:420px;height:420px;border-radius:50%;right:-160px;top:-200px;background:radial-gradient(circle,rgba(233,30,140,.3),transparent 70%);pointer-events:none}
   .final > *{position:relative;z-index:1}
   .final p{color:var(--muted);max-width:640px;margin:0 auto 32px}
@@ -298,9 +321,26 @@
   footer small{color:var(--muted)}
 
   /* Botão flutuante do WhatsApp */
-  .wa-float{position:fixed;right:20px;bottom:20px;z-index:90;width:60px;height:60px;border-radius:50%;background:var(--lime);color:#121212;display:grid;place-items:center;box-shadow:0 10px 30px rgba(181,232,67,.4);transition:transform .25s}
+  .wa-float{position:fixed;right:20px;bottom:20px;z-index:90;width:60px;height:60px;border-radius:50%;background:var(--lime);color:#121212;display:grid;place-items:center;box-shadow:0 10px 30px rgba(247,239,226,.4);transition:transform .25s}
   .wa-float:hover{transform:scale(1.08)}
   .wa-float svg{width:30px;height:30px}
+
+  /* =========================================================
+     SEÇÕES CLARAS (creme), alternando com as escuras
+     Para deixar uma seção clara, coloque class="light" nela.
+     ========================================================= */
+  body .light{background:var(--cream);color:#1a1a1a}
+  body .light .section-title,body .light h3,body .light strong,body .light p strong{color:#121212}
+  body .light .section-title em{color:var(--pink-dark);background:linear-gradient(transparent 58%,rgba(233,30,140,.16) 58%);padding:0 .12em}
+  body .light p,body .light .section-lead,body .light .answer{color:#4a4540}
+  body .light .eyebrow{color:var(--pink-dark)}
+  body .light .eyebrow::before{background:var(--pink-dark)}
+  body .light .glass{background:#fff;border-color:rgba(0,0,0,.08);box-shadow:0 12px 34px rgba(0,0,0,.07)}
+  body .light .about-quote{color:#121212;border-left-color:var(--pink)}
+  body .light .about-quote em{color:var(--pink-dark)}
+  body .light .pill,body .light .faq summary{color:#121212}
+  body .light .pill b,body .light .example .see,body .light .big-proof b{color:var(--pink-dark)}
+  body .light .example p{color:#6a635c}
 
   /* Animação de entrada */
   .js .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
@@ -330,9 +370,6 @@
     .hero-grid,.about-grid,.two-cols,.ba-wrap,.pay-col{grid-template-columns:1fr;gap:40px}
     .pay-col{gap:18px}
     .packages{grid-template-columns:1fr;max-width:480px;margin-left:auto;margin-right:auto;gap:34px}
-    .mock-wrap{width:min(260px,70%)}
-    .mock-badge.b1{left:-40px}
-    .mock-badge.b2{right:-40px}
     .about-photo{margin:0 auto;max-width:380px}
     .for-who{grid-template-columns:1fr}
     .final{padding:48px 24px}
@@ -345,12 +382,13 @@
     .hero-stats{gap:8px}
     .hero-stat{padding:14px 10px}
     .hero-stat span{font-size:.72rem}
-    .hero-ctas .btn{flex:1 1 100%}
     .btn{padding:16px 22px;font-size:.88rem}
-    .mock-badge{font-size:.72rem;padding:9px 11px}
-    .mock-badge .ic{width:24px;height:24px}
-    .mock-badge.b1{left:-34px}
-    .mock-badge.b2{right:-34px}
+    .btn-wide{padding:20px 18px;font-size:.9rem}
+    .toolbar{gap:10px;padding:10px 7px}
+    .toolbar span{font-size:.52rem}
+    .toolbar i{font-size:.85rem}
+    .sel-bar{font-size:.78rem;padding:7px 10px;gap:9px}
+    .collage-badge{font-size:.68rem;padding:6px 11px}
     .list-card{padding:28px 18px}
     .package{padding:38px 20px 26px}
   }
@@ -391,38 +429,36 @@
 
   <!-- ===================== 1. CAPA ===================== -->
   <section class="hero" id="inicio" aria-labelledby="hero-title">
-    <div class="container hero-grid">
-      <div>
-        <p class="hero-question glass reveal">Quantas oportunidades você já perdeu porque <b>seu portfólio não transmitia confiança?</b></p>
-        <h1 id="hero-title" class="reveal">Seu portfólio deveria <span class="pink">trabalhar</span> <span class="lime">por você</span></h1>
-        <p class="hero-sub reveal">Desenvolvo <strong>portfólios exclusivos para creators</strong> que querem transmitir confiança, autoridade e profissionalismo para as marcas.</p>
-        <div class="hero-ctas reveal">
-          <a href="#" class="btn btn-pink js-wa">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>
-            Quero o meu portfólio personalizado
-          </a>
-          <a href="#exemplos" class="btn btn-ghost">Ver exemplos</a>
+    <div class="container hero-center">
+      <!-- COLAGEM DA CAPA
+           img/luana-recorte.webp = sua foto com o fundo recortado
+           img/quadro-1.jpg e img/quadro-2.jpg = fotos das molduras de trás (troque por prints de portfólios, se quiser) -->
+      <div class="collage reveal">
+        <div class="ring" aria-hidden="true"></div>
+        <div class="bg-word" aria-hidden="true">PORT<br>FÓLIO</div>
+        <div class="frame f1"><img src="img/quadro-1.jpg" alt="" loading="eager"></div>
+        <div class="frame f2"><img src="img/quadro-2.jpg" alt="" loading="eager"></div>
+        <img class="person" src="img/luana-recorte.webp" alt="Luana Guimarães, criadora de portfólios para creators" width="1000" height="1500" fetchpriority="high">
+        <div class="toolbar" aria-hidden="true">
+          <span><i>▦</i>Modelos</span><span><i>◇</i>Elementos</span><span><i>☁</i>Uploads</span><span><i>T</i>Texto</span><span><i>▣</i>Fotos</span>
         </div>
-        <ul class="hero-stats reveal">
-          <li class="hero-stat glass"><b>+90</b><span>creators atendidas</span></li>
-          <li class="hero-stat glass"><b>10 dias</b><span>úteis de produção</span></li>
-          <li class="hero-stat glass"><b>100%</b><span>personalizado para você</span></li>
-        </ul>
+        <div class="handle" aria-hidden="true"></div>
+        <div class="sel-bar" aria-hidden="true"><span>✎</span><span>🔗</span><span>⧉</span><span>🗑</span></div>
       </div>
 
-      <div class="mock-wrap reveal" aria-hidden="true">
-        <!-- Desenho de um celular com um portfólio. Se quiser, troque a div .phone por uma imagem:
-             <img src="mockup.png" alt="Exemplo de portfólio no celular"> -->
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="ps-hero"><div class="ps-line"></div><div class="ps-line s"></div></div>
-            <div class="ps-line s" style="width:70%"></div>
-            <div class="ps-row"><span></span><span></span><span></span></div>
-            <div class="ps-btn"></div>
-          </div>
-        </div>
-        <div class="mock-badge glass b1"><span class="ic">★</span><span><b>+90</b> creators</span></div>
-        <div class="mock-badge glass b2"><span class="ic">✓</span><span>Pronto para <b>marcas</b></span></div>
+      <div class="hero-text">
+      <div class="brand-mark reveal"><b>Portfólio</b><span>PERSONALIZADO</span></div>
+      <h1 id="hero-title" class="reveal">Seu <span class="accent">portfólio</span> deveria <span class="accent">trabalhar por você</span></h1>
+      <p class="hero-sub reveal">Desenvolvo <strong>portfólios exclusivos para creators</strong> que querem transmitir confiança, autoridade e profissionalismo para as marcas.</p>
+      <div class="hero-ctas reveal">
+        <a href="#" class="btn btn-lime btn-wide js-wa">Quero o meu portfólio personalizado <span class="arr" aria-hidden="true">→</span></a>
+      </div>
+      <div class="pay-line reveal"><span>PIX</span><span>Cartão de crédito</span><span>Orçamento pelo WhatsApp</span></div>
+      <ul class="hero-stats reveal">
+        <li class="hero-stat glass"><b>+90</b><span>creators atendidas</span></li>
+        <li class="hero-stat glass"><b>15 dias</b><span>úteis de produção</span></li>
+        <li class="hero-stat glass"><b>100%</b><span>personalizado para você</span></li>
+      </ul>
       </div>
     </div>
   </section>
@@ -431,7 +467,10 @@
   <div class="ribbon" aria-hidden="true"><div class="ribbon-track" id="ribbon1"></div></div>
 
   <!-- ===================== 2 e 3. DORES E IMAGINE-SE ===================== -->
-  <section id="dores" aria-label="Você se identifica?">
+  <section id="dores" aria-labelledby="dores-title">
+    <div class="container narrow center reveal" style="margin-bottom:44px">
+      <h2 class="section-title" id="dores-title">Quantas oportunidades você já perdeu porque seu portfólio <em>não transmitia confiança?</em></h2>
+    </div>
     <div class="container two-cols">
       <div class="list-card pains glass reveal">
         <h2>Se você não <em>aguenta mais…</em></h2>
@@ -442,17 +481,17 @@
         <ul class="check-list" id="dreams"></ul>
       </div>
     </div>
-    <div class="container center reveal" style="margin-top:44px">
+    <div class="container center reveal" style="margin-top:44px;margin-bottom:0">
       <a href="#" class="btn btn-lime js-wa">Quero criar o meu portfólio</a>
     </div>
   </section>
 
   <!-- ===================== 4. SOBRE MIM ===================== -->
-  <section id="sobre" aria-labelledby="sobre-title">
+  <section id="sobre" class="light" aria-labelledby="sobre-title">
     <div class="container about-grid">
-      <!-- FOTO DO SOBRE: troque o conteúdo da div por <img src="foto-luana.jpg" alt="Luana Guimarães"> -->
-      <div class="media about-photo reveal" role="img" aria-label="Foto de Luana Guimarães">
-        <span class="media-label">sua foto 4:5</span>
+      <!-- FOTO DO SOBRE: para trocar, substitua o arquivo img/luana-sobre.jpg (formato 4:5) -->
+      <div class="media about-photo reveal">
+        <img src="img/luana-sobre.jpg" alt="Luana Guimarães apoiada no encosto de uma cadeira" loading="lazy" width="800" height="1000">
       </div>
       <div class="about-text reveal">
         <span class="eyebrow">Quem vai criar o seu portfólio</span>
@@ -484,7 +523,7 @@
   <div class="ribbon pink" aria-hidden="true"><div class="ribbon-track" id="ribbon2"></div></div>
 
   <!-- ===================== 6. EXEMPLOS E ANTES X DEPOIS ===================== -->
-  <section id="exemplos" aria-labelledby="exemplos-title">
+  <section id="exemplos" class="light" aria-labelledby="exemplos-title">
     <div class="container">
       <div class="center reveal">
         <span class="eyebrow">Portfólios personalizados</span>
@@ -528,7 +567,7 @@
   </section>
 
   <!-- ===================== 8. FEEDBACKS ===================== -->
-  <section id="feedbacks" aria-labelledby="feedbacks-title">
+  <section id="feedbacks" class="light" aria-labelledby="feedbacks-title">
     <div class="container">
       <div class="center reveal">
         <span class="eyebrow">Feedbacks</span>
@@ -574,8 +613,9 @@
             <div class="pay-option"><b>Cartão de crédito</b><span>Pagamento através de link de pagamento.</span></div>
           </div>
           <div class="pay-box canva-box glass reveal">
-            <h3><span class="ic" aria-hidden="true">!</span>Pacote Canva: publicação no Canva</h3>
-            <p>Para que o seu portfólio seja publicado como site dentro do Canva, é necessário ter uma assinatura do <strong>Canva Pro</strong>. Recentemente, a plataforma passou a exigir esse plano para permitir a publicação de sites, o que antes não era obrigatório. Por isso, caso você ainda não tenha a assinatura ativa, não será possível finalizar essa etapa de publicação.</p>
+            <h3><span class="ic" aria-hidden="true">!</span>Importante antes de escolher</h3>
+            <div class="pay-option"><b>Pacote Canva</b><span>É necessário ter uma assinatura do <strong>Canva Pro</strong>. Recentemente, a plataforma passou a exigir esse plano para permitir a publicação de sites, o que antes não era obrigatório. Sem a assinatura ativa, não é possível finalizar a publicação.</span></div>
+            <div class="pay-option"><b>Pacotes Essencial e Premium</b><span>Como o portfólio vira um site, é necessário comprar um <strong>domínio</strong> e uma <strong>hospedagem</strong>. Os custos são seus, mas todo o processo de configuração e conexão é feito por mim.</span></div>
           </div>
         </div>
       </div>
@@ -583,7 +623,7 @@
   </section>
 
   <!-- ===================== 11. PERGUNTAS FREQUENTES ===================== -->
-  <section id="duvidas" aria-labelledby="duvidas-title">
+  <section id="duvidas" class="light" aria-labelledby="duvidas-title">
     <div class="container narrow">
       <div class="center reveal">
         <span class="eyebrow">FAQ</span>
@@ -644,7 +684,7 @@ const WHATSAPP_MSG = "Oi, Luana! Vi o seu site e quero criar o meu portfólio pe
 
 /* Frases das faixas que rolam pela tela */
 const RIBBON = [
-  "Portfólio personalizado", "Entrega em até 10 dias úteis", "Ajustes inclusos",
+  "Portfólio personalizado", "Entrega em até 15 dias úteis", "Ajustes inclusos",
   "Pacotes Canva, Essencial e Premium", "+90 creators atendidas", "Estratégico e profissional"
 ];
 
@@ -670,7 +710,7 @@ const FEATURES = [
   { icon:"🧭", title:"Estrutura estratégica",   desc:"Uma apresentação organizada para a marca entender rápido quem você é e o que você entrega." },
   { icon:"💼", title:"Percepção profissional",  desc:"Mais autoridade e confiança antes mesmo da marca falar com você." },
   { icon:"🔁", title:"Acompanha a sua evolução", desc:"No Canva você mesma atualiza. Nos sites, os pacotes já incluem solicitações futuras para trocar ou adicionar vídeos." },
-  { icon:"⏱️", title:"Até 10 dias úteis",        desc:"O prazo de produção começa a contar assim que todo o material é recebido." },
+  { icon:"⏱️", title:"Até 15 dias úteis",       desc:"O prazo de produção começa a contar assim que todo o material é recebido." },
   { icon:"✏️", title:"Ajustes inclusos",         desc:"Rodadas de ajustes antes da aprovação final, para o portfólio ficar do seu jeito." }
 ];
 
@@ -705,7 +745,7 @@ const STEPS = [
   { title:"Confirmação",   desc:"Você escolhe a forma de pagamento e confirma o projeto." },
   { title:"Briefing",      desc:"Você responde às perguntas e me envia referências visuais, preferências de cores e tudo que deseja transmitir no seu portfólio." },
   { title:"Materiais",     desc:"Você me envia seus materiais: fotos, vídeos, informações, links e demais conteúdos necessários para a produção." },
-  { title:"Produção",      desc:"A partir do momento em que todo o material necessário é recebido, começa a contar o prazo de até 10 dias úteis." },
+  { title:"Produção",      desc:"A partir do momento em que todo o material necessário é recebido, começa a contar o prazo de até 15 dias úteis." },
   { title:"Ajustes e entrega", desc:"Você tem as rodadas de ajustes do seu pacote antes da aprovação final. Depois dos ajustes, faço o envio final do portfólio." }
 ];
 
@@ -729,7 +769,7 @@ const PACKAGES = [
       "Configuração dos botões clicáveis.",
       "1 rodada de ajuste simples, sem alterar a estrutura do portfólio."
     ],
-    note: "Publicação como site exige assinatura do Canva Pro."
+    note: "É necessário ter assinatura do Canva Pro."
   },
   {
     tag: "Pacote Essencial",
@@ -748,7 +788,7 @@ const PACKAGES = [
       "2 rodadas de ajustes básicos.",
       "2 solicitações futuras para adicionar ou substituir vídeos."
     ],
-    note: "Domínio e hospedagem pagos à parte pelo cliente."
+    note: "Domínio e hospedagem comprados à parte. A configuração é feita por mim."
   },
   {
     tag: "Pacote Premium",
@@ -767,20 +807,20 @@ const PACKAGES = [
       "2 rodadas de ajustes básicos.",
       "3 solicitações futuras para adicionar ou substituir vídeos."
     ],
-    note: "Domínio e hospedagem pagos à parte pelo cliente."
+    note: "Domínio e hospedagem comprados à parte. A configuração é feita por mim."
   }
 ];
 
 /* Perguntas frequentes */
 const FAQ = [
-  { q:"Qual é o prazo de entrega?", a:"O prazo de produção é de até 10 dias úteis, contados a partir do momento em que todo o material necessário é recebido." },
+  { q:"Qual é o prazo de entrega?", a:"O prazo de produção é de até 15 dias úteis, contados a partir do momento em que todo o material necessário é recebido." },
   { q:"Como funciona o pagamento?", a:"No PIX, 50% para iniciar a produção e 50% após a entrega do portfólio pronto. No cartão de crédito, o pagamento é feito através de link de pagamento." },
   { q:"Quanto custa?", a:"O valor depende do pacote e do que você precisa. Escolha o pacote que faz mais sentido para você e clique em fazer orçamento: eu te respondo no WhatsApp." },
   { q:"Qual a diferença entre os pacotes?", a:"O Pacote Canva é um portfólio estático, com carrossel de marcas e botões clicáveis, que você mesma consegue editar depois no seu Canva. O Essencial e o Premium são sites com animações, vídeos e domínio próprio. O Premium é multilíngue, em português, inglês e espanhol." },
   { q:"Posso pedir alterações?", a:"Sim. O Pacote Canva inclui 1 rodada de ajuste simples, sem alterar a estrutura do portfólio. O Essencial e o Premium incluem 2 rodadas de ajustes básicos." },
   { q:"Preciso ter Canva Pro?", a:"Só no Pacote Canva, para publicar o portfólio como site dentro do Canva. A plataforma passou a exigir o plano Pro para a publicação de sites. Sem a assinatura ativa, não é possível finalizar essa etapa." },
   { q:"Consigo atualizar o portfólio depois?", a:"No Pacote Canva, sim: você mesma edita no seu Canva. Nos pacotes Essencial e Premium a edição é feita por mim, e eles já incluem 2 e 3 solicitações futuras para adicionar ou substituir vídeos." },
-  { q:"Domínio e hospedagem estão inclusos?", a:"Nos pacotes Essencial e Premium eu faço a conexão do domínio e da hospedagem, mas os custos do domínio e da hospedagem são pagos à parte por você." },
+  { q:"Domínio e hospedagem estão inclusos?", a:"Nos pacotes Essencial e Premium você precisa comprar um domínio e uma hospedagem, que são pagos à parte. Mas não se preocupe: todo o processo de configuração e conexão é feito por mim." },
   { q:"O que eu preciso enviar?", a:"Fotos, vídeos, informações, links e demais conteúdos para a produção, além das respostas do briefing com referências visuais e preferências de cores." }
 ];
 
