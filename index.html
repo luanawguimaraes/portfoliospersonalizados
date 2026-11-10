@@ -252,16 +252,20 @@
   .example .see{display:inline-block;margin:8px 6px 0;font-size:.78rem;font-weight:600;color:var(--lime)}
 
   .ba-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:50px;align-items:center}
-  .ba{position:relative;aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);user-select:none;max-width:460px;width:100%;justify-self:center}
-  .ba .media{position:absolute;inset:0;border-radius:0}
-  .ba .after{clip-path:inset(0 0 0 var(--pos,50%))}
-  .ba .tagx{position:absolute;top:16px;z-index:3;padding:6px 14px;border-radius:999px;font-family:var(--font-title);font-weight:800;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase}
-  .ba .t-before{left:16px;background:rgba(18,18,18,.75);border:1px solid var(--border)}
-  .ba .t-after{right:16px;background:var(--lime);color:#121212}
-  .ba-line{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:3px;background:var(--cream);transform:translateX(-50%);z-index:2;pointer-events:none}
-  .ba-line::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:var(--pink);color:#fff;display:grid;place-items:center;font-size:1.2rem;box-shadow:0 6px 20px rgba(0,0,0,.4)}
-  .ba input[type=range]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;z-index:4;margin:0}
-  .ba input[type=range]:focus-visible + .ba-line{outline:3px solid var(--lime)}
+  /* Antes x depois: dois celulares lado a lado */
+  .ba-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+  .ba-tabs button{font-family:var(--font-body);font-weight:500;font-size:.9rem;padding:10px 18px;border-radius:999px;cursor:pointer;border:1px solid rgba(0,0,0,.15);background:#fff;color:#121212;transition:all .2s}
+  .ba-tabs button[aria-selected="true"]{background:var(--pink);border-color:var(--pink);color:#fff;font-weight:600}
+  .ba2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,3vw,26px);max-width:520px;width:100%;justify-self:center;margin:0 auto}
+  .ba-phone{position:relative;margin:0;padding:8px;border-radius:30px;background:#141014;box-shadow:0 24px 50px rgba(0,0,0,.25)}
+  .ba-phone.is-after{box-shadow:0 24px 60px rgba(233,30,140,.35);outline:2px solid var(--pink);outline-offset:-1px}
+  .ba-screen{position:relative;aspect-ratio:540/972;border-radius:23px;overflow:hidden;background:#fff}
+  .ba-screen img,.ba-screen video{display:block;width:100%}
+  .ba-screen video{height:100%;object-fit:cover}
+  .ba-scroll{will-change:transform;animation:baScroll var(--dur,24s) ease-in-out infinite alternate}
+  @keyframes baScroll{0%,8%{transform:translateY(0)}92%,100%{transform:translateY(var(--dist,0px))}}
+  .ba-tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);z-index:2;padding:5px 14px;border-radius:999px;font-family:var(--font-title);font-weight:800;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;background:#2a2228;color:#fff;white-space:nowrap}
+  .is-after .ba-tag{background:var(--pink)}
 
   /* =========================================================
      7. PARA QUEM É
@@ -581,19 +585,21 @@
         <div class="reveal">
           <span class="eyebrow">Antes x depois</span>
           <h2 class="section-title">A diferença que um portfólio <em>estratégico</em> faz</h2>
-          <p class="section-lead" style="margin-bottom:28px">Veja como um bom posicionamento visual transforma completamente a forma como uma creator é percebida pelas marcas. Arraste para comparar.</p>
+          <p class="section-lead" style="margin-bottom:24px">Veja como um bom posicionamento visual transforma completamente a forma como uma creator é percebida pelas marcas. Escolha uma cliente:</p>
+          <!-- Botões das clientes: vêm do array ANTES_DEPOIS no script -->
+          <div class="ba-tabs" id="baTabs" role="tablist" aria-label="Escolha a cliente"></div>
           <a href="#" class="btn btn-pink js-wa">Quero esse resultado</a>
         </div>
-        <!-- ANTES E DEPOIS: troque o conteúdo de cada .media por uma imagem:
-             antes:  <img src="antes.jpg" alt="Portfólio antes">
-             depois: <img src="depois.jpg" alt="Portfólio depois"> -->
-        <div class="ba reveal" id="ba">
-          <div class="media gray before" role="img" aria-label="Portfólio antes"><span class="media-label">print do antes 4:5</span></div>
-          <div class="media after" role="img" aria-label="Portfólio depois"><span class="media-label">print do depois 4:5</span></div>
-          <span class="tagx t-before">Antes</span>
-          <span class="tagx t-after">Depois</span>
-          <input type="range" min="0" max="100" value="50" aria-label="Arraste para comparar antes e depois">
-          <span class="ba-line"></span>
+        <!-- ANTES (imagem longa que rola sozinha) x DEPOIS (vídeo do portfólio novo) -->
+        <div class="ba2 reveal" id="ba2">
+          <figure class="ba-phone">
+            <span class="ba-tag">Antes</span>
+            <div class="ba-screen"><img id="baAntes" class="ba-scroll" src="" alt="" loading="lazy"></div>
+          </figure>
+          <figure class="ba-phone is-after">
+            <span class="ba-tag">Depois</span>
+            <div class="ba-screen"><video id="baDepois" muted autoplay loop playsinline preload="metadata" aria-label=""></video></div>
+          </figure>
         </div>
       </div>
     </div>
@@ -769,6 +775,16 @@ const EXAMPLES = [
   { name:"Julia Isabela",   niche:"Portfólio UGC",           cover:"img/exemplo-1.jpg", url:"img/exemplo-1-completo.jpg" },
   { name:"Yasmim Natatizi", niche:"Portfólio UGC",           cover:"img/exemplo-2.jpg", url:"img/exemplo-2-completo.jpg" },
   { name:"Rayca Drovetti",  niche:"Portfólio e mídia kit",   cover:"img/exemplo-3.jpg", url:"img/exemplo-3-completo.jpg" }
+];
+
+/* Antes x depois
+   antes:  imagem longa do portfólio antigo (rola sozinha dentro do celular)
+   depois: vídeo do portfólio novo (mp4, gravação de tela sem as barras do celular)
+   capa:   imagem que aparece enquanto o vídeo carrega */
+const ANTES_DEPOIS = [
+  { nome:"Rayca Drovetti",   antes:"img/antes-rayca.jpg",    depois:"img/depois-rayca.mp4",    capa:"img/depois-rayca-capa.jpg" },
+  { nome:"Gislaine Kröger",  antes:"img/antes-gislaine.jpg", depois:"img/depois-gislaine.mp4", capa:"img/depois-gislaine-capa.jpg" },
+  { nome:"Raissa Zipolato",  antes:"img/antes-raissa.jpg",   depois:"img/depois-raissa.mp4",   capa:"img/depois-raissa-capa.jpg" }
 ];
 
 /* Para quem é */
@@ -961,9 +977,37 @@ $("#faq").innerHTML = FAQ.map((f, i) => `
     <div class="answer">${esc(f.a)}</div>
   </details>`).join("");
 
-/* Antes x depois */
-const ba = $("#ba");
-ba.querySelector("input").addEventListener("input", (e) => ba.style.setProperty("--pos", e.target.value + "%"));
+/* Antes x depois: troca de cliente, rolagem automática do "antes" e vídeo do "depois" */
+(function(){
+  const tabs = $("#baTabs"), img = $("#baAntes"), vid = $("#baDepois");
+  tabs.innerHTML = ANTES_DEPOIS.map((c, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-i="${i}">${esc(c.nome)}</button>`).join("");
+  let visible = false;
+  function fitScroll(){
+    const screenH = img.parentElement.clientHeight;
+    const dist = Math.max(0, img.clientHeight - screenH);
+    img.style.setProperty("--dist", (-dist) + "px");
+    img.style.setProperty("--dur", Math.max(10, Math.round(dist / 60)) + "s");
+    if (reduceMotion) img.style.animation = "none";
+  }
+  function show(i){
+    const c = ANTES_DEPOIS[i];
+    tabs.querySelectorAll("button").forEach(b => b.setAttribute("aria-selected", b.dataset.i == i));
+    img.style.animation = "none"; img.alt = "Portfólio de " + c.nome + " antes";
+    img.onload = () => { fitScroll(); void img.offsetWidth; img.style.animation = ""; if (reduceMotion) img.style.animation = "none"; };
+    img.src = c.antes;
+    vid.setAttribute("aria-label", "Vídeo do portfólio de " + c.nome + " depois, criado por Luana");
+    vid.poster = c.capa || ""; vid.src = c.depois;
+    if (visible && !reduceMotion) vid.play().catch(() => {});
+  }
+  tabs.addEventListener("click", e => { const b = e.target.closest("button"); if (b) show(+b.dataset.i); });
+  window.addEventListener("resize", fitScroll);
+  // o vídeo só toca quando a seção aparece na tela (economiza bateria e dados)
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(es => es.forEach(en => { visible = en.isIntersecting; if (visible && !reduceMotion) vid.play().catch(() => {}); else vid.pause(); }), { threshold: 0.25 }).observe($("#ba2"));
+  }
+  if (reduceMotion) vid.controls = true;
+  show(0);
+})();
 
 /* Ano automático */
 $("#year").textContent = new Date().getFullYear();
