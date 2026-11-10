@@ -239,21 +239,23 @@
   /* =========================================================
      10. INVESTIMENTO
      ========================================================= */
-  .price-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:stretch}
-  .price-card{padding:44px 38px;position:relative;border:2px solid var(--pink);box-shadow:0 30px 80px rgba(233,30,140,.25);background:rgba(30,20,26,.7)}
-  .price-badge{position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:var(--lime);color:#121212;font-family:var(--font-title);font-weight:900;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;padding:7px 18px;border-radius:999px;white-space:nowrap}
-  .price-card h3{font-size:1.5rem;font-weight:900;margin-bottom:6px;text-align:center}
-  .price-card .p-sub{color:var(--muted);text-align:center;font-size:.92rem;margin-bottom:22px}
-  .price{text-align:center;margin-bottom:26px}
-  .price .from{color:var(--muted);font-size:.9rem;text-decoration:line-through}
-  .price .value{font-family:var(--font-title);font-weight:900;font-size:clamp(2.8rem,6vw,3.8rem);line-height:1;color:var(--cream)}
-  .price .value small{font-size:.4em;vertical-align:super;margin-right:4px;color:var(--lime)}
-  .price .split{display:block;color:var(--lime);font-weight:600;margin-top:8px}
-  .includes{display:grid;gap:10px;margin-bottom:30px}
-  .includes li{display:flex;gap:12px;align-items:flex-start;font-size:.95rem}
-  .includes li::before{content:"✓";flex:none;width:24px;height:24px;border-radius:50%;background:var(--lime);color:#121212;display:grid;place-items:center;font-weight:900;font-size:.78rem;margin-top:2px}
-  .price-card .btn{width:100%}
-  .pay-col{display:grid;gap:18px}
+  .packages{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch;margin-bottom:40px}
+  .package{padding:40px 28px 30px;position:relative;display:flex;flex-direction:column;transition:transform .3s,border-color .3s}
+  .package:hover{transform:translateY(-6px);border-color:rgba(181,232,67,.55)}
+  .package.featured{border:2px solid var(--pink);box-shadow:0 30px 80px rgba(233,30,140,.25);background:rgba(30,20,26,.7)}
+  .package.featured:hover{border-color:var(--pink)}
+  .pkg-flag{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--lime);color:#121212;font-family:var(--font-title);font-weight:900;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:999px;white-space:nowrap}
+  .pkg-tag{align-self:flex-start;font-family:var(--font-title);font-weight:800;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;border-radius:999px;background:rgba(233,30,140,.15);border:1px solid rgba(233,30,140,.5);color:var(--pink-soft);margin-bottom:16px}
+  .package:nth-child(2) .pkg-tag{background:rgba(181,232,67,.12);border-color:rgba(181,232,67,.5);color:var(--lime)}
+  .package h3{font-size:1.45rem;font-weight:900;margin-bottom:8px}
+  .pkg-sub{color:var(--muted);font-size:.92rem;margin-bottom:22px}
+  .pkg-highlight{font-size:.85rem;font-weight:600;color:#121212;background:var(--lime);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:20px}
+  .includes{display:grid;gap:10px;margin-bottom:24px;flex:1}
+  .includes li{display:flex;gap:12px;align-items:flex-start;font-size:.93rem}
+  .includes li::before{content:"✓";flex:none;width:22px;height:22px;border-radius:50%;background:var(--lime);color:#121212;display:grid;place-items:center;font-weight:900;font-size:.72rem;margin-top:2px}
+  .pkg-note{font-size:.8rem;color:var(--muted);margin-bottom:18px;padding-top:14px;border-top:1px solid var(--border)}
+  .package .btn{width:100%}
+  .pay-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   .pay-box{padding:28px 26px}
   .pay-box h3{font-size:1.15rem;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:10px}
   .pay-box h3 .ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--pink);color:#fff;font-size:1rem}
@@ -325,7 +327,9 @@
     .nav{background:rgba(18,18,18,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 
     .hero{padding-top:calc(var(--nav-h) + 36px)}
-    .hero-grid,.about-grid,.two-cols,.ba-wrap,.price-wrap{grid-template-columns:1fr;gap:40px}
+    .hero-grid,.about-grid,.two-cols,.ba-wrap,.pay-col{grid-template-columns:1fr;gap:40px}
+    .pay-col{gap:18px}
+    .packages{grid-template-columns:1fr;max-width:480px;margin-left:auto;margin-right:auto;gap:34px}
     .mock-wrap{width:min(260px,70%)}
     .mock-badge.b1{left:-40px}
     .mock-badge.b2{right:-40px}
@@ -348,7 +352,7 @@
     .mock-badge.b1{left:-34px}
     .mock-badge.b2{right:-34px}
     .list-card{padding:28px 18px}
-    .price-card{padding:40px 22px}
+    .package{padding:38px 20px 26px}
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -375,7 +379,7 @@
         <li><a href="#exemplos">Exemplos</a></li>
         <li><a href="#feedbacks">Feedbacks</a></li>
         <li><a href="#processo">Processo</a></li>
-        <li><a href="#investimento">Investimento</a></li>
+        <li><a href="#investimento">Pacotes</a></li>
         <li><a href="#duvidas">Dúvidas</a></li>
         <li><a href="#" class="nav-cta js-wa">Quero o meu</a></li>
       </ul>
@@ -555,26 +559,14 @@
   <section id="investimento" aria-labelledby="investimento-title">
     <div class="container">
       <div class="center reveal">
-        <span class="eyebrow">Investimento</span>
-        <h2 class="section-title" id="investimento-title">Seu próximo <em>“sim”</em> pode começar aqui</h2>
-        <p class="section-lead">Um investimento na forma como as marcas enxergam o seu trabalho.</p>
+        <span class="eyebrow">Pacotes</span>
+        <h2 class="section-title" id="investimento-title">Escolha o pacote que faz <em>mais sentido</em> para você</h2>
+        <p class="section-lead">Selecione o seu pacote e me chame no WhatsApp para receber o orçamento.</p>
       </div>
-      <div class="price-wrap">
-        <div class="price-card glass reveal">
-          <span class="price-badge">Portfólio personalizado</span>
-          <h3>Portfólio completo</h3>
-          <p class="p-sub">Criado do zero com a sua identidade</p>
-          <!-- PREÇO: troque os valores abaixo pelos seus (ou apague a linha "from" se não tiver preço riscado) -->
-          <div class="price">
-            <span class="from">De R$ 000,00</span><br>
-            <span class="value"><small>R$</small>000</span>
-            <span class="split">ou em até 0x no cartão</span>
-          </div>
-          <ul class="includes" id="includes"></ul>
-          <a href="#" class="btn btn-pink js-wa">Quero o meu portfólio</a>
-          <p class="cta-note center">Você será direcionada para o meu WhatsApp</p>
-        </div>
+      <!-- Os pacotes vêm do array PACKAGES no script -->
+      <div class="packages" id="packages"></div>
 
+      <div>
         <div class="pay-col">
           <div class="pay-box glass reveal">
             <h3><span class="ic" aria-hidden="true">$</span>Como funciona o pagamento?</h3>
@@ -582,7 +574,7 @@
             <div class="pay-option"><b>Cartão de crédito</b><span>Pagamento através de link de pagamento.</span></div>
           </div>
           <div class="pay-box canva-box glass reveal">
-            <h3><span class="ic" aria-hidden="true">!</span>Importante: publicação no Canva</h3>
+            <h3><span class="ic" aria-hidden="true">!</span>Pacote Canva: publicação no Canva</h3>
             <p>Para que o seu portfólio seja publicado como site dentro do Canva, é necessário ter uma assinatura do <strong>Canva Pro</strong>. Recentemente, a plataforma passou a exigir esse plano para permitir a publicação de sites, o que antes não era obrigatório. Por isso, caso você ainda não tenha a assinatura ativa, não será possível finalizar essa etapa de publicação.</p>
           </div>
         </div>
@@ -652,8 +644,8 @@ const WHATSAPP_MSG = "Oi, Luana! Vi o seu site e quero criar o meu portfólio pe
 
 /* Frases das faixas que rolam pela tela */
 const RIBBON = [
-  "Portfólio personalizado", "Entrega em até 10 dias úteis", "1 rodada de alterações",
-  "Acompanha a sua evolução", "+90 creators atendidas", "Estratégico e profissional"
+  "Portfólio personalizado", "Entrega em até 10 dias úteis", "Ajustes inclusos",
+  "Pacotes Canva, Essencial e Premium", "+90 creators atendidas", "Estratégico e profissional"
 ];
 
 /* Bloco "Se você não aguenta mais…" */
@@ -677,9 +669,9 @@ const FEATURES = [
   { icon:"🎨", title:"100% personalizado",      desc:"Cores, fontes e estilo pensados para a sua identidade, a partir das suas referências." },
   { icon:"🧭", title:"Estrutura estratégica",   desc:"Uma apresentação organizada para a marca entender rápido quem você é e o que você entrega." },
   { icon:"💼", title:"Percepção profissional",  desc:"Mais autoridade e confiança antes mesmo da marca falar com você." },
-  { icon:"🔁", title:"Acompanha a sua evolução", desc:"Você pode atualizar conteúdos e adicionar novos trabalhos conforme a sua carreira cresce." },
+  { icon:"🔁", title:"Acompanha a sua evolução", desc:"No Canva você mesma atualiza. Nos sites, os pacotes já incluem solicitações futuras para trocar ou adicionar vídeos." },
   { icon:"⏱️", title:"Até 10 dias úteis",        desc:"O prazo de produção começa a contar assim que todo o material é recebido." },
-  { icon:"✏️", title:"1 rodada de alterações",   desc:"Ajustes básicos antes da aprovação final, para o portfólio ficar do seu jeito." }
+  { icon:"✏️", title:"Ajustes inclusos",         desc:"Rodadas de ajustes antes da aprovação final, para o portfólio ficar do seu jeito." }
 ];
 
 /* Exemplos de portfólios
@@ -714,25 +706,81 @@ const STEPS = [
   { title:"Briefing",      desc:"Você responde às perguntas e me envia referências visuais, preferências de cores e tudo que deseja transmitir no seu portfólio." },
   { title:"Materiais",     desc:"Você me envia seus materiais: fotos, vídeos, informações, links e demais conteúdos necessários para a produção." },
   { title:"Produção",      desc:"A partir do momento em que todo o material necessário é recebido, começa a contar o prazo de até 10 dias úteis." },
-  { title:"Ajustes e entrega", desc:"Você tem 1 rodada de alterações básicas antes da aprovação final. Depois dos ajustes, faço o envio final do portfólio." }
+  { title:"Ajustes e entrega", desc:"Você tem as rodadas de ajustes do seu pacote antes da aprovação final. Depois dos ajustes, faço o envio final do portfólio." }
 ];
 
-/* O que está incluso (lista do card de preço) */
-const INCLUDES = [
-  "Portfólio criado do zero com a sua identidade",
-  "Estrutura estratégica pensada para marcas",
-  "Produção em até 10 dias úteis",
-  "1 rodada de alterações básicas",
-  "Portfólio que você pode atualizar depois"
+/* Pacotes (sem valores: o botão leva para o WhatsApp pedindo orçamento)
+   flag:      selo em cima do card (deixe "" para não mostrar)
+   featured:  true deixa o card em destaque com borda rosa
+   highlight: frase de destaque em verde (deixe "" para não mostrar)
+   note:      observação pequena no fim do card (deixe "" para não mostrar) */
+const PACKAGES = [
+  {
+    tag: "Pacote Canva",
+    title: "Portfólio no Canva",
+    sub: "Portfólio estático e editável",
+    flag: "",
+    featured: false,
+    highlight: "Você mesma edita depois, direto no seu Canva",
+    items: [
+      "Portfólio personalizado, criado do zero.",
+      "Estrutura que você consegue editar por conta própria no seu Canva.",
+      "Animação de carrossel de marcas.",
+      "Configuração dos botões clicáveis.",
+      "1 rodada de ajuste simples, sem alterar a estrutura do portfólio."
+    ],
+    note: "Publicação como site exige assinatura do Canva Pro."
+  },
+  {
+    tag: "Pacote Essencial",
+    title: "Site-portfólio profissional",
+    sub: "Site personalizado com animações",
+    flag: "",
+    featured: false,
+    highlight: "",
+    items: [
+      "Site personalizado.",
+      "Até 4 animações.",
+      "Tradução inglês para português.",
+      "Inserção dos vídeos iniciais.",
+      "Configuração dos elementos clicáveis.",
+      "Conexão do domínio e hospedagem.",
+      "2 rodadas de ajustes básicos.",
+      "2 solicitações futuras para adicionar ou substituir vídeos."
+    ],
+    note: "Domínio e hospedagem pagos à parte pelo cliente."
+  },
+  {
+    tag: "Pacote Premium",
+    title: "Site-portfólio multilíngue",
+    sub: "Para trabalhar com marcas do Brasil e de fora",
+    flag: "Mais completo",
+    featured: true,
+    highlight: "",
+    items: [
+      "Site personalizado.",
+      "Até 6 animações.",
+      "Tradução português, inglês e espanhol.",
+      "Inserção dos vídeos iniciais.",
+      "Configuração dos elementos clicáveis.",
+      "Conexão do domínio e hospedagem.",
+      "2 rodadas de ajustes básicos.",
+      "3 solicitações futuras para adicionar ou substituir vídeos."
+    ],
+    note: "Domínio e hospedagem pagos à parte pelo cliente."
+  }
 ];
 
 /* Perguntas frequentes */
 const FAQ = [
   { q:"Qual é o prazo de entrega?", a:"O prazo de produção é de até 10 dias úteis, contados a partir do momento em que todo o material necessário é recebido." },
   { q:"Como funciona o pagamento?", a:"No PIX, 50% para iniciar a produção e 50% após a entrega do portfólio pronto. No cartão de crédito, o pagamento é feito através de link de pagamento." },
-  { q:"Posso pedir alterações?", a:"Sim. Você tem 1 rodada de alterações básicas antes da aprovação final. Depois dos ajustes, faço o envio final do portfólio." },
-  { q:"Preciso ter Canva Pro?", a:"Para publicar o portfólio como site dentro do Canva, sim. A plataforma passou a exigir o plano Pro para a publicação de sites. Sem a assinatura ativa, não é possível finalizar essa etapa." },
-  { q:"Consigo atualizar o portfólio depois?", a:"Sim. O seu portfólio acompanha a sua evolução: você pode atualizar seus conteúdos e adicionar novos trabalhos conforme a sua carreira cresce." },
+  { q:"Quanto custa?", a:"O valor depende do pacote e do que você precisa. Escolha o pacote que faz mais sentido para você e clique em fazer orçamento: eu te respondo no WhatsApp." },
+  { q:"Qual a diferença entre os pacotes?", a:"O Pacote Canva é um portfólio estático, com carrossel de marcas e botões clicáveis, que você mesma consegue editar depois no seu Canva. O Essencial e o Premium são sites com animações, vídeos e domínio próprio. O Premium é multilíngue, em português, inglês e espanhol." },
+  { q:"Posso pedir alterações?", a:"Sim. O Pacote Canva inclui 1 rodada de ajuste simples, sem alterar a estrutura do portfólio. O Essencial e o Premium incluem 2 rodadas de ajustes básicos." },
+  { q:"Preciso ter Canva Pro?", a:"Só no Pacote Canva, para publicar o portfólio como site dentro do Canva. A plataforma passou a exigir o plano Pro para a publicação de sites. Sem a assinatura ativa, não é possível finalizar essa etapa." },
+  { q:"Consigo atualizar o portfólio depois?", a:"No Pacote Canva, sim: você mesma edita no seu Canva. Nos pacotes Essencial e Premium a edição é feita por mim, e eles já incluem 2 e 3 solicitações futuras para adicionar ou substituir vídeos." },
+  { q:"Domínio e hospedagem estão inclusos?", a:"Nos pacotes Essencial e Premium eu faço a conexão do domínio e da hospedagem, mas os custos do domínio e da hospedagem são pagos à parte por você." },
   { q:"O que eu preciso enviar?", a:"Fotos, vídeos, informações, links e demais conteúdos para a produção, além das respostas do briefing com referências visuais e preferências de cores." }
 ];
 
@@ -794,8 +842,22 @@ $("#steps").innerHTML = STEPS.map((s, i) => `
     <p>${esc(s.desc)}</p>
   </li>`).join("");
 
-/* Incluso no preço */
-$("#includes").innerHTML = INCLUDES.map(t => `<li>${esc(t)}</li>`).join("");
+/* Pacotes: cada botão abre o WhatsApp já dizendo qual pacote a cliente escolheu */
+$("#packages").innerHTML = PACKAGES.map(p => {
+  const msg = "Oi, Luana! Vi o seu site e quero um orçamento do " + p.tag + ".";
+  const link = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
+  return `
+  <article class="package glass reveal${p.featured ? " featured" : ""}">
+    ${p.flag ? `<span class="pkg-flag">${esc(p.flag)}</span>` : ""}
+    <span class="pkg-tag">${esc(p.tag)}</span>
+    <h3>${esc(p.title)}</h3>
+    <p class="pkg-sub">${esc(p.sub)}</p>
+    ${p.highlight ? `<p class="pkg-highlight">${esc(p.highlight)}</p>` : ""}
+    <ul class="includes">${p.items.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+    ${p.note ? `<p class="pkg-note">${esc(p.note)}</p>` : ""}
+    <a class="btn ${p.featured ? "btn-pink" : "btn-lime"}" href="${link}" target="_blank" rel="noopener">Fazer orçamento</a>
+  </article>`;
+}).join("");
 
 /* Perguntas frequentes */
 $("#faq").innerHTML = FAQ.map((f, i) => `
