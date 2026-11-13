@@ -469,11 +469,31 @@
   .feat .feat-name{z-index:2}
   .cloud-hint{position:absolute;left:0;right:0;bottom:0;z-index:8;margin:0;padding:0 16px;text-align:center;font-family:var(--font-title);font-weight:700;font-size:.78rem;letter-spacing:.04em;color:var(--muted)}
   .stage:not(.so-nuvem) .cloud-hint{display:none}
-  .stage.so-nuvem ~ .hero-text .brand-mark{margin-top:18px}
+  .stage.so-nuvem ~ .hero-text .hero-eyebrow{margin-top:18px}
   /* frases do destaque nunca saem da tela: quebram em duas linhas se precisar */
   .stage.so-nuvem .feat-tags span{white-space:normal;max-width:min(40vw,300px);width:max-content;text-align:center;line-height:1.25;border-radius:16px}
   .cloud-hint .hint-touch{display:none}
   @media (hover:none){.cloud-hint .hint-mouse{display:none}.cloud-hint .hint-touch{display:inline}}
+
+  /* Lateral da capa mais leve e proporcional */
+  .hero-eyebrow{display:inline-block;margin:0 0 16px;padding:6px 14px;border-radius:999px;border:1.5px solid rgba(199,45,103,.45);background:rgba(255,255,255,.6);font-family:var(--font-title);font-weight:800;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);white-space:nowrap}
+  .hero h1{font-size:clamp(2rem,4.4vw,3.3rem);line-height:1.05;margin-bottom:16px}
+  .hero-sub{font-size:clamp(.95rem,1.4vw,1.05rem);margin-bottom:24px;max-width:520px}
+  .btn-hero{padding:12px 24px;font-size:.8rem;letter-spacing:.08em;gap:10px}
+  @media (min-width:901px){.hero-ctas{align-items:flex-start}.pay-line{justify-content:flex-start}.hero-sub{margin-left:0}}
+  .btn-hero .arr{font-size:1rem;line-height:1}
+  .pay-line{margin-top:14px;font-size:.7rem}
+  .hero-stats{gap:10px;max-width:520px;margin-top:26px}
+  .hero-stat{padding:12px 12px}
+  .hero-stat b{font-size:clamp(1.05rem,1.8vw,1.3rem)}
+  .hero-stat span{font-size:.72rem}
+  /* reflexo de luz passando por cima do degradê do botão, em loop */
+  .btn-shine{position:relative;overflow:hidden;isolation:isolate}
+  .btn-shine::after{content:"";position:absolute;top:-20%;bottom:-20%;left:-60%;width:45%;z-index:1;pointer-events:none;
+    background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.08) 30%,rgba(255,255,255,.55) 50%,rgba(255,255,255,.08) 70%,transparent 100%);
+    transform:skewX(-18deg);animation:btnShine 3.2s ease-in-out infinite}
+  @keyframes btnShine{0%{left:-60%}55%,100%{left:130%}}
+  @media (prefers-reduced-motion:reduce){.btn-shine::after{animation:none;display:none}}
 
   /* Animação de entrada */
   .js .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
@@ -596,17 +616,17 @@
       </div>
 
       <div class="hero-text">
-      <div class="brand-mark"><b>Portfólio</b><span>PERSONALIZADO</span></div>
+      <span class="hero-eyebrow">Portfólio personalizado</span>
       <h1 id="hero-title" class="reveal">Seu <span class="accent">portfólio</span> deveria <span class="accent">trabalhar por você</span></h1>
       <p class="hero-sub">Desenvolvo <strong>portfólios exclusivos para creators</strong> que querem transmitir confiança, autoridade e profissionalismo para as marcas.</p>
       <div class="hero-ctas">
-        <a href="#" class="btn btn-lime btn-wide js-wa">Quero o meu portfólio personalizado <span class="arr" aria-hidden="true">→</span></a>
+        <a href="#" class="btn btn-lime btn-hero btn-shine js-wa">Quero o meu portfólio <span class="arr" aria-hidden="true">→</span></a>
       </div>
       <div class="pay-line"><span>PIX</span><span>Cartão de crédito</span><span>Orçamento pelo WhatsApp</span></div>
       <ul class="hero-stats">
         <li class="hero-stat glass"><b>+90</b><span>creators atendidas</span></li>
-        <li class="hero-stat glass"><b>15 dias</b><span>úteis de produção</span></li>
-        <li class="hero-stat glass"><b>100%</b><span>personalizado para você</span></li>
+        <li class="hero-stat glass"><b>15 dias</b><span>úteis do briefing à entrega</span></li>
+        <li class="hero-stat glass"><b>Ajustes</b><span>inclusos em todos os pacotes</span></li>
       </ul>
       </div>
     </div>
