@@ -483,7 +483,8 @@
   @media (min-width:901px){.hero-ctas{align-items:flex-start}.pay-line{justify-content:flex-start}.hero-sub{margin-left:0}}
   .btn-hero .arr{font-size:1rem;line-height:1}
   .pay-line{margin-top:14px;font-size:.7rem}
-  .hero-stats{gap:10px;max-width:520px;margin-top:26px}
+  .hero-stats{grid-template-columns:repeat(2,1fr);gap:10px;max-width:340px;margin:30px auto 0}
+  @media (min-width:901px){.hero-stats{margin-left:0}}
   .hero-stat{padding:12px 12px}
   .hero-stat b{font-size:clamp(1.05rem,1.8vw,1.3rem)}
   .hero-stat span{font-size:.72rem}
@@ -622,11 +623,9 @@
       <div class="hero-ctas">
         <a href="#" class="btn btn-lime btn-hero btn-shine js-wa">Quero o meu portfólio <span class="arr" aria-hidden="true">→</span></a>
       </div>
-      <div class="pay-line"><span>PIX</span><span>Cartão de crédito</span><span>Orçamento pelo WhatsApp</span></div>
       <ul class="hero-stats">
-        <li class="hero-stat glass"><b>+90</b><span>creators atendidas</span></li>
-        <li class="hero-stat glass"><b>15 dias</b><span>úteis do briefing à entrega</span></li>
-        <li class="hero-stat glass"><b>Ajustes</b><span>inclusos em todos os pacotes</span></li>
+        <li class="hero-stat glass"><b>+90</b><span>creators satisfeitas</span></li>
+        <li class="hero-stat glass"><b>100%</b><span>portfólio personalizado</span></li>
       </ul>
       </div>
     </div>
