@@ -834,7 +834,7 @@ document.documentElement.classList.add("js");
 const FOTO_CAPA = "a";
 
 /* NUVEM DE TRABALHOS DA CAPA
-   id:       nome dos arquivos na pasta img/capa (id-1.jpg, id-2.jpg...) e img/capa/full/id.jpg (portfólio inteiro)
+   id:       nome dos arquivos na pasta img/capa (id-1.jpg, id-2.jpg...) e img/capa/full-id.jpg (portfólio inteiro)
    destaque: a parte mais elaborada do portfólio, que sai em destaque
    pecas:    quantas partes desse portfólio giram na nuvem (id-1 até id-N)
    link:     abre ao tocar no destaque | tags: 2 frases sobre a estratégia do design */
@@ -1131,7 +1131,7 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   if (finePointer) {
     feat.addEventListener("mouseenter", () => {
       featHover = true; if (!cur) return;
-      const src = `img/capa/full/${cur.id}.jpg`;
+      const src = `img/capa/full-${cur.id}.jpg`;
       if (fFullImg.getAttribute("src") !== src) { fFullImg.onload = runFull; fFullImg.src = src; } else runFull();
     });
     feat.addEventListener("mouseleave", () => { featHover = false; resetFull(); });
