@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Teste de estilo | 3 opções</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Mulish:ital,wght@0,300..900;1,300..900&family=Open+Sans:wght@400;600&family=Montserrat:wght@800;900&family=Poppins:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#e9e4dc;color:#222;font-family:"Mulish",system-ui,sans-serif;padding:32px 16px 70px}
+  header{text-align:center;max-width:720px;margin:0 auto 34px}
+  header h1{font-family:"Instrument Serif",serif;font-weight:400;font-size:clamp(2.2rem,6vw,3.2rem);line-height:1;margin:0 0 10px}
+  header p{margin:0;color:#555;line-height:1.6}
+  .grid{display:flex;flex-wrap:wrap;justify-content:center;gap:30px}
+  .opt{width:360px;max-width:100%}
+  .label{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .label b{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#C72D67;color:#fff;font-size:.95rem}
+  .label h2{margin:0;font-size:1.05rem;font-weight:800}
+  .opt > p{margin:0 0 14px;color:#555;font-size:.9rem;min-height:2.8em;line-height:1.5}
+  .rec{display:inline-block;margin-left:6px;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;background:#2B2B2B;color:#fff;padding:3px 8px;border-radius:999px;vertical-align:middle}
+
+  /* moldura de celular */
+  .phone{position:relative;aspect-ratio:9/18.5;border-radius:34px;overflow:hidden;border:7px solid #1b1b1b;box-shadow:0 24px 50px rgba(0,0,0,.18)}
+  .scr{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:16px 18px 0;overflow:hidden}
+  .scr .grain{position:absolute;inset:0;pointer-events:none;opacity:.18;mix-blend-mode:multiply;background-size:200px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+  .nav{width:100%;display:flex;justify-content:space-between;align-items:center;font-size:.72rem;margin-bottom:10px;position:relative;z-index:2}
+  .nav span:first-child{font-weight:800}
+  .nav .pill{padding:5px 10px;border-radius:999px}
+  .stage{position:relative;width:100%;height:46%;margin-bottom:6px}
+  .thumb{position:absolute;width:22%;aspect-ratio:3/4;border-radius:8px;background-size:cover;background-position:top;box-shadow:0 8px 18px rgba(0,0,0,.25)}
+  .t1{left:2%;top:10%;transform:rotate(-8deg);background-image:url(img/exemplo-1.jpg)}
+  .t2{right:3%;top:4%;transform:rotate(7deg);background-image:url(img/exemplo-2.jpg)}
+  .t3{left:10%;top:52%;transform:rotate(5deg);width:18%;background-image:url(img/quadro-1.jpg)}
+  .t4{right:6%;top:50%;transform:rotate(-6deg);width:19%;background-image:url(img/exemplo-3.jpg)}
+  .tag{position:absolute;z-index:3;font-size:.62rem;padding:5px 10px;border-radius:999px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);white-space:nowrap}
+  .g1{left:4%;top:40%}.g2{right:2%;top:36%}
+  .person{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:100%;z-index:2}
+  .note{position:absolute;z-index:4;right:4%;bottom:10%;width:34%;padding:8px;font-size:.55rem;line-height:1.3;text-align:left;transform:rotate(4deg);box-shadow:0 6px 14px rgba(0,0,0,.18)}
+  .kicker{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;margin:4px 0 6px;position:relative;z-index:2}
+  .h{margin:0 0 8px;position:relative;z-index:2}
+  .sub{font-size:.72rem;line-height:1.5;margin:0 0 12px;position:relative;z-index:2}
+  .btn{display:inline-block;padding:11px 20px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;position:relative;z-index:2}
+
+  /* A: atual */
+  .a .scr{background:radial-gradient(70% 45% at 50% 30%,rgba(233,30,140,.4),transparent 70%),linear-gradient(#0d070b,#140a10);color:#f7efe2}
+  .a .scr .grain{mix-blend-mode:overlay;opacity:.25}
+  .a .nav{font-family:"Montserrat",sans-serif}
+  .a .nav .pill{background:#ff5fb0;color:#121212}
+  .a .tag{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-family:"Poppins",sans-serif}
+  .a .note{background:#e91e8c;color:#fff;font-family:"Poppins",sans-serif}
+  .a .kicker{color:#ff5fb0;font-family:"Montserrat",sans-serif;font-weight:800}
+  .a .h{font-family:"Montserrat",sans-serif;font-weight:900;font-size:1.7rem;line-height:1;letter-spacing:-.03em}
+  .a .h em{font-family:"Poppins",sans-serif;font-weight:300;font-style:italic;color:#e91e8c}
+  .a .sub{font-family:"Poppins",sans-serif;color:#c9c0b4}
+  .a .btn{background:#ff5fb0;color:#121212;font-family:"Montserrat",sans-serif}
+
+  /* B: creme + preto + rosa, Instrument Serif + Mulish */
+  .b .scr{background:radial-gradient(60% 40% at 50% 32%,rgba(234,112,165,.28),transparent 70%),#F6F0E6;color:#1f1d1c}
+  .b .nav .pill{background:#1f1d1c;color:#F6F0E6}
+  .b .tag{background:rgba(255,255,255,.6);border:1px solid rgba(0,0,0,.08);color:#1f1d1c;font-weight:700}
+  .b .note{background:#FFD9E8;color:#1f1d1c;font-family:"Mulish",sans-serif}
+  .b .kicker{color:#C72D67;font-weight:800}
+  .b .h{font-family:"Instrument Serif",serif;font-weight:400;font-size:2.35rem;line-height:.95;letter-spacing:-.01em}
+  .b .h em{font-style:italic;color:#C72D67}
+  .b .sub{color:#555050}
+  .b .btn{background:#1f1d1c;color:#F6F0E6}
+
+  /* C: igual ao portfólio da Luana, Mulish + Open Sans */
+  .c .scr{background-color:#FEF8E7;background-image:linear-gradient(rgba(0,0,0,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.04) 1px,transparent 1px);background-size:22px 22px;color:#2B2B2B}
+  .c .nav{font-family:"Mulish",sans-serif}
+  .c .nav span:first-child{font-weight:400}
+  .c .nav span:first-child i{font-style:normal;color:#C72D67}
+  .c .nav .pill{background:linear-gradient(90deg,#C72D67,#EA70A5);color:#fff}
+  .c .tag{background:#fff;border:1px solid rgba(199,45,103,.3);color:#C72D67;font-family:"Open Sans",sans-serif;font-weight:600}
+  .c .note{background:#fff3b0;color:#2B2B2B;font-family:"Open Sans",sans-serif}
+  .c .kicker{color:#C72D67;font-family:"Mulish",sans-serif;font-weight:800}
+  .c .h{font-family:"Mulish",sans-serif;font-weight:900;font-size:1.75rem;line-height:1.02;letter-spacing:-.02em}
+  .c .h em{font-style:normal;color:#C72D67}
+  .c .sub{font-family:"Open Sans",sans-serif;color:#555050}
+  .c .btn{background:linear-gradient(90deg,#C72D67,#EA70A5);color:#fff;font-family:"Mulish",sans-serif}
+</style>
+</head>
+<body>
+  <header>
+    <h1>Qual estilo é mais <em>você?</em></h1>
+    <p>Mesma capa, três jeitos de vestir. Repare nas cores de fundo e nas letras dos títulos. É só um rascunho para escolher o caminho: a animação da nuvem de trabalhos vem depois.</p>
+  </header>
+  <div class="grid">
+    <div class="opt a">
+      <div class="label"><b>A</b><h2>Escuro + rosa (atual)</h2></div>
+      <p>Montserrat nos títulos e Poppins no texto. Clima noturno, vibrante.</p>
+      <div class="phone"><div class="scr">
+        <div class="nav"><span>Luana.Guimarães</span><span class="pill">Quero o meu</span></div>
+        <div class="stage"><div class="thumb t1"></div><div class="thumb t2"></div><div class="thumb t3"></div><div class="thumb t4"></div>
+          <span class="tag g1">Skincare</span><span class="tag g2">+ Autoridade</span>
+          <img class="person" src="img/luana-recorte-b.webp" alt=""><div class="note">pode fuçar: tem surpresas escondidas por aqui ✦</div></div>
+        <div class="kicker">Portfólio personalizado</div>
+        <h3 class="h">Seu portfólio deveria <em>trabalhar por você</em></h3>
+        <p class="sub">Portfólios exclusivos para creators que querem fechar mais parcerias.</p>
+        <span class="btn">Fazer orçamento</span>
+        <div class="grain"></div>
+      </div></div>
+    </div>
+
+    <div class="opt b">
+      <div class="label"><b>B</b><h2>Creme + preto + rosa <span class="rec">minha indicação</span></h2></div>
+      <p>Instrument Serif nos títulos (elegante, editorial) e Mulish no texto, a mesma do seu portfólio.</p>
+      <div class="phone"><div class="scr">
+        <div class="nav"><span>Luana Guimarães</span><span class="pill">Quero o meu</span></div>
+        <div class="stage"><div class="thumb t1"></div><div class="thumb t2"></div><div class="thumb t3"></div><div class="thumb t4"></div>
+          <span class="tag g1">Skincare</span><span class="tag g2">+ Autoridade</span>
+          <img class="person" src="img/luana-recorte-a.webp" alt=""><div class="note">pode fuçar: tem surpresas escondidas por aqui ✦</div></div>
+        <div class="kicker">Portfólio personalizado</div>
+        <h3 class="h">Seu portfólio deveria <em>trabalhar por você</em></h3>
+        <p class="sub">Portfólios exclusivos para creators que querem fechar mais parcerias.</p>
+        <span class="btn">Fazer orçamento</span>
+        <div class="grain"></div>
+      </div></div>
+    </div>
+
+    <div class="opt c">
+      <div class="label"><b>C</b><h2>Igual ao seu portfólio</h2></div>
+      <p>Mulish nos títulos e Open Sans no texto, creme quadriculado e rosa em degradê.</p>
+      <div class="phone"><div class="scr">
+        <div class="nav"><span>Luana <i>Guimarães</i></span><span class="pill">Quero o meu</span></div>
+        <div class="stage"><div class="thumb t1"></div><div class="thumb t2"></div><div class="thumb t3"></div><div class="thumb t4"></div>
+          <span class="tag g1">Skincare</span><span class="tag g2">+ Autoridade</span>
+          <img class="person" src="img/luana-recorte-a.webp" alt=""><div class="note">pode fuçar: tem surpresas escondidas por aqui ✦</div></div>
+        <div class="kicker">Portfólio personalizado</div>
+        <h3 class="h">Seu portfólio deveria <em>trabalhar por você</em></h3>
+        <p class="sub">Portfólios exclusivos para creators que querem fechar mais parcerias.</p>
+        <span class="btn">Fazer orçamento</span>
+      </div></div>
+    </div>
+  </div>
+</body>
+</html>
