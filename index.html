@@ -453,6 +453,27 @@
   .stage.so-nuvem .feat-tags{right:auto;left:35.5%;top:14%;width:29%}
   .stage.so-nuvem .feat-tags .ft1{right:72%;top:10%}
   .stage.so-nuvem .feat-tags .ft2{right:auto;left:72%;top:30%}
+  /* sem retângulo: a nuvem flutua direto no fundo da página, com um brilho rosa redondo atrás dela toda */
+  .stage.so-nuvem{overflow:visible;background:radial-gradient(circle closest-side at 50% 45%,rgba(234,112,165,.34) 0%,rgba(234,112,165,.16) 55%,rgba(234,112,165,0) 100%);touch-action:pan-y;user-select:none;-webkit-user-select:none}
+  .stage.so-nuvem::before,.stage.so-nuvem .grain,.stage.so-nuvem .fade,.stage.so-nuvem .glow{display:none}
+  .stage.so-nuvem .cloud{pointer-events:auto;cursor:grab}
+  .stage.so-nuvem .cloud:active{cursor:grabbing}
+  .stage.so-nuvem .cloud i{cursor:pointer;transition:filter .25s ease,box-shadow .25s ease}
+  .stage.so-nuvem .cloud i:hover{filter:brightness(1.06);box-shadow:0 0 0 3px #fff,0 0 0 5px var(--pink),0 14px 26px rgba(43,43,43,.25)}
+  /* rótulo do destaque e portfólio inteiro rolando por dentro */
+  .feat-name b{display:block;font-weight:800}
+  .feat-name small{display:inline-block;margin-top:4px;padding:3px 8px;border-radius:999px;background:var(--grad);font-size:.85em;font-weight:800;letter-spacing:.02em}
+  .feat-full{position:absolute;inset:0;opacity:0;transition:opacity .45s ease;background:#fff;overflow:hidden}
+  .feat-full.on{opacity:1}
+  .feat-full img{display:block;width:100%;height:auto;object-fit:initial;will-change:transform}
+  .feat .feat-name{z-index:2}
+  .cloud-hint{position:absolute;left:0;right:0;bottom:0;z-index:8;margin:0;padding:0 16px;text-align:center;font-family:var(--font-title);font-weight:700;font-size:.78rem;letter-spacing:.04em;color:var(--muted)}
+  .stage:not(.so-nuvem) .cloud-hint{display:none}
+  .stage.so-nuvem ~ .hero-text .brand-mark{margin-top:18px}
+  /* frases do destaque nunca saem da tela: quebram em duas linhas se precisar */
+  .stage.so-nuvem .feat-tags span{white-space:normal;max-width:min(40vw,230px);width:max-content;text-align:center;line-height:1.25;border-radius:16px}
+  .cloud-hint .hint-touch{display:none}
+  @media (hover:none){.cloud-hint .hint-mouse{display:none}.cloud-hint .hint-touch{display:inline}}
 
   /* Animação de entrada */
   .js .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
@@ -565,12 +586,13 @@
         <div class="head-light" aria-hidden="true"></div>
         <div class="glow" aria-hidden="true"></div>
         <!-- trabalho em destaque (sai da nuvem; tocando, abre o portfólio) -->
-        <a class="feat" id="feat" href="#" target="_blank" rel="noopener"><img src="" alt=""><span class="feat-name"></span></a>
+        <a class="feat" id="feat" href="#" target="_blank" rel="noopener"><img class="feat-img" src="" alt=""><span class="feat-full" aria-hidden="true"><img alt=""></span><span class="feat-name"><b></b><small>Ver portfólio completo ↗</small></span></a>
         <div class="feat-tags" id="featTags" aria-hidden="true"><span class="ft1"></span><span class="ft2"></span></div>
         <div class="desk" aria-hidden="true"><span>Portfólio Personalizado ▾</span><span>Compartilhar</span><span>Publicar site</span></div>
         <img class="person" id="person" alt="Luana Guimarães, criadora de portfólios para creators" width="1100" height="1201">
         <div class="grain" aria-hidden="true"></div>
         <div class="fade" aria-hidden="true"></div>
+        <p class="cloud-hint"><span class="hint-mouse">Arraste para girar · clique num trabalho · passe o mouse no destaque para ver o portfólio inteiro</span><span class="hint-touch">Arraste para girar · toque num trabalho para ver</span></p>
       </div>
 
       <div class="hero-text">
@@ -812,29 +834,26 @@ document.documentElement.classList.add("js");
 const FOTO_CAPA = "a";
 
 /* NUVEM DE TRABALHOS DA CAPA
-   Cada trabalho aparece girando na nuvem e, um por vez, sai em destaque com 3 etiquetas.
-   img:  miniatura 3:4 (pasta img/capa) | link: abre ao tocar no destaque | tags: 3 etiquetas
-   Para adicionar um trabalho, copie uma linha e troque os dados. */
+   id:       nome dos arquivos na pasta img/capa (id-1.jpg, id-2.jpg...) e img/capa/full/id.jpg (portfólio inteiro)
+   destaque: a parte mais elaborada do portfólio, que sai em destaque
+   pecas:    quantas partes desse portfólio giram na nuvem (id-1 até id-N)
+   link:     abre ao tocar no destaque | tags: 2 frases sobre a estratégia do design */
 const CAPA_TRABALHOS = [
-  /* tags: as qualidades e a estratégia do portfólio (não o nicho da creator) */
-  { nome:"Julia Isabela",   img:"img/capa/julia-1.jpg",  link:"https://lariwiechetek.my.canva.site/portf-lio-julia-isabela",      tags:["Cores ousadas para ser lembrada", "Prova social logo no início"] },
-  { nome:"Camila Santos",   img:"img/capa/camila-santos-1.jpg", link:"https://lariwiechetek.my.canva.site/portf-lio-camila-santos", tags:["Paleta nude que transmite luxo", "Estrutura pensada para converter"] },
-  { nome:"Lais Saraiva",    img:"img/capa/lais-1.jpg",   link:"https://lariwiechetek.my.canva.site/portf-lio-lais",              tags:["Estética de diário de viagem", "Cada seção é uma parada"] },
-  { nome:"Rayca Drovetti",  img:"img/capa/rayca-1.jpg",  link:"https://lariwiechetek.my.canva.site/portf-lio-ugc-rayca-drovetti", tags:["Tipografia elegante e editorial", "Case de sucesso como prova"] },
-  { nome:"Raissa Zipolato", img:"img/capa/raissa-1.jpg", link:"https://lariwiechetek.my.canva.site/portf-lio-raissa",            tags:["Cores vibrantes com a energia dela", "Resultados reais em destaque"] },
-  { nome:"Mari Bicalho",    img:"img/capa/mari-bicalho-1.jpg", link:"https://lariwiechetek.my.canva.site/2-op-o-portf-lio-mari-bicalho", tags:["Tons terrosos que passam confiança", "+180 marcas logo no topo"] },
-  { nome:"Domenique Ramalho", img:"img/capa/domenique-1.jpg", link:"https://lariwiechetek.my.canva.site/portf-lio-domenique",     tags:["Textura jeans com a identidade dela", "Colagens que ficam na memória"] },
-  { nome:"Mayara Romaniw",  img:"img/capa/mayara-1.jpg", link:"https://lariwiechetek.my.canva.site/portf-lio-mayara",            tags:["Visual de revista", "Números de influência em destaque"] },
-  { nome:"Manoela Alcebíades", img:"img/capa/manoela-1.jpg", link:"https://lariwiechetek.my.canva.site/c-pia-de-portf-lio-manoela-maia", tags:["Cores quentes e formas divertidas", "Nichos fáceis de navegar"] },
-  { nome:"Yasmim Natatizi", img:"img/capa/yasmim-1.jpg", link:"https://lariwiechetek.my.canva.site/portf-lio-yasmin",             tags:["Rosa que reforça a marca pessoal", "Métricas que provam resultado"] },
-  { nome:"Duda Piassi",     img:"img/capa/duda-1.jpg",   link:"https://lariwiechetek.my.canva.site/portf-lio-viagem-duda",       tags:["Tema de viagem do início ao fim", "Roteiro que vende a próxima campanha"] },
-  { nome:"Bruna Veronezi",  img:"img/capa/bruna-1.jpg",  link:"https://lariwiechetek.my.canva.site/portf-lio-bruna",             tags:["Tipografia forte e marcante", "Planos claros para fechar rápido"] },
-  { nome:"Brenda Santana",  img:"img/capa/brenda-1.jpg", link:"https://lariwiechetek.my.canva.site/brenda-santana-portf-lio",    tags:["Visual leve e natural", "Storytelling que aproxima a marca"] }
-  /* Falta o print: { nome:"Jaqueline Marchiori", img:"img/capa/jaqueline-1.jpg", link:"https://lariwiechetek.my.canva.site/portf-lio-jaqueline", tags:["", "", ""] }, */
+  { nome:"Julia Isabela",      id:"julia",         destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-julia-isabela",        tags:["Cores ousadas para ser lembrada", "Prova social logo no início"] },
+  { nome:"Camila Santos",      id:"camila-santos", destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-camila-santos",        tags:["Paleta nude que transmite luxo", "Estrutura pensada para converter"] },
+  { nome:"Lais Saraiva",       id:"lais",          destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-lais",                 tags:["Estética de diário de viagem", "Cada seção é uma parada"] },
+  { nome:"Rayca Drovetti",     id:"rayca",         destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-ugc-rayca-drovetti",   tags:["Tipografia elegante e editorial", "Case de sucesso como prova"] },
+  { nome:"Raissa Zipolato",    id:"raissa",        destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-raissa",               tags:["Cores vibrantes com a energia dela", "Resultados reais em destaque"] },
+  { nome:"Mari Bicalho",       id:"mari-bicalho",  destaque:3, pecas:4, link:"https://lariwiechetek.my.canva.site/2-op-o-portf-lio-mari-bicalho",  tags:["Tons terrosos que passam confiança", "+180 marcas logo no topo"] },
+  { nome:"Domenique Ramalho",  id:"domenique",     destaque:3, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-domenique",            tags:["Textura jeans com a identidade dela", "Colagens que ficam na memória"] },
+  { nome:"Mayara Romaniw",     id:"mayara",        destaque:3, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-mayara",               tags:["Visual de revista", "Números de influência em destaque"] },
+  { nome:"Manoela Alcebíades", id:"manoela",       destaque:2, pecas:4, link:"https://lariwiechetek.my.canva.site/c-pia-de-portf-lio-manoela-maia", tags:["Cores quentes e formas divertidas", "Nichos fáceis de navegar"] },
+  { nome:"Yasmim Natatizi",    id:"yasmim",        destaque:3, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-yasmin",               tags:["Rosa que reforça a marca pessoal", "Métricas que provam resultado"] },
+  { nome:"Duda Piassi",        id:"duda",          destaque:2, pecas:4, link:"https://lariwiechetek.my.canva.site/portf-lio-viagem-duda",          tags:["Tema de viagem do início ao fim", "Roteiro que vende a próxima campanha"] },
+  { nome:"Bruna Veronezi",     id:"bruna",         destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-bruna",                tags:["Tipografia forte e marcante", "Planos claros para fechar rápido"] },
+  { nome:"Brenda Santana",     id:"brenda",        destaque:2, pecas:4, link:"https://lariwiechetek.my.canva.site/brenda-santana-portf-lio",       tags:["Visual leve e natural", "Storytelling que aproxima a marca"] }
+  /* Falta o print: { nome:"Jaqueline Marchiori", id:"jaqueline", destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-jaqueline", tags:["", ""] }, */
 ];
-/* Imagens extras que só aparecem girando na nuvem (as melhores seções de dentro dos portfólios) */
-const CAPA_EXTRAS = ["julia", "camila-santos", "lais", "rayca", "raissa", "mari-bicalho", "domenique", "mayara", "manoela", "yasmim", "duda", "bruna", "brenda"]
-  .flatMap(n => [2, 3].map(k => `img/capa/${n}-${k}.jpg`));
 /* WhatsApp: número com DDI 55 + DDD, e a mensagem que já vem escrita */
 const WHATSAPP = "5511963604439";
 const WHATSAPP_MSG = "Oi, Luana! Vi o seu site e quero criar o meu portfólio personalizado.";
@@ -1020,17 +1039,21 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   $("#person").src = "img/luana-recorte-" + v + ".webp";
 })();
 
-/* Nuvem de trabalhos girando + trabalho em destaque */
+/* Nuvem de trabalhos: abre a partir do centro, gira, dá para arrastar e tocar.
+   Um trabalho por vez sai em destaque; passando o mouse no destaque, o portfólio inteiro rola dentro dele. */
 (function(){
   const stage = $("#stage"), cloud = $("#cloud"), feat = $("#feat"), tagsBox = $("#featTags");
   if (!stage || !cloud || !CAPA_TRABALHOS.length) return;
-  const all = CAPA_TRABALHOS.map(t => t.img).concat(CAPA_EXTRAS);
-  // embaralha de forma fixa para as partes do mesmo portfólio não ficarem juntas
+  const img = (t, k) => `img/capa/${t.id}-${k}.jpg`;
+  // todas as partes, embaralhadas de forma fixa para as do mesmo portfólio não ficarem juntas
+  const all = [];
+  CAPA_TRABALHOS.forEach((t, w) => { for (let k = 1; k <= t.pecas; k++) all.push({ w, src: img(t, k) }); });
   const step = [7, 11, 13, 17].find(s => all.length % s) || 1;
   const pics = all.map((_, i) => all[(i * step) % all.length]);
-  const N = Math.min(40, Math.max(22, pics.length)), items = [], pts = [];
+  const N = Math.min(48, Math.max(22, pics.length)), items = [], pts = [];
   for (let i = 0; i < N; i++) {
-    const el = document.createElement("i"); el.style.backgroundImage = `url("${pics[i % pics.length]}")`;
+    const p = pics[i % pics.length], el = document.createElement("i");
+    el.style.backgroundImage = `url("${p.src}")`; el.dataset.w = p.w; el.dataset.src = p.src;
     cloud.appendChild(el); items.push(el);
     const y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), th = i * 2.39996;  // pontos espalhados numa esfera
     pts.push({ x: Math.cos(th) * r, y, z: Math.sin(th) * r });
@@ -1040,46 +1063,102 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   const measure = () => { W = stage.clientWidth; H = stage.clientHeight; iw = W * 0.13; ih = iw * 5 / 3; };
   measure(); window.addEventListener("resize", measure);
 
-  let ang = 0.6, op = 1, opTarget = 1, last = performance.now(), running = false;
+  let ang = 0.6, vel = 0, op = 1, opTarget = 1, intro = reduceMotion ? 1 : 0, last = performance.now(), running = false;
+  let hovering = false, dragging = false;
+  const ease = x => 1 - Math.pow(1 - x, 3);
   function draw(){
-    const R = W * (soNuvem ? 0.46 : 0.43), cx = W * 0.5, cy = H * (soNuvem ? 0.45 : 0.4), tilt = -0.32, ca = Math.cos(ang), sa = Math.sin(ang), ct = Math.cos(tilt), st = Math.sin(tilt);
+    const e = ease(Math.min(1, intro));
+    const R = W * (soNuvem ? 0.46 : 0.43) * (0.08 + 0.92 * e), cx = W * 0.5, cy = H * (soNuvem ? 0.45 : 0.4);
+    const tilt = -0.32, ca = Math.cos(ang), sa = Math.sin(ang), ct = Math.cos(tilt), st = Math.sin(tilt);
     for (let i = 0; i < N; i++) {
       const p = pts[i], x1 = p.x * ca + p.z * sa, z1 = -p.x * sa + p.z * ca;
       const y2 = p.y * ct - z1 * st, z2 = p.y * st + z1 * ct, d = (z2 + 1) / 2;
-      const s = 0.5 + 0.5 * d, el = items[i];
+      const s = (0.5 + 0.5 * d) * (0.35 + 0.65 * e), el = items[i];
       el.style.transform = `translate(${cx + x1 * R - iw / 2}px,${cy + y2 * R * 0.82 - ih / 2}px) scale(${s.toFixed(3)})`;
-      el.style.opacity = ((0.3 + 0.7 * d) * op).toFixed(3);
+      el.style.opacity = ((0.3 + 0.7 * d) * op * Math.min(1, intro * 3)).toFixed(3);
       el.style.zIndex = 100 + Math.round(z2 * 100);
     }
   }
   function frame(now){
     if (!running) return;
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
-    ang += dt * 0.28; op += (opTarget - op) * Math.min(1, dt * 4);
+    if (intro < 1) intro = Math.min(1, intro + dt / 1.8);
+    if (!dragging) {
+      const base = hovering ? 0.05 : 0.28;            // mais devagar com o mouse em cima
+      vel += (base - vel) * Math.min(1, dt * 2.5);    // inércia depois de arrastar
+      ang += dt * vel * (intro < 1 ? 1 + 2.5 * (1 - intro) : 1);
+    }
+    op += (opTarget - op) * Math.min(1, dt * 4);
     draw(); requestAnimationFrame(frame);
   }
   function play(){ if (running || reduceMotion) return; running = true; last = performance.now(); requestAnimationFrame(frame); }
   function stop(){ running = false; }
 
-  // destaque: um trabalho por vez sai da nuvem, com 3 etiquetas
-  const fImg = feat.querySelector("img"), fName = feat.querySelector(".feat-name"), fTags = tagsBox.querySelectorAll("span");
-  let idx = 0, timer = null;
-  function showFeat(){
-    const t = CAPA_TRABALHOS[idx % CAPA_TRABALHOS.length];
-    feat.href = t.link; fImg.src = t.img; fImg.alt = "Portfólio de " + t.nome + " criado por Luana";
-    feat.setAttribute("aria-label", "Ver o portfólio de " + t.nome + " (abre em nova aba)");
+  // destaque
+  const fImg = feat.querySelector(".feat-img"), fName = feat.querySelector(".feat-name b"), fTags = tagsBox.querySelectorAll("span");
+  const fFull = feat.querySelector(".feat-full"), fFullImg = fFull.querySelector("img");
+  let idx = 0, timer = null, cur = null, featHover = false;
+  function showFeat(w, src){
+    clearTimeout(timer);
+    const t = CAPA_TRABALHOS[w];
+    cur = t; feat.href = t.link; fImg.src = src || img(t, t.destaque); fImg.alt = "Parte do portfólio de " + t.nome + " criado por Luana";
+    feat.setAttribute("aria-label", "Ver o portfólio completo de " + t.nome + " (abre em nova aba)");
     fName.textContent = t.nome; fTags.forEach((s, k) => s.textContent = t.tags[k] || "");
+    resetFull(); fFullImg.removeAttribute("src");
+    feat.classList.remove("on"); tagsBox.classList.remove("on"); void feat.offsetWidth;
     feat.classList.add("on"); opTarget = 0.5;
-    timer = setTimeout(() => { tagsBox.classList.add("on"); timer = setTimeout(hideFeat, 3600); }, 500);
+    timer = setTimeout(() => { tagsBox.classList.add("on"); timer = setTimeout(hideFeat, 4200); }, 450);
   }
   function hideFeat(){
+    if (featHover) { timer = setTimeout(hideFeat, 1200); return; }  // não some enquanto a pessoa olha
     tagsBox.classList.remove("on"); feat.classList.remove("on"); opTarget = 1; idx++;
-    timer = setTimeout(showFeat, 1900);
+    timer = setTimeout(() => showFeat(idx % CAPA_TRABALHOS.length), 1700);
   }
-  function startCycle(){ if (!timer) timer = setTimeout(showFeat, 1200); }
-  function stopCycle(){ clearTimeout(timer); timer = null; }
+  function startCycle(){ if (!timer) timer = setTimeout(() => showFeat(idx % CAPA_TRABALHOS.length), 1900); }
 
-  if (reduceMotion) { draw(); showFeat(); clearTimeout(timer); tagsBox.classList.add("on"); return; }
+  // passar o mouse no destaque: o portfólio inteiro rola dentro dele
+  function resetFull(){ fFull.classList.remove("on"); fFullImg.style.transition = "none"; fFullImg.style.transform = "translateY(0)"; }
+  function runFull(){
+    if (!featHover || !fFullImg.naturalHeight) return;
+    const shift = fFullImg.clientHeight - feat.clientHeight;
+    fFull.classList.add("on");
+    requestAnimationFrame(() => {
+      fFullImg.style.transition = `transform ${Math.max(6, shift / 110).toFixed(1)}s linear .5s`;
+      fFullImg.style.transform = `translateY(${-Math.max(0, shift)}px)`;
+    });
+  }
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (finePointer) {
+    feat.addEventListener("mouseenter", () => {
+      featHover = true; if (!cur) return;
+      const src = `img/capa/full/${cur.id}.jpg`;
+      if (fFullImg.getAttribute("src") !== src) { fFullImg.onload = runFull; fFullImg.src = src; } else runFull();
+    });
+    feat.addEventListener("mouseleave", () => { featHover = false; resetFull(); });
+  }
+
+  // nuvem: passar o mouse destaca a peça; tocar mostra aquele portfólio; arrastar gira
+  cloud.addEventListener("pointerover", e => { if (e.target.tagName === "I") hovering = true; });
+  cloud.addEventListener("pointerout", e => { if (e.target.tagName === "I") hovering = false; });
+  let downX = 0, lastX = 0, lastT = 0, moved = false, downEl = null;
+  stage.addEventListener("pointerdown", e => {
+    if (e.target.closest(".feat")) return;
+    dragging = true; moved = false; downX = lastX = e.clientX; lastT = performance.now(); downEl = e.target;
+  });
+  window.addEventListener("pointermove", e => {
+    if (!dragging) return;
+    const dx = e.clientX - lastX, now = performance.now();
+    if (Math.abs(e.clientX - downX) > 6) moved = true;
+    if (moved) { ang += dx * 0.006; vel = dx * 0.006 / Math.max(0.016, (now - lastT) / 1000); }
+    lastX = e.clientX; lastT = now;
+  });
+  window.addEventListener("pointerup", () => {
+    if (!dragging) return; dragging = false;
+    vel = Math.max(-4, Math.min(4, vel));
+    if (!moved && downEl && downEl.tagName === "I") { idx = +downEl.dataset.w; showFeat(idx, downEl.dataset.src); }
+  });
+
+  if (reduceMotion) { draw(); showFeat(0); clearTimeout(timer); tagsBox.classList.add("on"); return; }
   draw();
   // só anima quando a capa está na tela (economiza bateria)
   if ("IntersectionObserver" in window) {
@@ -1087,7 +1166,6 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   } else { play(); startCycle(); }
   document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); else play(); });
 })();
-
 /* Faixas */
 const ribbonHTML = RIBBON.map(t => `<span>${esc(t)}</span>`).join("");
 ["#ribbon1","#ribbon2","#ribbon3"].forEach(id => { $(id).innerHTML = ribbonHTML + (reduceMotion ? "" : ribbonHTML); });
