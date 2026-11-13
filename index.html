@@ -497,7 +497,7 @@
   @media (prefers-reduced-motion:reduce){.btn-shine::after{animation:none;display:none}}
 
   /* Comparador antes x depois (seção das dores) */
-  .cmp-wrap{display:grid;grid-template-columns:minmax(0,310px) minmax(0,440px);justify-content:center;align-items:center;gap:48px;margin-bottom:56px}
+  .cmp-wrap{display:grid;grid-template-columns:minmax(0,334px) minmax(0,440px);justify-content:center;align-items:center;gap:48px;margin-bottom:56px}
   .cmp{position:relative;aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#eee;border:4px solid #fff;box-shadow:0 26px 60px rgba(43,43,43,.18);touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:ew-resize}
   .cmp img{position:absolute;left:0;top:0;width:100%;height:auto;pointer-events:none;display:block;will-change:transform}
   .cmp-before{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--p)) 0 0)}
@@ -515,11 +515,20 @@
   .cmp-text h3 em{font-style:normal;color:var(--pink)}
   .cmp-text p{color:var(--muted);line-height:1.65;margin:0 0 20px}
   .cmp-tabs{display:flex;flex-wrap:wrap;gap:8px}
+  .cmp-box{display:flex;gap:12px;align-items:stretch;width:100%}
+  .cmp-box .cmp{flex:1;min-width:0}
+  /* barra lateral: arraste para rolar o portfólio */
+  .cmp-track{position:relative;width:10px;flex:none;margin:18px 0;border-radius:999px;background:rgba(199,45,103,.14);cursor:ns-resize;touch-action:none}
+  .cmp-track:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
+  .cmp-thumb{position:absolute;left:-4px;right:-4px;top:0;height:16%;min-height:34px;border-radius:999px;background:var(--grad);box-shadow:0 4px 12px rgba(199,45,103,.35);pointer-events:none}
+  .cmp-link{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-family:var(--font-title);font-weight:800;font-size:.86rem;color:var(--pink);text-decoration:none;border-bottom:2px solid rgba(199,45,103,.3);padding-bottom:2px}
+  .cmp-link:hover{border-color:var(--pink)}
+  .cmp-link[hidden]{display:none}
   .cmp-tabs button{padding:9px 16px;border-radius:999px;border:1.5px solid rgba(199,45,103,.35);background:#fff;color:var(--cream);font-family:var(--font-title);font-weight:800;font-size:.78rem;cursor:pointer;transition:background .2s,color .2s}
   .cmp-tabs button[aria-selected="true"]{background:var(--grad);color:#fff;border-color:transparent}
   @media (max-width:900px){
     .cmp-wrap{grid-template-columns:1fr;gap:24px;text-align:center;justify-items:center}
-    .cmp{width:min(100%,320px)}
+    .cmp-box{width:min(100%,344px)}
     .cmp-tabs{justify-content:center}
   }
 
@@ -665,6 +674,7 @@
     </div>
     <!-- Comparador antes x depois: arraste a linha. As imagens vêm do array ANTES_DEPOIS no script -->
     <div class="container cmp-wrap">
+      <div class="cmp-box">
       <div class="cmp" id="cmp" style="--p:50%">
         <img class="cmp-after" id="cmpAfter" src="img/depois-mayara.jpg" alt="Depois: portfólio de Mayara Romaniw criado por Luana" loading="lazy">
         <div class="cmp-before"><img id="cmpBefore" src="img/antes-mayara.jpg" alt="Antes: portfólio de Mayara Romaniw sem organização" loading="lazy"></div>
@@ -672,11 +682,14 @@
         <div class="cmp-handle" aria-hidden="true"><span>‹ ›</span></div>
         <input class="cmp-range" id="cmpRange" type="range" min="0" max="100" value="50" aria-label="Arraste para comparar o antes e o depois">
       </div>
+        <div class="cmp-track" id="cmpTrack" role="slider" tabindex="0" aria-label="Rolar o portfólio para baixo e para cima" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="cmp-thumb"></span></div>
+      </div>
       <div class="cmp-text">
         <span class="eyebrow">Arraste e compare</span>
         <h3>Mesma creator. Outra <em>percepção.</em></h3>
         <p>O conteúdo já era bom. O que faltava era organização: hierarquia clara, identidade visual e cada informação no lugar certo para a marca entender rápido por que contratar.</p>
         <div class="cmp-tabs" id="cmpTabs" role="tablist" aria-label="Escolha a cliente"></div>
+        <a class="cmp-link" id="cmpLink" href="#" target="_blank" rel="noopener">Ver o portfólio completo <span aria-hidden="true">↗</span></a>
       </div>
     </div>
     <div class="container two-cols">
@@ -967,10 +980,10 @@ const EXAMPLES = [
    capa:   imagem que aparece enquanto o vídeo carrega */
 /* Comparador da seção das dores: imagens inteiras (verticais) do antes e do depois; as duas rolam juntas */
 const COMPARADOR = [
-  { nome:"Mayara Romaniw",  antes:"img/antes-mayara.jpg",        depois:"img/depois-mayara.jpg" },
-  { nome:"Yasmim Natatizi", antes:"img/antes-yasmim.jpg",        depois:"img/depois-yasmim.jpg" },
-  { nome:"Raissa Zipolato", antes:"img/antes-raissa-full.jpg",   depois:"img/depois-raissa-full.jpg" },
-  { nome:"Gislaine Kröger", antes:"img/antes-gislaine-full.jpg", depois:"img/depois-gislaine-full.jpg" }
+  { nome:"Mayara Romaniw",  antes:"img/antes-mayara.jpg",        depois:"img/depois-mayara.jpg",        link:"https://lariwiechetek.my.canva.site/portf-lio-mayara" },
+  { nome:"Yasmim Natatizi", antes:"img/antes-yasmim.jpg",        depois:"img/depois-yasmim.jpg",        link:"https://lariwiechetek.my.canva.site/portf-lio-yasmin" },
+  { nome:"Raissa Zipolato", antes:"img/antes-raissa-full.jpg",   depois:"img/depois-raissa-full.jpg",   link:"https://lariwiechetek.my.canva.site/portf-lio-raissa" },
+  { nome:"Gislaine Kröger", antes:"img/antes-gislaine-full.jpg", depois:"img/depois-gislaine-full.jpg", link:"" }  /* link: cole aqui o endereço do portfólio novo dela */
 ];
 const ANTES_DEPOIS = [
   { nome:"Rayca Drovetti",   antes:"img/antes-rayca.jpg",    depois:"img/depois-rayca.mp4",    capa:"img/depois-rayca-capa.jpg" },
@@ -1236,19 +1249,24 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); else play(); });
 })();
 /* Comparador antes x depois: arrastar a linha para os lados, trocar de cliente,
-   e os dois portfólios rolam para baixo juntos (cada um no seu ritmo, chegando ao fim ao mesmo tempo) */
+   rolagem automática lenta (os dois juntos) e rolagem manual pela barra lateral ou pela rodinha do mouse */
 (function(){
   const cmp = $("#cmp"); if (!cmp) return;
   const range = $("#cmpRange"), tabs = $("#cmpTabs"), before = $("#cmpBefore"), after = $("#cmpAfter");
+  const track = $("#cmpTrack"), thumb = track.querySelector(".cmp-thumb"), link = $("#cmpLink");
   const set = v => { v = Math.max(0, Math.min(100, v)); cmp.style.setProperty("--p", v + "%"); range.value = Math.round(v); };
   tabs.innerHTML = COMPARADOR.map((c, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-i="${i}">${esc(c.nome.split(" ")[0])}</button>`).join("");
+  function setLink(c){
+    if (c.link) { link.hidden = false; link.href = c.link; link.firstChild.textContent = "Ver o portfólio completo de " + c.nome.split(" ")[0] + " "; }
+    else link.hidden = true;
+  }
+  setLink(COMPARADOR[0]);
 
-  // rolagem simultânea
-  // velocidade calma e constante: SPEED pixels por segundo no portfólio mais comprido; pausa com o mouse em cima
-  let t0 = performance.now(), visible = false, raf = 0, paused = false, pausedAt = 0;
+  // posição da rolagem (0 = topo, 1 = fim), igual para os dois portfólios
+  let pos = 0, t0 = performance.now(), visible = false, raf = 0, hoverPause = false, manualUntil = 0;
   const SPEED = 38, HOLD = 2500, UP = 3000;
   const ease = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
-  const down = () => { const H = cmp.clientHeight; return Math.max(8000, Math.max(before.clientHeight, after.clientHeight) - H) / SPEED * 1000; };
+  const down = () => Math.max(8000, Math.max(before.clientHeight, after.clientHeight) - cmp.clientHeight) / SPEED * 1000;
   function prog(ms){
     const DOWN = down(), CYCLE = HOLD + DOWN + HOLD + UP, m = ms % CYCLE;
     if (m < HOLD) return 0;
@@ -1256,26 +1274,57 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
     if (m < HOLD * 2 + DOWN) return 1;
     return 1 - ease((m - HOLD * 2 - DOWN) / UP);
   }
-  cmp.addEventListener("mouseenter", () => { paused = true; pausedAt = performance.now(); });
-  cmp.addEventListener("mouseleave", () => { if (paused) { t0 += performance.now() - pausedAt; paused = false; } });
   function place(p){
+    pos = Math.max(0, Math.min(1, p));
     const H = cmp.clientHeight;
-    [before, after].forEach(img => { const s = Math.max(0, img.clientHeight - H); img.style.transform = `translateY(${(-s * p).toFixed(1)}px)`; });
+    [before, after].forEach(img => { const s = Math.max(0, img.clientHeight - H); img.style.transform = `translateY(${(-s * pos).toFixed(1)}px)`; });
+    const th = thumb.offsetHeight, tr = track.clientHeight;
+    thumb.style.top = ((tr - th) * pos).toFixed(1) + "px";
+    track.setAttribute("aria-valuenow", Math.round(pos * 100));
   }
-  function loop(now){ if (!visible) { raf = 0; return; } if (!paused) place(prog(now - t0)); raf = requestAnimationFrame(loop); }
-  function start(){ if (reduceMotion || raf) return; raf = requestAnimationFrame(loop); }
+  // depois de mexer na mão, a rolagem automática continua do mesmo ponto
+  function resumeFrom(p){ t0 = performance.now() - (HOLD + p * down()); }
+  function manual(p){ manualUntil = performance.now() + 5000; place(p); resumeFrom(pos); }
+  function loop(now){
+    if (!visible) { raf = 0; return; }
+    if (!hoverPause && now > manualUntil) place(prog(now - t0)); else resumeFrom(pos);
+    raf = requestAnimationFrame(loop);
+  }
+  function start(){ if (raf) return; raf = requestAnimationFrame(loop); }
+  if (reduceMotion) manualUntil = Infinity;   // sem animação: só a rolagem manual
+
+  cmp.addEventListener("mouseenter", () => hoverPause = true);
+  cmp.addEventListener("mouseleave", () => hoverPause = false);
+  // rodinha do mouse em cima do comparador rola o portfólio (nas pontas, a página volta a rolar)
+  cmp.addEventListener("wheel", e => {
+    const s = Math.max(1, Math.max(before.clientHeight, after.clientHeight) - cmp.clientHeight);
+    const next = pos + e.deltaY / s;
+    if ((next <= 0 && pos <= 0) || (next >= 1 && pos >= 1)) return;
+    e.preventDefault(); manual(next);
+  }, { passive: false });
+  // barra lateral
+  let tdrag = false;
+  const tAt = e => { const r = track.getBoundingClientRect(), th = thumb.offsetHeight; manual((e.clientY - r.top - th / 2) / Math.max(1, r.height - th)); };
+  track.addEventListener("pointerdown", e => { tdrag = true; try { track.setPointerCapture(e.pointerId); } catch (_) {} tAt(e); });
+  track.addEventListener("pointermove", e => { if (tdrag) tAt(e); });
+  track.addEventListener("pointerup", () => tdrag = false);
+  track.addEventListener("pointercancel", () => tdrag = false);
+  track.addEventListener("keydown", e => {
+    const k = { ArrowDown: .05, ArrowUp: -.05, PageDown: .2, PageUp: -.2, End: 1, Home: -1 }[e.key];
+    if (k == null) return; e.preventDefault(); manual(pos + k);
+  });
 
   tabs.addEventListener("click", e => {
     const b = e.target.closest("button"); if (!b) return;
     const c = COMPARADOR[+b.dataset.i];
     tabs.querySelectorAll("button").forEach(x => x.setAttribute("aria-selected", x === b));
-    before.src = c.antes; after.src = c.depois;
+    before.src = c.antes; after.src = c.depois; setLink(c);
     before.alt = "Antes: portfólio de " + c.nome + " sem organização"; after.alt = "Depois: portfólio de " + c.nome + " criado por Luana";
-    t0 = performance.now(); place(0); hint();
+    manualUntil = 0; t0 = performance.now(); place(0); hint();
   });
   let drag = false;
   const at = e => { const r = cmp.getBoundingClientRect(); set((e.clientX - r.left) / r.width * 100); };
-  cmp.addEventListener("pointerdown", e => { drag = true; cmp.classList.remove("hint"); cmp.setPointerCapture(e.pointerId); at(e); });
+  cmp.addEventListener("pointerdown", e => { drag = true; cmp.classList.remove("hint"); try { cmp.setPointerCapture(e.pointerId); } catch (_) {} at(e); });
   cmp.addEventListener("pointermove", e => { if (drag) at(e); });
   cmp.addEventListener("pointerup", () => drag = false);
   cmp.addEventListener("pointercancel", () => drag = false);
