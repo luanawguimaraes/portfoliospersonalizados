@@ -389,7 +389,7 @@
   body::after{background:var(--pink);opacity:.08}
   .section-title em,.list-card h2 em,.accent,.hero h1 .accent{font-family:var(--font-title);font-style:normal;font-weight:900;letter-spacing:-.02em;color:var(--pink)}
   .section-title,.hero h1,.list-card h2{font-weight:900}
-  .btn-pink,.btn-lime,.nav-links .nav-cta,.nav-links .nav-cta:hover,.c-btn{background:var(--grad);color:#fff;box-shadow:0 10px 26px rgba(199,45,103,.3)}
+  .btn-pink,.btn-lime,.nav-links .nav-cta,.nav-links .nav-cta:hover,.c-btn{background:var(--grad);background-origin:border-box;border-color:transparent;color:#fff;box-shadow:0 10px 26px rgba(199,45,103,.3)}
   .btn-wide{border-color:rgba(199,45,103,.15)}
   .btn-ghost{color:var(--cream);border-color:rgba(43,43,43,.25)}
   .nav.scrolled,.nav{border-color:var(--border)}
@@ -476,7 +476,7 @@
   @media (hover:none){.cloud-hint .hint-mouse{display:none}.cloud-hint .hint-touch{display:inline}}
 
   /* Lateral da capa mais leve e proporcional */
-  .hero-eyebrow{display:inline-block;margin:0 0 16px;padding:6px 14px;border-radius:999px;border:1.5px solid rgba(199,45,103,.45);background:rgba(255,255,255,.6);font-family:var(--font-title);font-weight:800;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);white-space:nowrap}
+  .hero-eyebrow{display:block;margin:0 0 12px;padding:0;font-family:var(--font-title);font-weight:800;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);white-space:nowrap}
   .hero h1{font-size:clamp(2rem,4.4vw,3.3rem);line-height:1.05;margin-bottom:16px}
   .hero-sub{font-size:clamp(.95rem,1.4vw,1.05rem);margin-bottom:24px;max-width:520px}
   .btn-hero{padding:12px 24px;font-size:.8rem;letter-spacing:.08em;gap:10px}
