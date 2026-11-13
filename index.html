@@ -462,7 +462,7 @@
   .stage.so-nuvem .cloud i:hover{filter:brightness(1.06);box-shadow:0 0 0 3px #fff,0 0 0 5px var(--pink),0 14px 26px rgba(43,43,43,.25)}
   /* rótulo do destaque e portfólio inteiro rolando por dentro */
   .feat-name b{display:block;font-weight:800}
-  .feat-name small{display:inline-block;margin-top:4px;padding:3px 8px;border-radius:999px;background:var(--grad);font-size:.85em;font-weight:800;letter-spacing:.02em}
+  .feat-name small{display:inline-block;white-space:nowrap;margin-top:4px;padding:3px 8px;border-radius:999px;background:var(--grad);font-size:.85em;font-weight:800;letter-spacing:.02em}
   .feat-full{position:absolute;inset:0;opacity:0;transition:opacity .45s ease;background:#fff;overflow:hidden}
   .feat-full.on{opacity:1}
   .feat-full img{display:block;width:100%;height:auto;object-fit:initial;will-change:transform}
@@ -471,7 +471,7 @@
   .stage:not(.so-nuvem) .cloud-hint{display:none}
   .stage.so-nuvem ~ .hero-text .brand-mark{margin-top:18px}
   /* frases do destaque nunca saem da tela: quebram em duas linhas se precisar */
-  .stage.so-nuvem .feat-tags span{white-space:normal;max-width:min(40vw,230px);width:max-content;text-align:center;line-height:1.25;border-radius:16px}
+  .stage.so-nuvem .feat-tags span{white-space:normal;max-width:min(40vw,300px);width:max-content;text-align:center;line-height:1.25;border-radius:16px}
   .cloud-hint .hint-touch{display:none}
   @media (hover:none){.cloud-hint .hint-mouse{display:none}.cloud-hint .hint-touch{display:inline}}
 
@@ -586,7 +586,7 @@
         <div class="head-light" aria-hidden="true"></div>
         <div class="glow" aria-hidden="true"></div>
         <!-- trabalho em destaque (sai da nuvem; tocando, abre o portfólio) -->
-        <a class="feat" id="feat" href="#" target="_blank" rel="noopener"><img class="feat-img" src="" alt=""><span class="feat-full" aria-hidden="true"><img alt=""></span><span class="feat-name"><b></b><small>Ver portfólio completo ↗</small></span></a>
+        <a class="feat" id="feat" href="#" target="_blank" rel="noopener"><img class="feat-img" src="" alt=""><span class="feat-full" aria-hidden="true"><img alt=""></span><span class="feat-name"><b></b><small>Ver completo ↗</small></span></a>
         <div class="feat-tags" id="featTags" aria-hidden="true"><span class="ft1"></span><span class="ft2"></span></div>
         <div class="desk" aria-hidden="true"><span>Portfólio Personalizado ▾</span><span>Compartilhar</span><span>Publicar site</span></div>
         <img class="person" id="person" alt="Luana Guimarães, criadora de portfólios para creators" width="1100" height="1201">
@@ -837,21 +837,21 @@ const FOTO_CAPA = "a";
    id:       nome dos arquivos na pasta img/capa (id-1.jpg, id-2.jpg...) e img/capa/full-id.jpg (portfólio inteiro)
    destaque: a parte mais elaborada do portfólio, que sai em destaque
    pecas:    quantas partes desse portfólio giram na nuvem (id-1 até id-N)
-   link:     abre ao tocar no destaque | tags: 2 frases sobre a estratégia do design */
+   link:     abre ao tocar no destaque | tags: 2 frases sobre as escolhas de design da Luana (nunca sobre as fotos ou números da cliente) */
 const CAPA_TRABALHOS = [
-  { nome:"Julia Isabela",      id:"julia",         destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-julia-isabela",        tags:["Cores ousadas para ser lembrada", "Prova social logo no início"] },
-  { nome:"Camila Santos",      id:"camila-santos", destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-camila-santos",        tags:["Paleta nude que transmite luxo", "Estrutura pensada para converter"] },
-  { nome:"Lais Saraiva",       id:"lais",          destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-lais",                 tags:["Estética de diário de viagem", "Cada seção é uma parada"] },
-  { nome:"Rayca Drovetti",     id:"rayca",         destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-ugc-rayca-drovetti",   tags:["Tipografia elegante e editorial", "Case de sucesso como prova"] },
-  { nome:"Raissa Zipolato",    id:"raissa",        destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-raissa",               tags:["Cores vibrantes com a energia dela", "Resultados reais em destaque"] },
-  { nome:"Mari Bicalho",       id:"mari-bicalho",  destaque:3, pecas:4, link:"https://lariwiechetek.my.canva.site/2-op-o-portf-lio-mari-bicalho",  tags:["Tons terrosos que passam confiança", "+180 marcas logo no topo"] },
-  { nome:"Domenique Ramalho",  id:"domenique",     destaque:3, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-domenique",            tags:["Textura jeans com a identidade dela", "Colagens que ficam na memória"] },
-  { nome:"Mayara Romaniw",     id:"mayara",        destaque:3, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-mayara",               tags:["Visual de revista", "Números de influência em destaque"] },
-  { nome:"Manoela Alcebíades", id:"manoela",       destaque:2, pecas:4, link:"https://lariwiechetek.my.canva.site/c-pia-de-portf-lio-manoela-maia", tags:["Cores quentes e formas divertidas", "Nichos fáceis de navegar"] },
-  { nome:"Yasmim Natatizi",    id:"yasmim",        destaque:3, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-yasmin",               tags:["Rosa que reforça a marca pessoal", "Métricas que provam resultado"] },
-  { nome:"Duda Piassi",        id:"duda",          destaque:2, pecas:4, link:"https://lariwiechetek.my.canva.site/portf-lio-viagem-duda",          tags:["Tema de viagem do início ao fim", "Roteiro que vende a próxima campanha"] },
-  { nome:"Bruna Veronezi",     id:"bruna",         destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-bruna",                tags:["Tipografia forte e marcante", "Planos claros para fechar rápido"] },
-  { nome:"Brenda Santana",     id:"brenda",        destaque:2, pecas:4, link:"https://lariwiechetek.my.canva.site/brenda-santana-portf-lio",       tags:["Visual leve e natural", "Storytelling que aproxima a marca"] }
+  { nome:"Julia Isabela",      id:"julia",         destaque:4, pecas:4, link:"https://lariwiechetek.my.canva.site/portf-lio-julia-isabela",        tags:["Contraste neon que prende o olhar", "Recortes que saem da moldura"] },
+  { nome:"Camila Santos",      id:"camila-santos", destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-camila-santos",        tags:["Paleta nude com ar de luxo", "Mockups que valorizam o conteúdo"] },
+  { nome:"Lais Saraiva",       id:"lais",          destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-lais",                 tags:["Direção de arte de diário de viagem", "Texturas de papel e carimbos"] },
+  { nome:"Rayca Drovetti",     id:"rayca",         destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-ugc-rayca-drovetti",   tags:["Tipografia serifada editorial", "Comparativo visual Influencer x UGC"] },
+  { nome:"Raissa Zipolato",    id:"raissa",        destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-raissa",               tags:["Paleta pink e lima cheia de energia", "Colagem com stickers e câmera retrô"] },
+  { nome:"Mari Bicalho",       id:"mari-bicalho",  destaque:3, pecas:4, link:"https://lariwiechetek.my.canva.site/2-op-o-portf-lio-mari-bicalho",  tags:["Tons terrosos que passam confiança", "Hierarquia limpa e profissional"] },
+  { nome:"Domenique Ramalho",  id:"domenique",     destaque:3, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-domenique",            tags:["Textura jeans e estrelas costuradas", "Colagem com bilhetes e clipes"] },
+  { nome:"Mayara Romaniw",     id:"mayara",        destaque:3, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-mayara",               tags:["Tipografia de revista sobre a foto", "Blocos marrons que guiam a leitura"] },
+  { nome:"Manoela Alcebíades", id:"manoela",       destaque:5, pecas:5, link:"https://lariwiechetek.my.canva.site/c-pia-de-portf-lio-manoela-maia", tags:["Bordas em ondinhas e cores quentes", "Navegação por nichos em botões"] },
+  { nome:"Yasmim Natatizi",    id:"yasmim",        destaque:3, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-yasmin",               tags:["Rosa monocromático da marca pessoal", "Caderno e post-its como elementos"] },
+  { nome:"Duda Piassi",        id:"duda",          destaque:2, pecas:4, link:"https://lariwiechetek.my.canva.site/portf-lio-viagem-duda",          tags:["Cartões-postais e carimbos de viagem", "Cada seção abre com um destino"] },
+  { nome:"Bruna Veronezi",     id:"bruna",         destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-bruna",                tags:["Tipografia condensada de impacto", "Colagem de fotos em camadas"] },
+  { nome:"Brenda Santana",     id:"brenda",        destaque:2, pecas:4, link:"https://lariwiechetek.my.canva.site/brenda-santana-portf-lio",       tags:["Palavra gigante atrás da foto", "Paleta nude leve e natural"] }
   /* Falta o print: { nome:"Jaqueline Marchiori", id:"jaqueline", destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-jaqueline", tags:["", ""] }, */
 ];
 /* WhatsApp: número com DDI 55 + DDD, e a mensagem que já vem escrita */
