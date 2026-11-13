@@ -447,7 +447,7 @@
   .feat-tags.on span{opacity:1;transform:none}
   .feat-tags.on .ft2{transition-delay:.15s}
   .stage .fade{height:30%}
-  /* TESTE "só a nuvem" (sem a Luana na frente): index.html?capa=nuvem */
+  /* Capa padrão: só a nuvem (sem a Luana na frente). A versão com foto abre em index.html?capa=foto */
   .stage.so-nuvem .person,.stage.so-nuvem .desk,.stage.so-nuvem .side,.stage.so-nuvem .handle,.stage.so-nuvem .h-line,.stage.so-nuvem .head-light{display:none}
   .stage.so-nuvem .feat{right:auto;left:35.5%;top:14%;width:29%}
   .stage.so-nuvem .feat-tags{right:auto;left:35.5%;top:14%;width:29%}
@@ -549,7 +549,7 @@
       <!-- COMPOSIÇÃO DA CAPA
            img/luana-recorte-b.webp = sua foto recortada (a, b ou c = tratamentos de cor; troque no script em FOTO_CAPA)
            Nuvem de trabalhos: as miniaturas vêm do array CAPA_TRABALHOS no script (pasta img/capa) -->
-      <div class="stage" id="stage" data-foto="a">
+      <div class="stage so-nuvem" id="stage" data-foto="a">
         <!-- nuvem de trabalhos girando atrás de você -->
         <div class="cloud" id="cloud" aria-hidden="true"></div>
         <div class="side" aria-hidden="true">
@@ -568,7 +568,7 @@
         <a class="feat" id="feat" href="#" target="_blank" rel="noopener"><img src="" alt=""><span class="feat-name"></span></a>
         <div class="feat-tags" id="featTags" aria-hidden="true"><span class="ft1"></span><span class="ft2"></span></div>
         <div class="desk" aria-hidden="true"><span>Portfólio Personalizado ▾</span><span>Compartilhar</span><span>Publicar site</span></div>
-        <img class="person" id="person" src="img/luana-recorte-b.webp" alt="Luana Guimarães, criadora de portfólios para creators" width="1100" height="1201" fetchpriority="high">
+        <img class="person" id="person" alt="Luana Guimarães, criadora de portfólios para creators" width="1100" height="1201">
         <div class="grain" aria-hidden="true"></div>
         <div class="fade" aria-hidden="true"></div>
       </div>
@@ -1008,8 +1008,12 @@ function mediaBlock(cover, label, alt, cls) {
     : `<div class="media ${cls || ""}" role="img" aria-label="${esc(alt)}"><span class="media-label">${esc(label)}</span></div>`;
 }
 
-/* Foto da capa (a, b ou c) */
+/* Capa: por padrão só a nuvem de trabalhos. Para ver a versão com a sua foto na frente: index.html?capa=foto */
+const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
+/* Foto da capa (a, b ou c), só carrega na versão com foto */
 (function(){
+  if (!CAPA_COM_FOTO) return;
+  $("#stage").classList.remove("so-nuvem");
   let v = FOTO_CAPA;
   try { const q = new URLSearchParams(location.search).get("foto"); if (/^[abc]$/.test(q || "")) v = q; } catch (e) {}
   $("#stage").dataset.foto = v;
@@ -1031,8 +1035,7 @@ function mediaBlock(cover, label, alt, cls) {
     const y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), th = i * 2.39996;  // pontos espalhados numa esfera
     pts.push({ x: Math.cos(th) * r, y, z: Math.sin(th) * r });
   }
-  const soNuvem = /[?&]capa=nuvem/.test(location.search);
-  if (soNuvem) stage.classList.add("so-nuvem");
+  const soNuvem = !CAPA_COM_FOTO;
   let W = 0, H = 0, iw = 0, ih = 0;
   const measure = () => { W = stage.clientWidth; H = stage.clientHeight; iw = W * 0.13; ih = iw * 5 / 3; };
   measure(); window.addEventListener("resize", measure);
