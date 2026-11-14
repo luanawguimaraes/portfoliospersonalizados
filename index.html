@@ -610,6 +610,16 @@
   .q-mark{color:inherit;padding:0 .12em;background:linear-gradient(transparent 58%,rgba(234,112,165,.42) 58%,rgba(234,112,165,.42) 92%,transparent 92%) no-repeat 0 0/0% 100%;transition:background-size .8s cubic-bezier(.6,0,.2,1) .85s}
   .about-quote.in .q-strike::after{transform:rotate(-6deg) scaleX(1)}
   .about-quote.in .q-mark{background-size:100% 100%}
+  /* no computador: o mouse vira um lápis na citação e o risco só aparece ao passar o lápis em cima de "bonito" */
+  @media (hover:hover) and (pointer:fine){
+    .about-quote.q-new{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 24 24'%3E%3Cpath d='M3 21l1.2-4.6L16.5 4.1a2 2 0 0 1 2.8 0l.6.6a2 2 0 0 1 0 2.8L7.6 19.8z' fill='%23C72D67' stroke='%23fff' stroke-width='1.2' stroke-linejoin='round'/%3E%3Cpath d='M3 21l1.2-4.6 3.4 3.4z' fill='%232B2B2B'/%3E%3C/svg%3E") 2 28, auto}
+    .about-quote.in .q-strike::after{transform:rotate(-6deg) scaleX(0);transition:transform .45s cubic-bezier(.6,0,.2,1)}
+    .about-quote .q-strike.riscado::after{transform:rotate(-6deg) scaleX(1)}
+    .q-strike{padding:0 2px}
+    .q-tip{display:block;margin-top:10px;font-family:var(--font-title);font-weight:700;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--pink);opacity:.8;transition:opacity .4s}
+    .about-quote.feito .q-tip{opacity:0}
+  }
+  @media not all and (hover:hover){.q-tip{display:none}}
   @media (prefers-reduced-motion:reduce){.q-strike::after{transition:none;transform:rotate(-6deg) scaleX(1)}.q-mark{transition:none;background-size:100% 100%}}
 
   /* Cartão de designer que vira (Sobre) */
@@ -933,7 +943,7 @@
           <span class="pill glass"><b>+90</b> portfólios criados</span>
           <span class="pill glass">Formação em <b>Marketing</b></span>
         </div>
-        <blockquote class="about-quote q-new" id="aboutQuote"><span class="q-line1">Seu portfólio não precisa ser só <s class="q-strike">bonito</s>.</span><span class="q-line2">Ele precisa <mark class="q-mark">posicionar você.</mark></span></blockquote>
+        <blockquote class="about-quote q-new" id="aboutQuote"><span class="q-line1">Seu portfólio não precisa ser só <s class="q-strike">bonito</s>.</span><span class="q-line2">Ele precisa <mark class="q-mark">posicionar você.</mark></span><span class="q-tip" aria-hidden="true">✎ passe o lápis no “bonito”</span></blockquote>
       </div>
     </div>
   </section>
@@ -1633,6 +1643,9 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   if (!("IntersectionObserver" in window)) { q.classList.add("in"); return; }
   const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { q.classList.add("in"); io.disconnect(); } }), { threshold: .7 });
   io.observe(q);
+  // com mouse: o lápis risca "bonito" ao passar por cima (e o risco fica)
+  const s = q.querySelector(".q-strike");
+  s.addEventListener("mouseenter", () => { s.classList.add("riscado"); q.classList.add("feito"); });
 })();
 
 /* Áudio de cliente em cima da foto do Sobre (estilo mensagem de voz) */
