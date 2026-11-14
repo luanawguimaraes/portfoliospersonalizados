@@ -595,9 +595,9 @@
   .stage.anel .feat{left:36.5%;width:27%;top:17%}
   .stage.anel .feat-tags{left:36.5%;width:27%;top:17%}
   /* Abertura da capa: textos finos em volta do anel, que somem quando a nuvem aparece */
-  .ref-label{position:absolute;z-index:3;top:45%;transform:translateY(-50%);font-family:"Open Sans",sans-serif;font-size:.66rem;color:#2B2B2B;letter-spacing:.01em;transition:opacity .6s ease;pointer-events:none;white-space:nowrap}
-  .ref-l{left:14px}.ref-c{left:50%;transform:translate(-50%,-50%);font-weight:700}.ref-r{right:14px}
-  @media (max-width:900px){.ref-label{font-size:.58rem}.ref-l{left:18px}.ref-r{right:18px}}
+  .ref-label{position:absolute;z-index:3;top:45%;transform:translateY(-50%);font-family:var(--font-title);font-weight:800;font-size:.95rem;color:#2B2B2B;letter-spacing:-.01em;transition:opacity .6s ease;pointer-events:none;white-space:nowrap}
+  .ref-l{left:14px}.ref-r{right:14px;color:var(--pink)}
+  @media (max-width:900px){.ref-label{font-size:.78rem}.ref-l{left:18px}.ref-r{right:18px}}
   .stage.ref-cloud .ref-label{opacity:0}
   /* Cartão de designer que vira (Sobre) */
   .about-visual.cartao .about-photo,.about-visual.cartao .about-sticker{display:none}
@@ -1335,7 +1335,8 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   const refMode = !anel && !CAPA_COM_FOTO && !/[?&]capa=classica/.test(location.search);   // padrão: abertura da referência e depois a nuvem com destaques
   if (refMode) {
     stage.classList.add("refmode");
-    [["ref-l", "Luana Guimarães"], ["ref-c", "L.G"], ["ref-r", "Portfólios para creators"]].forEach(([c, txt]) => { const s = document.createElement("span"); s.className = "ref-label " + c; s.textContent = txt; stage.appendChild(s); });
+    // uma frase dividida pelo anel: uma palavra de cada lado, centro vazio
+    [["ref-l", "Portfólios"], ["ref-r", "que vendem"]].forEach(([c, txt]) => { const s = document.createElement("span"); s.className = "ref-label " + c; s.textContent = txt; stage.appendChild(s); });
   }
   const N = anel ? 18 : Math.min(48, Math.max(22, pics.length)), items = [], pts = [];
   for (let i = 0; i < N; i++) {
