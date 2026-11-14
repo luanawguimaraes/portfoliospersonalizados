@@ -519,6 +519,72 @@
   .voice-time{flex:none;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
   @media (max-width:900px){.voice{right:-8px;bottom:18px}.about-sticker{left:-6px}}
 
+  /* Bastidores do design: mini telas animadas nos cartões de "O que você recebe" */
+  .mock{position:relative;height:132px;margin-bottom:18px;border-radius:14px;background:linear-gradient(180deg,#fff,#FEF8E7);border:1px solid rgba(43,43,43,.08);overflow:hidden}
+  .mk{position:absolute;inset:0}
+  .mk *{animation-play-state:paused!important}
+  .feature.play .mk *{animation-play-state:running!important}
+  .feature.still .mk *{animation:none!important}
+  .mk i,.mk b{display:block}
+  /* 1. personalizado: paleta e fonte mudando até a versão final */
+  .mk-cor .sw{position:absolute;left:14px;width:14px;height:14px;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+  .mk-cor .s1{top:22px;background:#9aa0a6}.mk-cor .s2{top:44px;background:#7fa1d6}.mk-cor .s3{top:66px;background:var(--pink)}
+  .mk-cor .sw{animation:swPick 6s infinite}
+  .mk-cor .s2{animation-delay:-4s}.mk-cor .s3{animation-delay:-2s}
+  @keyframes swPick{0%,30%{transform:scale(1.35);outline:2px solid #2B2B2B}33%,100%{transform:scale(1);outline:0}}
+  .mk-cor .pg{position:absolute;left:44px;right:14px;top:12px;bottom:12px;border-radius:10px;background:#fff;box-shadow:0 6px 16px rgba(43,43,43,.1);overflow:hidden}
+  .mk-cor .hd{height:30px;animation:pgColor 6s infinite steps(1)}
+  @keyframes pgColor{0%{background:#9aa0a6}33%{background:#7fa1d6}66%,100%{background:linear-gradient(90deg,#C72D67,#EA70A5)}}
+  .mk-cor .tt{position:absolute;left:12px;top:38px;font-size:.78rem;color:#2B2B2B}
+  .mk-cor .t1{font-family:Georgia,serif;font-weight:400;animation:fontA 6s infinite steps(1)}
+  .mk-cor .t2{font-family:var(--font-title);font-weight:900;color:var(--pink);animation:fontB 6s infinite steps(1)}
+  @keyframes fontA{0%{opacity:1}66%,100%{opacity:0}}
+  @keyframes fontB{0%{opacity:0}66%,100%{opacity:1}}
+  .mk-cor .ln{position:absolute;left:12px;top:60px;width:60%;height:5px;border-radius:3px;background:rgba(43,43,43,.14)}
+  .mk-cor .ln.short{top:70px;width:40%}
+  .mk-cor .ph{position:absolute;right:10px;top:40px;width:34%;bottom:10px;border-radius:8px;background:url(img/luana-sobre.jpg) center 20%/cover}
+  /* 2. estrutura: blocos bagunçados se organizam */
+  .mk-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:8px;padding:14px}
+  .mk-grid .bk{border-radius:8px;background:rgba(199,45,103,.16);animation:snap 5s infinite cubic-bezier(.3,1.3,.5,1)}
+  .mk-grid .b1{grid-column:span 2;background:linear-gradient(90deg,#C72D67,#EA70A5);--x:30px;--y:22px;--r:12deg}
+  .mk-grid .b2{--x:-40px;--y:30px;--r:-18deg}.mk-grid .b3{--x:24px;--y:-26px;--r:20deg}
+  .mk-grid .b4{--x:-20px;--y:-30px;--r:-10deg;background:rgba(43,43,43,.12)}.mk-grid .b5{--x:36px;--y:-14px;--r:15deg}.mk-grid .b6{--x:-30px;--y:-22px;--r:-22deg;background:rgba(43,43,43,.12)}
+  @keyframes snap{0%,12%{transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(.85);opacity:.55}45%,88%{transform:none;opacity:1}100%{transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(.85);opacity:.55}}
+  /* 3. percepção: mensagem da marca chega e a confiança sobe */
+  .mk-msg{padding:14px}
+  .mk-msg .bub{max-width:82%;padding:9px 12px;border-radius:14px 14px 14px 4px;background:#fff;box-shadow:0 6px 16px rgba(43,43,43,.12);font-size:.7rem;line-height:1.35;color:#2B2B2B;animation:bub 5s infinite}
+  @keyframes bub{0%,10%{opacity:0;transform:translateY(12px) scale(.9)}22%,85%{opacity:1;transform:none}100%{opacity:0}}
+  .mk-msg .meter{position:absolute;left:14px;right:14px;bottom:14px;display:flex;align-items:center;gap:8px;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--pink)}
+  .mk-msg .meter i{flex:1;height:8px;border-radius:999px;background:rgba(199,45,103,.14);overflow:hidden}
+  .mk-msg .meter b{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#C72D67,#EA70A5);animation:meter 5s infinite}
+  @keyframes meter{0%,20%{width:12%}60%,90%{width:96%}100%{width:12%}}
+  /* 4. evolução: novos trabalhos entram na grade */
+  .mk-evo{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:16px 14px 30px;align-content:start}
+  .mk-evo .th{aspect-ratio:3/5;border-radius:6px;background:url(img/capa/julia-1.jpg) center top/cover}
+  .mk-evo .th:nth-child(2){background-image:url(img/capa/mayara-1.jpg)}.mk-evo .th:nth-child(3){background-image:url(img/capa/raissa-1.jpg)}
+  .mk-evo .n1{background-image:url(img/capa/manoela-1.jpg);animation:pop 6s infinite}.mk-evo .n2{background-image:url(img/capa/lais-1.jpg);animation:pop 6s infinite 1s}.mk-evo .n3{background-image:url(img/capa/duda-1.jpg);animation:pop 6s infinite 2s}
+  @keyframes pop{0%,8%{opacity:0;transform:scale(.4) translateY(10px)}18%,85%{opacity:1;transform:none}100%{opacity:0}}
+  .mk-evo em{position:absolute;right:12px;bottom:8px;font-style:normal;font-size:.62rem;font-weight:800;color:var(--pink);animation:fontB 6s infinite}
+  /* 5. prazo: do briefing à entrega */
+  .mk-prazo{padding:34px 18px 0}
+  .mk-prazo .track{position:relative;height:8px;border-radius:999px;background:rgba(199,45,103,.14)}
+  .mk-prazo .fill{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:linear-gradient(90deg,#C72D67,#EA70A5);animation:fillP 6s infinite}
+  .mk-prazo .dot{position:absolute;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#fff;border:3px solid var(--pink);box-shadow:0 4px 10px rgba(199,45,103,.35);animation:dotP 6s infinite}
+  @keyframes fillP{0%,8%{width:0}80%,92%{width:100%}100%{width:0}}
+  @keyframes dotP{0%,8%{left:0}80%,92%{left:100%}100%{left:0}}
+  .mk-prazo .steps{display:flex;justify-content:space-between;margin-top:16px;font-size:.6rem;font-weight:800;color:var(--muted)}
+  .mk-prazo .steps span:last-child{color:var(--pink)}
+  /* 6. ajustes: comentário e a mudança feita */
+  .mk-adj .pg{position:absolute;left:18px;right:18px;top:14px;bottom:14px;border-radius:10px;background:#fff;box-shadow:0 6px 16px rgba(43,43,43,.1);overflow:hidden;padding:8px}
+  .mk-adj .hd{height:12px;width:50%;border-radius:4px;background:linear-gradient(90deg,#C72D67,#EA70A5)}
+  .mk-adj .ph{margin-top:8px;height:34px;width:40%;border-radius:6px;background:url(img/capa/yasmim-1.jpg) center 15%/cover;animation:grow 6s infinite}
+  @keyframes grow{0%,40%{width:40%;height:34px}55%,90%{width:70%;height:58px}100%{width:40%;height:34px}}
+  .mk-adj .ln{margin-top:8px;height:5px;width:55%;border-radius:3px;background:rgba(43,43,43,.14)}
+  .mk-adj .pin{position:absolute;right:24px;top:26px;padding:5px 9px;border-radius:10px 10px 10px 2px;background:#2B2B2B;color:#fff;font-size:.62rem;font-weight:700;animation:pinA 6s infinite}
+  @keyframes pinA{0%,6%{opacity:0;transform:translateY(8px)}14%,45%{opacity:1;transform:none}52%,100%{opacity:0}}
+  .mk-adj .ok{position:absolute;right:24px;bottom:22px;padding:5px 10px;border-radius:999px;background:linear-gradient(90deg,#C72D67,#EA70A5);color:#fff;font-size:.62rem;font-weight:800;animation:okA 6s infinite}
+  @keyframes okA{0%,55%{opacity:0;transform:scale(.6)}62%,90%{opacity:1;transform:none}100%{opacity:0}}
+  .feature.still .mk-grid .bk{transform:none;opacity:1}.feature.still .mk-msg .meter b{width:90%}.feature.still .mk-prazo .fill{width:100%}.feature.still .mk-prazo .dot{left:100%}.feature.still .mk-adj .pin{opacity:0}
   /* O que você recebe: subtítulo em uma linha no computador e cartões sem a mancha de degradê no canto */
   #recebe .section-lead{max-width:none}
   @media (min-width:901px){#recebe .section-lead{white-space:nowrap}}
@@ -1431,12 +1497,37 @@ $("#pains").innerHTML  = PAINS.map(t => `<li><span class="mark" aria-hidden="tru
 $("#dreams").innerHTML = DREAMS.map(t => `<li><span class="mark" aria-hidden="true">✓</span><span>${esc(t)}</span></li>`).join("");
 
 /* O que você recebe */
-$("#features").innerHTML = FEATURES.map(f => `
+/* "Bastidores do design": cada cartão tem uma mini tela animada mostrando o benefício acontecendo.
+   A animação roda quando o cartão está na tela; passar o mouse recomeça do início. */
+const MOCKS = {
+  personalizado: `<div class="mk mk-cor"><span class="sw s1"></span><span class="sw s2"></span><span class="sw s3"></span>
+      <div class="pg"><i class="hd"></i><b class="tt t1">Seu nome</b><b class="tt t2">Seu nome</b><i class="ln"></i><i class="ln short"></i><i class="ph"></i></div></div>`,
+  estrutura: `<div class="mk mk-grid"><i class="bk b1"></i><i class="bk b2"></i><i class="bk b3"></i><i class="bk b4"></i><i class="bk b5"></i><i class="bk b6"></i></div>`,
+  percepcao: `<div class="mk mk-msg"><div class="bub">Oi! Vimos seu portfólio e queremos fechar uma parceria 💌</div>
+      <div class="meter"><span>Confiança</span><i><b></b></i></div></div>`,
+  evolucao: `<div class="mk mk-evo"><i class="th"></i><i class="th"></i><i class="th"></i><i class="th n1"></i><i class="th n2"></i><i class="th n3"></i><em>+ novo trabalho</em></div>`,
+  prazo: `<div class="mk mk-prazo"><div class="track"><b class="fill"></b><i class="dot"></i></div>
+      <div class="steps"><span>Briefing</span><span>Produção</span><span>Ajustes</span><span>Entregue ✓</span></div></div>`,
+  ajustes: `<div class="mk mk-adj"><div class="pg"><i class="hd"></i><i class="ph"></i><i class="ln"></i></div>
+      <span class="pin">“foto maior?”</span><span class="ok">Ajustado ✓</span></div>`
+};
+const MOCK_ORDER = ["personalizado", "estrutura", "percepcao", "evolucao", "prazo", "ajustes"];
+$("#features").innerHTML = FEATURES.map((f, i) => `
   <article class="feature glass reveal">
-    <div class="ic" aria-hidden="true">${f.icon}</div>
+    <div class="mock" aria-hidden="true">${MOCKS[MOCK_ORDER[i]] || ""}</div>
     <h3>${esc(f.title)}</h3>
     <p>${esc(f.desc)}</p>
   </article>`).join("");
+(function(){
+  const cards = document.querySelectorAll("#features .feature");
+  if (reduceMotion) { cards.forEach(c => c.classList.add("play", "still")); return; }
+  const restart = c => { c.classList.remove("play"); void c.offsetWidth; c.classList.add("play"); };
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => es.forEach(en => en.target.classList.toggle("play", en.isIntersecting)), { threshold: .45 });
+    cards.forEach(c => io.observe(c));
+  } else cards.forEach(c => c.classList.add("play"));
+  cards.forEach(c => c.addEventListener("mouseenter", () => restart(c)));
+})();
 
 /* Exemplos */
 $("#examples").innerHTML = EXAMPLES.map((e, i) => {
