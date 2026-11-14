@@ -605,13 +605,13 @@
   .res-stage{position:relative;height:clamp(300px,42vw,460px);margin:10px -20px 0;perspective:1100px;perspective-origin:60% 40%;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
   .res-track{position:absolute;inset:0;transform-style:preserve-3d}
   .res-track i{position:absolute;left:0;top:0;width:132px;aspect-ratio:3/5;margin:0;border-radius:6px;cursor:zoom-in;transform-origin:50% 50%;background:#eee center top/cover no-repeat;box-shadow:0 14px 30px rgba(43,43,43,.18);will-change:transform,opacity,filter}
-  .res-quote{position:relative;z-index:3;max-width:620px;margin:-70px auto 30px;padding:28px 30px 24px;border-radius:24px;background:#fff;box-shadow:0 26px 60px rgba(43,43,43,.16);text-align:center}
+  .res-quote{position:relative;z-index:3;max-width:620px;margin:6px auto 30px;padding:28px 30px 24px;border-radius:24px;background:#fff;box-shadow:0 26px 60px rgba(43,43,43,.16);text-align:center}
   .res-badge{display:inline-block;margin-bottom:12px;padding:5px 12px;border-radius:999px;background:var(--grad);color:#fff;font-family:var(--font-title);font-weight:800;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
   .res-quote blockquote{margin:0;font-family:var(--font-title);font-weight:800;font-size:clamp(1.15rem,2.4vw,1.55rem);line-height:1.35;color:#2B2B2B}
   .res-quote mark{color:inherit;padding:0 .1em;background:linear-gradient(transparent 58%,rgba(234,112,165,.45) 58%,rgba(234,112,165,.45) 92%,transparent 92%)}
   .res-quote figcaption{margin-top:14px;font-size:.84rem;color:var(--muted)}
   .res-quote figcaption b{color:var(--pink)}
-  @media (max-width:900px){.res-stage{margin:6px -16px 0;height:300px}.res-quote{margin-top:-50px;padding:22px 18px 18px}}
+  @media (max-width:900px){.res-stage{margin:6px -16px 0;height:300px}.res-quote{margin-top:4px;padding:22px 18px 18px}}
   .res-stage{cursor:default}
   .res-lb{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px;background:rgba(43,43,43,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .3s}
   .res-lb.on{opacity:1}
@@ -1655,7 +1655,7 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   }
 })();
 
-/* Resultados (como a referência Deimos): os portfólios entram pequenininhos pela direita e vêm crescendo numa onda até a frente.
+/* Resultados (como a referência Deimos): os portfólios entram pequenininhos pela direita e vêm crescendo numa curva leve e contínua até a frente.
    Passando o mouse, a onda desacelera; clicando num portfólio, ele abre ampliado para ver inteiro. */
 (function(){
   const stage = $("#resStage"), track = $("#resTrack"); if (!stage || !track) return;
@@ -1673,11 +1673,11 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
     for (let i = 0; i < N; i++) {
       const u = ((i / N) + off) % 1;                       // 0 = pequenininho à direita, 1 = grande na frente à esquerda
       const g = Math.pow(u, 2.1);
-      const wave = Math.sin(u * Math.PI * 2.2 - time * 2.4);  // a onda que percorre a fileira
+      // caminho fixo: uma curva leve e contínua, pequena à direita e crescendo para a esquerda (sem balançar)
       const s = 0.16 + 2.1 * g;
       const x = W * (0.98 - 1.25 * Math.pow(u, 0.9)) - base / 2;
-      const y = H * (0.3 + 0.28 * u) + wave * H * 0.07 * (0.3 + u) - base * 0.83;
-      const ry = -32 + wave * 16, rz = wave * 2.5;
+      const y = H * (0.36 + 0.24 * u) - H * 0.06 * Math.sin(u * Math.PI) - base * 0.83;
+      const ry = -30 + 10 * u, rz = 0;
       const blur = s > 1.15 ? Math.min(16, (s - 1.15) * 11) : 0;
       const o = Math.min(1, u * 9) * (u > 0.92 ? (1 - u) / 0.08 : 1);
       const el = items[i];
