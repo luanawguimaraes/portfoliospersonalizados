@@ -897,6 +897,9 @@
   .dep figcaption small{font-size:.72rem;color:#8e8792}
   @media (max-width:900px){.dep{width:270px;padding:18px}.dep-top{width:290px}.dep blockquote{font-size:.88rem}}
   @media (prefers-reduced-motion:reduce){.dep-track{animation:none;flex-wrap:wrap;width:auto;justify-content:center}}
+  /* bolinhas dos processos: círculo perfeito, sem a faixinha de cor diferente nas laterais (o degradê não se repete por baixo da borda) */
+  #processo .step-num{box-sizing:border-box;flex:none;width:56px!important;height:56px!important;aspect-ratio:1;border:2px solid #C72D67;background-color:#fff;background-origin:border-box;background-clip:border-box}
+  #processo .step.open .step-num,#processo .step:hover .step-num{border:0;background:linear-gradient(135deg,#C72D67,#EA70A5) border-box}
   /* Animação de entrada */
   .js .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
   .js .reveal.visible{opacity:1;transform:none}
