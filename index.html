@@ -909,6 +909,15 @@
   .dep-wrap{gap:0}
   .dep-row{padding:16px 0 50px;margin-bottom:-22px}
   .dep-row:last-child{margin-bottom:0}
+  /* CRACHÁ no celular: exatamente o mesmo do computador, só que em miniatura (mesmas proporções e fontes) */
+  @media (max-width:900px){
+    .about-visual.cartao{max-width:272px}
+    .about-visual.cartao .idcard{width:410px;zoom:.663}
+    .idc-front .idc-top{padding:30px 20px 14px}.idc-top b{font-size:.82rem}.idc-top small{font-size:.66rem}
+    .idc-photo{margin:16px 20px 0}.idc-info{padding:14px 20px 4px}.idc-info b{font-size:1.25rem}
+    .idc-foot{padding:8px 20px 18px}.idc-hint{font-size:.6rem}
+    .idc-back{padding:40px 24px 22px}.idc-list li{font-size:.9rem;padding:10px 14px}
+  }
   .pay-faq{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;max-width:1040px;margin:0 auto}
   .pay-faq .answer p{margin:0 0 10px}.pay-faq .answer p:last-child{margin:0}
   .pay-faq .answer b{color:#2B2B2B}
@@ -1301,7 +1310,7 @@
           <summary>Importante antes de escolher</summary>
           <div class="answer">
             <p><b>Pacote Canva:</b> é necessário ter uma assinatura do <strong>Canva Pro</strong>. Recentemente, a plataforma passou a exigir esse plano para permitir a publicação de sites, o que antes não era obrigatório. Sem a assinatura ativa, não é possível finalizar a publicação.</p>
-            <p><b>Pacotes Essencial e Premium:</b> como o portfólio vira um site, é necessário comprar um <strong>domínio</strong> e uma <strong>hospedagem</strong>. Os custos são seus, mas todo o processo de configuração e conexão é feito por mim.</p>
+            <p><b>Pacotes Essencial e Premium:</b> como o portfólio vira um site, é necessário comprar só o <strong>domínio</strong> (o endereço do site). Esse custo é seu, mas todo o processo de configuração e conexão é feito por mim.</p>
           </div>
         </details>
       </div>
@@ -1522,7 +1531,7 @@ const PACKAGES = [
   },
   {
     tag: "Pacote Essencial",
-    title: "Site-portfólio profissional",
+    title: "Site-portfólio personalizado",
     sub: "Site personalizado com animações",
     flag: "",
     featured: false,
@@ -1533,16 +1542,16 @@ const PACKAGES = [
       "Tradução inglês para português.",
       "Inserção dos vídeos iniciais.",
       "Configuração dos elementos clicáveis.",
-      "Conexão do domínio e hospedagem.",
+      "Conexão do domínio.",
       "2 rodadas de ajustes básicos.",
       "2 solicitações futuras para adicionar ou substituir vídeos."
     ],
-    note: "Domínio e hospedagem comprados à parte. A configuração é feita por mim."
+    note: "Você só compra o domínio (o endereço do site). A configuração é feita por mim."
   },
   {
     tag: "Pacote Premium",
-    title: "Site-portfólio multilíngue",
-    sub: "Para trabalhar com marcas do Brasil e de fora",
+    title: "Site-portfólio completo",
+    sub: "Mais animações, mais solicitações futuras e link na bio de brinde",
     flag: "Mais completo",
     featured: true,
     highlight: "",
@@ -1552,11 +1561,12 @@ const PACKAGES = [
       "Tradução português, inglês e espanhol.",
       "Inserção dos vídeos iniciais.",
       "Configuração dos elementos clicáveis.",
-      "Conexão do domínio e hospedagem.",
+      "Conexão do domínio.",
       "2 rodadas de ajustes básicos.",
-      "3 solicitações futuras para adicionar ou substituir vídeos."
+      "3 solicitações futuras para adicionar ou substituir vídeos.",
+      "Brinde: link na bio personalizado."
     ],
-    note: "Domínio e hospedagem comprados à parte. A configuração é feita por mim."
+    note: "Você só compra o domínio (o endereço do site). A configuração é feita por mim."
   }
 ];
 
@@ -1569,7 +1579,7 @@ const FAQ = [
   { q:"Posso pedir alterações?", a:"Sim. O Pacote Canva inclui 1 rodada de ajuste simples, sem alterar a estrutura do portfólio. O Essencial e o Premium incluem 2 rodadas de ajustes básicos." },
   { q:"Preciso ter Canva Pro?", a:"Só no Pacote Canva, para publicar o portfólio como site dentro do Canva. A plataforma passou a exigir o plano Pro para a publicação de sites. Sem a assinatura ativa, não é possível finalizar essa etapa." },
   { q:"Consigo atualizar o portfólio depois?", a:"No Pacote Canva, sim: você mesma edita no seu Canva. Nos pacotes Essencial e Premium a edição é feita por mim, e eles já incluem 2 e 3 solicitações futuras para adicionar ou substituir vídeos." },
-  { q:"Domínio e hospedagem estão inclusos?", a:"Nos pacotes Essencial e Premium você precisa comprar um domínio e uma hospedagem, que são pagos à parte. Mas não se preocupe: todo o processo de configuração e conexão é feito por mim." },
+  { q:"Preciso pagar domínio ou hospedagem?", a:"Nos pacotes Essencial e Premium você só precisa comprar o domínio (o endereço do site), que é pago à parte. A hospedagem não tem custo. E não se preocupe: todo o processo de configuração e conexão é feito por mim." },
   { q:"O que eu preciso enviar?", a:"Fotos, vídeos, informações, links e demais conteúdos para a produção, além das respostas do briefing com referências visuais e preferências de cores." }
 ];
 
