@@ -909,6 +909,10 @@
   .dep-wrap{gap:0}
   .dep-row{padding:16px 0 50px;margin-bottom:-22px}
   .dep-row:last-child{margin-bottom:0}
+  .pay-faq{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;max-width:1040px;margin:0 auto}
+  .pay-faq .answer p{margin:0 0 10px}.pay-faq .answer p:last-child{margin:0}
+  .pay-faq .answer b{color:#2B2B2B}
+  @media (max-width:900px){.pay-faq{grid-template-columns:1fr}}
   /* ROSA dos destaques: mais vivo e um pouco mais claro */
   :root{--pink-dark:#DE3F80;--pink-soft:#DE3F80}
   .section-title em,.list-card h2 em,.accent,.hero h1 .accent{color:#DE3F80}
@@ -917,7 +921,7 @@
   /* FAIXAS: todas no rosa */
   .ribbon.pink{background:linear-gradient(90deg,#EA70A5,#C72D67);color:#fff}
   /* CARTÕES: mesmo fundo em relevo no site inteiro (o que você recebe, para quem é, pacotes) */
-  #recebe:not(.deckmode) .feature,body #forWho li,body .package,body #faq details,body .example.glass{background:linear-gradient(180deg,#fff 0%,rgb(246,243,247) 100%)!important;border:1px solid rgba(43,43,43,.06)!important;box-shadow:0 18px 34px -24px rgba(43,43,43,.35),0 2px 6px rgba(43,43,43,.04),inset 0 1px 0 #fff!important;backdrop-filter:none;-webkit-backdrop-filter:none}
+  #recebe:not(.deckmode) .feature,body #forWho li,body .package,body #faq details,body #payFaq details,body .example.glass{background:linear-gradient(180deg,#fff 0%,rgb(246,243,247) 100%)!important;border:1px solid rgba(43,43,43,.06)!important;box-shadow:0 18px 34px -24px rgba(43,43,43,.35),0 2px 6px rgba(43,43,43,.04),inset 0 1px 0 #fff!important;backdrop-filter:none;-webkit-backdrop-filter:none}
   body .package.featured{border:2px solid #EA70A5!important;box-shadow:0 30px 50px -28px rgba(199,45,103,.45),0 2px 6px rgba(43,43,43,.04)!important}
   body #forWho li{border-radius:20px}
   /* RESULTADOS: menos espaço e depoimento sem negrito */
@@ -1284,19 +1288,22 @@
       <!-- Os pacotes vêm do array PACKAGES no script -->
       <div class="packages" id="packages"></div>
 
-      <div>
-        <div class="pay-col">
-          <div class="pay-box glass reveal">
-            <h3><span class="ic" aria-hidden="true">$</span>Como funciona o pagamento?</h3>
-            <div class="pay-option"><b>PIX</b><span>50% para iniciar a produção + 50% após a entrega do portfólio pronto.</span></div>
-            <div class="pay-option"><b>Cartão de crédito</b><span>Pagamento através de link de pagamento.</span></div>
+      <!-- Pagamento e avisos: fechados, abrem no + (igual às perguntas frequentes) -->
+      <div class="faq pay-faq" id="payFaq">
+        <details class="glass reveal">
+          <summary>Como funciona o pagamento?</summary>
+          <div class="answer">
+            <p><b>PIX:</b> 50% para iniciar a produção + 50% após a entrega do portfólio pronto.</p>
+            <p><b>Cartão de crédito:</b> pagamento através de link de pagamento.</p>
           </div>
-          <div class="pay-box canva-box glass reveal">
-            <h3><span class="ic" aria-hidden="true">!</span>Importante antes de escolher</h3>
-            <div class="pay-option"><b>Pacote Canva</b><span>É necessário ter uma assinatura do <strong>Canva Pro</strong>. Recentemente, a plataforma passou a exigir esse plano para permitir a publicação de sites, o que antes não era obrigatório. Sem a assinatura ativa, não é possível finalizar a publicação.</span></div>
-            <div class="pay-option"><b>Pacotes Essencial e Premium</b><span>Como o portfólio vira um site, é necessário comprar um <strong>domínio</strong> e uma <strong>hospedagem</strong>. Os custos são seus, mas todo o processo de configuração e conexão é feito por mim.</span></div>
+        </details>
+        <details class="glass reveal">
+          <summary>Importante antes de escolher</summary>
+          <div class="answer">
+            <p><b>Pacote Canva:</b> é necessário ter uma assinatura do <strong>Canva Pro</strong>. Recentemente, a plataforma passou a exigir esse plano para permitir a publicação de sites, o que antes não era obrigatório. Sem a assinatura ativa, não é possível finalizar a publicação.</p>
+            <p><b>Pacotes Essencial e Premium:</b> como o portfólio vira um site, é necessário comprar um <strong>domínio</strong> e uma <strong>hospedagem</strong>. Os custos são seus, mas todo o processo de configuração e conexão é feito por mim.</p>
           </div>
-        </div>
+        </details>
       </div>
     </div>
   </section>
