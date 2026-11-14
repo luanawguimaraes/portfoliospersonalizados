@@ -836,6 +836,11 @@
   .idc-back .idc-tags li{background:#2B2B2B;color:#fff}
   .idc-back .idc-sign{border-top-color:rgba(43,43,43,.15)}
   .idc-back .idc-sign small{color:#8e8792}
+  /* baralho: brilho cobre a carta inteira (corrige o quadrado no canto) e as fotos aparecem inteiras, sem corte */
+  #recebe.deckmode .deck .feature.holo::after,#recebe.deckmode .deck .feature.holo::before{width:auto;height:auto;inset:0;top:0;right:0;left:0;bottom:0;border-radius:inherit}
+  #recebe.deckmode .features.deck{max-width:430px;height:480px}
+  .dk-photo{flex:none;aspect-ratio:3/2;background-size:contain!important;background-position:center!important;background-color:#f1edf0}
+  @media (max-width:900px){#recebe.deckmode .features.deck{max-width:330px;height:395px}}
   /* Animação de entrada */
   .js .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
   .js .reveal.visible{opacity:1;transform:none}
@@ -1907,9 +1912,10 @@ $("#features").innerHTML = FEATURES.map((f, i) => `
   const cards = [...deck.querySelectorAll(".feature")];
   // fotos horizontais recortadas sob medida para a moldura da carta
   const FOTOS = ["img/dk-julia.jpg", "img/dk-camila.jpg", "img/dk-mari.jpg", "img/dk-mayara.jpg", "img/dk-duda.jpg?v=2", "img/dk-yasmim.jpg"];
+  const FUNDOS = ["", "", "", "#7A3A1C", "", ""];   // cor de fundo quando a foto não preenche a moldura toda
   cards.forEach((c, i) => {
     c.classList.remove("reveal"); c.classList.add("holo");
-    c.insertAdjacentHTML("afterbegin", `<div class="dk-top"><span>Benefício ${pad(i + 1)}</span><span>Luana G.</span></div><div class="dk-photo" style="background-image:url(&quot;${FOTOS[i] || FOTOS[0]}&quot;)"></div>`);
+    c.insertAdjacentHTML("afterbegin", `<div class="dk-top"><span>Benefício ${pad(i + 1)}</span><span>Luana G.</span></div><div class="dk-photo" style="background-image:url(&quot;${FOTOS[i] || FOTOS[0]}&quot;);${FUNDOS[i] ? "background-color:" + FUNDOS[i] : ""}"></div>`);
     c.insertAdjacentHTML("beforeend", `<div class="dk-foot"><span>Portfólio personalizado</span><i aria-hidden="true">→</i></div>`);
     holoFollow(c);
   });
