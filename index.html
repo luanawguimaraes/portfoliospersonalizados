@@ -1358,8 +1358,11 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   } else { visible = true; start(); }
 })();
 /* Faixas */
-const ribbonHTML = RIBBON.map(t => `<span>${esc(t)}</span>`).join("");
-["#ribbon1","#ribbon2","#ribbon3"].forEach(id => { $(id).innerHTML = ribbonHTML + (reduceMotion ? "" : ribbonHTML); });
+const ribbonOf = list => list.map(t => `<span>${esc(t)}</span>`).join("");
+const ribbonHTML = ribbonOf(RIBBON);
+// a primeira faixa (logo abaixo de "Se você não aguenta mais") não fala de pacotes
+const ribbon1HTML = ribbonOf(RIBBON.filter(t => !/pacotes/i.test(t)));
+[["#ribbon1", ribbon1HTML], ["#ribbon2", ribbonHTML], ["#ribbon3", ribbonHTML]].forEach(([id, h]) => { $(id).innerHTML = h + (reduceMotion ? "" : h); });
 
 /* Dores e desejos */
 $("#pains").innerHTML  = PAINS.map(t => `<li><span class="mark" aria-hidden="true">✕</span><span>${esc(t)}</span></li>`).join("");
