@@ -496,6 +496,29 @@
   @keyframes btnShine{0%{left:-60%}55%,100%{left:130%}}
   @media (prefers-reduced-motion:reduce){.btn-shine::after,.btn-pink::after,.btn-lime::after,.nav-links .nav-cta::after,.c-btn::after{animation:none;display:none}}
 
+  /* Sobre: foto em camadas (cartão rosa atrás, moldura branca levemente torta) + adesivo + áudio de cliente */
+  .about-visual{position:relative;max-width:420px;width:100%;margin:0 auto}
+  .about-back{position:absolute;inset:0;border-radius:var(--radius);background:var(--grad);transform:rotate(5deg) translate(16px,10px);opacity:.92}
+  .about-visual .about-photo{max-width:none;border:10px solid #fff;box-shadow:0 26px 50px rgba(43,43,43,.18);transform:rotate(-2.5deg);transition:transform .6s cubic-bezier(.2,.85,.25,1)}
+  .about-visual:hover .about-photo{transform:rotate(0)}
+  .about-visual .about-photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .about-sticker{position:absolute;z-index:3;top:22px;left:-18px;transform:rotate(-8deg);padding:8px 14px;border-radius:999px;background:#fff;color:var(--pink);font-family:var(--font-title);font-weight:800;font-size:.74rem;letter-spacing:.04em;box-shadow:0 10px 24px rgba(43,43,43,.14)}
+  .pill b{font-weight:900}
+  .about-stats .pill{display:inline-block}
+  .voice{position:absolute;z-index:4;right:-26px;bottom:30px;width:min(290px,86%);display:flex;align-items:center;gap:10px;padding:10px 14px 10px 10px;border-radius:20px 20px 6px 20px;background:#fff;box-shadow:0 18px 40px rgba(43,43,43,.2)}
+  .voice[hidden]{display:none}
+  .voice-play{flex:none;width:42px;height:42px;border-radius:50%;border:0;display:grid;place-items:center;background:var(--grad);cursor:pointer;box-shadow:0 6px 16px rgba(199,45,103,.35)}
+  .voice-play svg{width:18px;height:18px;fill:#fff}
+  .voice-play .i-pause,.voice.playing .voice-play .i-play{display:none}
+  .voice.playing .voice-play .i-pause{display:block}
+  .voice-body{flex:1;min-width:0}
+  .voice-label{display:block;font-family:var(--font-title);font-weight:800;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--pink);margin-bottom:5px}
+  .voice-wave{display:flex;align-items:center;gap:2px;height:22px;cursor:pointer}
+  .voice-wave i{flex:1;border-radius:2px;background:rgba(43,43,43,.18);transition:background .15s}
+  .voice-wave i.on{background:var(--pink)}
+  .voice-time{flex:none;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
+  @media (max-width:900px){.voice{right:-8px;bottom:18px}.about-sticker{left:-6px}}
+
   /* "Se você não aguenta mais" e "Imagine se": tudo um pouco menor */
   #dores .two-cols{gap:20px;max-width:1040px;margin-left:auto;margin-right:auto;margin-top:clamp(56px,8vw,96px)}
   #dores .list-card{padding:28px 26px}
@@ -728,18 +751,31 @@
   <section id="sobre" class="light" aria-labelledby="sobre-title">
     <div class="container about-grid">
       <!-- FOTO DO SOBRE: para trocar, substitua o arquivo img/luana-sobre.jpg (formato 4:5) -->
-      <div class="media about-photo reveal">
-        <img src="img/luana-sobre.jpg" alt="Luana Guimarães apoiada no encosto de uma cadeira" loading="lazy" width="800" height="1000">
+      <div class="about-visual reveal">
+        <div class="about-back" aria-hidden="true"></div>
+        <div class="media about-photo">
+          <img src="img/luana-sobre.jpg" alt="Luana Guimarães apoiada no encosto de uma cadeira" loading="lazy" width="800" height="1000">
+        </div>
+        <span class="about-sticker" aria-hidden="true">Designer de portfólios ✦</span>
+        <!-- ÁUDIO DE CLIENTE: aparece quando AUDIO_CLIENTE (no script) tiver o arquivo -->
+        <div class="voice" id="voice" hidden>
+          <button type="button" class="voice-play" id="voicePlay" aria-label="Ouvir o áudio de uma cliente"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+          <div class="voice-body">
+            <span class="voice-label">Áudio de uma cliente</span>
+            <div class="voice-wave" id="voiceWave" aria-hidden="true"></div>
+          </div>
+          <span class="voice-time" id="voiceTime">0:00</span>
+          <audio id="voiceAudio" preload="metadata"></audio>
+        </div>
       </div>
       <div class="about-text reveal">
         <span class="eyebrow">Quem vai criar o seu portfólio</span>
         <h2 class="section-title" id="sobre-title">Prazer, eu sou a <em>Luana</em></h2>
         <p>Sou <strong>formada em Marketing</strong> e já criei portfólios para <strong>mais de 90 creators</strong>.</p>
         <p>Meu trabalho é transformar o seu portfólio em uma apresentação estratégica do seu conteúdo: organizada, personalizada e pensada para aumentar a percepção de profissionalismo e autoridade diante das marcas.</p>
-        <p>E o melhor: <strong>seu portfólio acompanha a sua evolução</strong>. Você pode atualizar seus conteúdos, adicionar novos trabalhos e manter sua apresentação sempre profissional conforme sua carreira cresce.</p>
         <div class="about-stats">
           <span class="pill glass"><b>+90</b> portfólios criados</span>
-          <span class="pill glass"><b>Marketing</b> formação</span>
+          <span class="pill glass">Formação em <b>Marketing</b></span>
         </div>
         <blockquote class="about-quote glass">Seu portfólio não precisa ser só bonito. <em>Ele precisa posicionar você.</em></blockquote>
       </div>
@@ -943,6 +979,9 @@ const CAPA_TRABALHOS = [
   { nome:"Brenda Santana",     id:"brenda",        destaque:2, pecas:4, link:"https://lariwiechetek.my.canva.site/brenda-santana-portf-lio",       tags:["Palavra gigante atrás da foto", "Paleta nude leve e natural"] }
   /* Falta o print: { nome:"Jaqueline Marchiori", id:"jaqueline", destaque:2, pecas:3, link:"https://lariwiechetek.my.canva.site/portf-lio-jaqueline", tags:["", ""] }, */
 ];
+/* Áudio de cliente que aparece em cima da sua foto no "Sobre" (ex.: "img/audio-cliente.mp3"). Vazio = não aparece */
+const AUDIO_CLIENTE = "";
+
 /* WhatsApp: número com DDI 55 + DDD, e a mensagem que já vem escrita */
 const WHATSAPP = "5511963604439";
 const WHATSAPP_MSG = "Oi, Luana! Vi o seu site e quero criar o meu portfólio personalizado.";
@@ -1357,6 +1396,27 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
     }), { threshold: 0.35 }).observe(cmp);
   } else { visible = true; start(); }
 })();
+/* Áudio de cliente em cima da foto do Sobre (estilo mensagem de voz) */
+(function(){
+  const box = $("#voice"); if (!box || !AUDIO_CLIENTE) return;
+  const audio = $("#voiceAudio"), play = $("#voicePlay"), wave = $("#voiceWave"), time = $("#voiceTime");
+  audio.src = AUDIO_CLIENTE; box.hidden = false;
+  const N = 32, bars = [];
+  for (let i = 0; i < N; i++) { const b = document.createElement("i"); b.style.height = (28 + Math.round(Math.abs(Math.sin(i * 1.7) * 52 + Math.sin(i * .6) * 20))) + "%"; wave.appendChild(b); bars.push(b); }
+  const fmt = s => Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0");
+  audio.addEventListener("loadedmetadata", () => time.textContent = fmt(audio.duration));
+  audio.addEventListener("timeupdate", () => {
+    const p = audio.duration ? audio.currentTime / audio.duration : 0;
+    bars.forEach((b, i) => b.classList.toggle("on", i / N < p));
+    time.textContent = fmt(audio.paused && !audio.currentTime ? audio.duration || 0 : audio.currentTime);
+  });
+  audio.addEventListener("play", () => box.classList.add("playing"));
+  audio.addEventListener("pause", () => box.classList.remove("playing"));
+  audio.addEventListener("ended", () => { box.classList.remove("playing"); audio.currentTime = 0; });
+  play.addEventListener("click", () => audio.paused ? audio.play() : audio.pause());
+  wave.addEventListener("click", e => { if (!audio.duration) return; const r = wave.getBoundingClientRect(); audio.currentTime = (e.clientX - r.left) / r.width * audio.duration; });
+})();
+
 /* Faixas */
 const ribbonHTML = RIBBON.map(t => `<span>${esc(t)}</span>`).join("");
 ["#ribbon1","#ribbon2","#ribbon3"].forEach(id => { $(id).innerHTML = ribbonHTML + (reduceMotion ? "" : ribbonHTML); });
