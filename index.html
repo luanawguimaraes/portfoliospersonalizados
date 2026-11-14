@@ -604,14 +604,26 @@
   .res-head .section-lead{margin-left:auto;margin-right:auto;margin-bottom:0}
   .res-stage{position:relative;height:clamp(300px,42vw,460px);margin:10px -20px 0;perspective:1100px;perspective-origin:60% 40%;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
   .res-track{position:absolute;inset:0;transform-style:preserve-3d}
-  .res-track i{position:absolute;left:50%;top:50%;width:132px;aspect-ratio:3/5;margin:-110px 0 0 -66px;border-radius:6px;background:#eee center top/cover no-repeat;box-shadow:0 14px 30px rgba(43,43,43,.18);will-change:transform,opacity,filter}
+  .res-track i{position:absolute;left:0;top:0;width:132px;aspect-ratio:3/5;margin:0;border-radius:6px;cursor:zoom-in;transform-origin:50% 50%;background:#eee center top/cover no-repeat;box-shadow:0 14px 30px rgba(43,43,43,.18);will-change:transform,opacity,filter}
   .res-quote{position:relative;z-index:3;max-width:620px;margin:-70px auto 30px;padding:28px 30px 24px;border-radius:24px;background:#fff;box-shadow:0 26px 60px rgba(43,43,43,.16);text-align:center}
   .res-badge{display:inline-block;margin-bottom:12px;padding:5px 12px;border-radius:999px;background:var(--grad);color:#fff;font-family:var(--font-title);font-weight:800;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
   .res-quote blockquote{margin:0;font-family:var(--font-title);font-weight:800;font-size:clamp(1.15rem,2.4vw,1.55rem);line-height:1.35;color:#2B2B2B}
   .res-quote mark{color:inherit;padding:0 .1em;background:linear-gradient(transparent 58%,rgba(234,112,165,.45) 58%,rgba(234,112,165,.45) 92%,transparent 92%)}
   .res-quote figcaption{margin-top:14px;font-size:.84rem;color:var(--muted)}
   .res-quote figcaption b{color:var(--pink)}
-  @media (max-width:900px){.res-stage{margin:6px -16px 0;height:300px}.res-track i{width:110px;margin:-92px 0 0 -55px}.res-quote{margin-top:-50px;padding:22px 18px 18px}}
+  @media (max-width:900px){.res-stage{margin:6px -16px 0;height:300px}.res-quote{margin-top:-50px;padding:22px 18px 18px}}
+  .res-stage{cursor:default}
+  .res-lb{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px;background:rgba(43,43,43,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .3s}
+  .res-lb.on{opacity:1}
+  .res-lb[hidden]{display:none}
+  .res-lb-card{position:relative;width:min(420px,100%);max-height:92vh;display:flex;flex-direction:column;border-radius:26px;background:#fff;box-shadow:0 30px 80px rgba(0,0,0,.35);overflow:hidden;transform:scale(.85);transition:transform .35s cubic-bezier(.2,.85,.25,1)}
+  .res-lb.on .res-lb-card{transform:none}
+  .res-lb-screen{flex:1;overflow-y:auto;min-height:0;max-height:calc(92vh - 76px)}
+  .res-lb-screen img{display:block;width:100%;height:auto}
+  .res-lb-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-top:1px solid rgba(43,43,43,.08)}
+  .res-lb-foot b{font-family:var(--font-title);font-weight:900}
+  .res-lb-foot .btn{padding:10px 16px;font-size:.72rem}
+  .res-lb-x{position:absolute;top:10px;right:10px;z-index:2;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.92);font-size:1.4rem;line-height:1;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2)}
   /* Frase do Sobre: "bonito" riscado à mão e "posicionar você" grifado com marca-texto, animados quando aparecem */
   body .light .about-quote.q-new{position:relative;margin-top:30px;padding:26px 28px 26px 74px;border:0;border-radius:22px;background:#fff;box-shadow:0 18px 44px rgba(43,43,43,.1);color:#2B2B2B;font-size:clamp(1.15rem,2.2vw,1.45rem);line-height:1.35}
   .about-quote.q-new::before{content:"“";position:absolute;left:20px;top:6px;font-family:Georgia,serif;font-size:4.6rem;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -1643,32 +1655,71 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   }
 })();
 
-/* Resultados: portfólios andando em perspectiva (do fundo à direita até a frente à esquerda, desfocando quando chegam perto) */
+/* Resultados (como a referência Deimos): os portfólios entram pequenininhos pela direita e vêm crescendo numa onda até a frente.
+   Passando o mouse, a onda desacelera; clicando num portfólio, ele abre ampliado para ver inteiro. */
 (function(){
   const stage = $("#resStage"), track = $("#resTrack"); if (!stage || !track) return;
-  const pics = CAPA_TRABALHOS.flatMap(t => [img2(t, t.destaque), img2(t, 1)]);
-  function img2(t, k){ return `img/capa/${t.id}-${k}.jpg`; }
-  // como na referência: muitos cartões bem juntinhos numa linha que sobe para a direita,
-  // pequenos e nítidos lá no fundo, enormes e desfocados quando passam pela frente
-  const N = 28, items = [];
-  for (let i = 0; i < N; i++) { const el = document.createElement("i"); el.style.backgroundImage = `url("${pics[i % pics.length]}")`; track.appendChild(el); items.push(el); }
-  let off = 0, last = performance.now(), running = false;
+  const list = CAPA_TRABALHOS.flatMap(t => [{ t, src: `img/capa/${t.id}-${t.destaque}.jpg` }, { t, src: `img/capa/${t.id}-1.jpg` }]);
+  const N = 30, items = [];
+  for (let i = 0; i < N; i++) {
+    const p = list[(i * 7) % list.length], el = document.createElement("i");
+    el.style.backgroundImage = `url("${p.src}")`; el.dataset.k = (i * 7) % list.length;
+    el.setAttribute("role", "button"); el.setAttribute("aria-label", "Ver o portfólio de " + p.t.nome);
+    track.appendChild(el); items.push(el);
+  }
+  let off = 0, speed = 0.085, target = 0.085, time = 0, last = performance.now(), running = false;
   function place(){
-    const W = stage.clientWidth, H = stage.clientHeight;
+    const W = stage.clientWidth, H = stage.clientHeight, base = Math.min(150, W * 0.2);
     for (let i = 0; i < N; i++) {
-      const u = ((i / N) + off) % 1;              // 0 = lá no fundo, 1 = passando pela frente
-      const e = Math.pow(u, 2.3);
-      const x = (0.5 - 1.25 * Math.pow(u, 1.15)) * W, y = (-0.17 + 0.26 * u) * H, z = -1700 + 2300 * e;
-      const blur = Math.max(0, (z + 220) / 38);
-      const o = Math.min(1, u * 8) * (u > 0.93 ? (1 - u) / 0.07 : 1);
+      const u = ((i / N) + off) % 1;                       // 0 = pequenininho à direita, 1 = grande na frente à esquerda
+      const g = Math.pow(u, 2.1);
+      const wave = Math.sin(u * Math.PI * 2.2 - time * 2.4);  // a onda que percorre a fileira
+      const s = 0.16 + 2.1 * g;
+      const x = W * (0.98 - 1.25 * Math.pow(u, 0.9)) - base / 2;
+      const y = H * (0.3 + 0.28 * u) + wave * H * 0.07 * (0.3 + u) - base * 0.83;
+      const ry = -32 + wave * 16, rz = wave * 2.5;
+      const blur = s > 1.15 ? Math.min(16, (s - 1.15) * 11) : 0;
+      const o = Math.min(1, u * 9) * (u > 0.92 ? (1 - u) / 0.08 : 1);
       const el = items[i];
-      el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,${z.toFixed(1)}px) rotateY(-24deg)`;
-      el.style.filter = blur > 0.3 ? `blur(${Math.min(22, blur).toFixed(1)}px) saturate(1.25)` : "none";
+      el.style.width = base + "px";
+      el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) perspective(800px) rotateY(${ry.toFixed(1)}deg) rotateZ(${rz.toFixed(2)}deg) scale(${s.toFixed(3)})`;
+      el.style.filter = blur > 0.4 ? `blur(${blur.toFixed(1)}px) saturate(1.2)` : "none";
       el.style.opacity = o.toFixed(3);
       el.style.zIndex = Math.round(u * 100);
+      el.style.pointerEvents = blur > 4 || o < 0.5 ? "none" : "auto";
     }
   }
-  function frame(now){ if (!running) return; const dt = Math.min(.05, (now - last) / 1000); last = now; off = (off + dt * 0.055) % 1; place(); requestAnimationFrame(frame); }  place();
+  function frame(now){
+    if (!running) return;
+    const dt = Math.min(.05, (now - last) / 1000); last = now;
+    speed += (target - speed) * Math.min(1, dt * 3);        // acelera e desacelera suave
+    off = (off + dt * speed) % 1; time += dt * (0.4 + speed * 8);
+    place(); requestAnimationFrame(frame);
+  }
+  stage.addEventListener("mouseenter", () => target = 0.018);
+  stage.addEventListener("mouseleave", () => target = 0.085);
+
+  // ampliar ao clicar
+  const lb = document.createElement("div"); lb.className = "res-lb"; lb.hidden = true;
+  lb.innerHTML = `<div class="res-lb-card" role="dialog" aria-modal="true" aria-label="Portfólio ampliado">
+      <button type="button" class="res-lb-x" aria-label="Fechar">×</button>
+      <div class="res-lb-screen"><img alt=""></div>
+      <div class="res-lb-foot"><b></b><a target="_blank" rel="noopener" class="btn btn-pink">Ver portfólio completo ↗</a></div></div>`;
+  document.body.appendChild(lb);
+  const lbImg = lb.querySelector("img"), lbName = lb.querySelector("b"), lbLink = lb.querySelector("a"), lbScreen = lb.querySelector(".res-lb-screen");
+  function open(k){
+    const HI = { raissa: "img/depois-raissa-full.jpg", yasmim: "img/depois-yasmim.jpg?v=2", mayara: "img/depois-mayara.jpg" };   // versões em alta qualidade
+    const p = list[k]; lbImg.src = HI[p.t.id] || `img/capa/full-${p.t.id}.jpg`; lbImg.alt = "Portfólio de " + p.t.nome + " criado por Luana";
+    lbName.textContent = p.t.nome; lbLink.href = p.t.link; lbScreen.scrollTop = 0;
+    lb.hidden = false; requestAnimationFrame(() => lb.classList.add("on")); document.body.style.overflow = "hidden";
+    lb.querySelector(".res-lb-x").focus();
+  }
+  function close(){ lb.classList.remove("on"); document.body.style.overflow = ""; setTimeout(() => lb.hidden = true, 300); }
+  track.addEventListener("click", e => { const el = e.target.closest("i"); if (el) open(+el.dataset.k); });
+  lb.addEventListener("click", e => { if (e.target === lb || e.target.closest(".res-lb-x")) close(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) close(); });
+
+  place();
   if (reduceMotion) return;
   if ("IntersectionObserver" in window) {
     new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting && !running) { running = true; last = performance.now(); requestAnimationFrame(frame); } else if (!en.isIntersecting) running = false; }), { threshold: 0.05 }).observe(stage);
