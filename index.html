@@ -909,6 +909,10 @@
   .dep-wrap{gap:0}
   .dep-row{padding:16px 0 50px;margin-bottom:-22px}
   .dep-row:last-child{margin-bottom:0}
+  .pkg-price{display:flex;align-items:flex-start;gap:4px;margin:-6px 0 18px;font-family:var(--font-title);color:#2B2B2B;line-height:1}
+  .pkg-price small{font-weight:800;font-size:1rem;margin-top:6px}
+  .pkg-price b{font-weight:900;font-size:2.6rem;letter-spacing:-.02em}
+  .package.featured .pkg-price{color:#DE3F80}
   /* CRACHÁ no celular: exatamente o mesmo do computador, só que em miniatura (mesmas proporções e fontes) */
   @media (max-width:900px){
     .about-visual.cartao{max-width:272px}
@@ -1292,7 +1296,7 @@
       <div class="center reveal">
         <span class="eyebrow">Pacotes</span>
         <h2 class="section-title" id="investimento-title">Escolha o pacote que faz <em>mais sentido</em> para você</h2>
-        <p class="section-lead">Selecione o seu pacote e me chame no WhatsApp para receber o orçamento.</p>
+        <p class="section-lead">Escolha o seu pacote e me chame no WhatsApp para começar.</p>
       </div>
       <!-- Os pacotes vêm do array PACKAGES no script -->
       <div class="packages" id="packages"></div>
@@ -1507,7 +1511,7 @@ const STEPS = [
   { title:"Ajustes e entrega", desc:"Você tem as rodadas de ajustes do seu pacote antes da aprovação final. Depois dos ajustes, faço o envio final do portfólio." }
 ];
 
-/* Pacotes (sem valores: o botão leva para o WhatsApp pedindo orçamento)
+/* Pacotes (com valores: o botão leva para o WhatsApp já dizendo o pacote escolhido)
    flag:      selo em cima do card (deixe "" para não mostrar)
    featured:  true deixa o card em destaque com borda rosa
    highlight: frase de destaque em verde (deixe "" para não mostrar)
@@ -1515,6 +1519,7 @@ const STEPS = [
 const PACKAGES = [
   {
     tag: "Pacote Canva",
+    price: 200,
     title: "Portfólio no Canva",
     sub: "Portfólio estático e editável",
     flag: "",
@@ -1531,6 +1536,7 @@ const PACKAGES = [
   },
   {
     tag: "Pacote Essencial",
+    price: 400,
     title: "Site-portfólio personalizado",
     sub: "Site personalizado com animações",
     flag: "",
@@ -1550,6 +1556,7 @@ const PACKAGES = [
   },
   {
     tag: "Pacote Premium",
+    price: 600,
     title: "Site-portfólio completo",
     sub: "Mais animações, mais solicitações futuras e link na bio de brinde",
     flag: "Mais completo",
@@ -1574,7 +1581,7 @@ const PACKAGES = [
 const FAQ = [
   { q:"Qual é o prazo de entrega?", a:"O prazo de produção é de até 15 dias úteis, contados a partir do momento em que todo o material necessário é recebido." },
   { q:"Como funciona o pagamento?", a:"No PIX, 50% para iniciar a produção e 50% após a entrega do portfólio pronto. No cartão de crédito, o pagamento é feito através de link de pagamento." },
-  { q:"Quanto custa?", a:"O valor depende do pacote e do que você precisa. Escolha o pacote que faz mais sentido para você e clique em fazer orçamento: eu te respondo no WhatsApp." },
+  { q:"Quanto custa?", a:"O Pacote Canva custa R$ 200, o Pacote Essencial R$ 400 e o Pacote Premium R$ 600. Escolha o que faz mais sentido para você e clique em quero esse pacote: eu te respondo no WhatsApp." },
   { q:"Qual a diferença entre os pacotes?", a:"O Pacote Canva é um portfólio estático, com carrossel de marcas e botões clicáveis, que você mesma consegue editar depois no seu Canva. O Essencial e o Premium são sites com animações, vídeos e domínio próprio. O Premium é multilíngue, em português, inglês e espanhol." },
   { q:"Posso pedir alterações?", a:"Sim. O Pacote Canva inclui 1 rodada de ajuste simples, sem alterar a estrutura do portfólio. O Essencial e o Premium incluem 2 rodadas de ajustes básicos." },
   { q:"Preciso ter Canva Pro?", a:"Só no Pacote Canva, para publicar o portfólio como site dentro do Canva. A plataforma passou a exigir o plano Pro para a publicação de sites. Sem a assinatura ativa, não é possível finalizar essa etapa." },
@@ -2164,7 +2171,7 @@ $("#steps").innerHTML = STEPS.map((s, i) => `
 
 /* Pacotes: cada botão abre o WhatsApp já dizendo qual pacote a cliente escolheu */
 $("#packages").innerHTML = PACKAGES.map(p => {
-  const msg = "Oi, Luana! Vi o seu site e quero um orçamento do " + p.tag + ".";
+  const msg = "Oi, Luana! Vi o seu site e quero o " + p.tag + " (" + p.title + ").";
   const link = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
   return `
   <article class="package glass reveal${p.featured ? " featured" : ""}">
@@ -2172,10 +2179,11 @@ $("#packages").innerHTML = PACKAGES.map(p => {
     <span class="pkg-tag">${esc(p.tag)}</span>
     <h3>${esc(p.title)}</h3>
     <p class="pkg-sub">${esc(p.sub)}</p>
+    ${p.price ? `<p class="pkg-price"><small>R$</small><b>${p.price}</b></p>` : ""}
     ${p.highlight ? `<p class="pkg-highlight">${esc(p.highlight)}</p>` : ""}
     <ul class="includes">${p.items.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
     ${p.note ? `<p class="pkg-note">${esc(p.note)}</p>` : ""}
-    <a class="btn ${p.featured ? "btn-pink" : "btn-lime"}" href="${link}" target="_blank" rel="noopener">Fazer orçamento</a>
+    <a class="btn ${p.featured ? "btn-pink" : "btn-lime"}" href="${link}" target="_blank" rel="noopener">Quero esse pacote</a>
   </article>`;
 }).join("");
 
