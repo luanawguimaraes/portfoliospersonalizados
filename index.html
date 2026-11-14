@@ -604,7 +604,7 @@
   .res-head .section-lead{margin-left:auto;margin-right:auto;margin-bottom:0}
   .res-stage{position:relative;height:clamp(300px,42vw,460px);margin:10px -20px 0;perspective:1100px;perspective-origin:60% 40%;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
   .res-track{position:absolute;inset:0;transform-style:preserve-3d}
-  .res-track i{position:absolute;left:50%;top:50%;width:150px;aspect-ratio:3/5;margin:-125px 0 0 -75px;border-radius:10px;background:#eee center top/cover no-repeat;box-shadow:0 14px 30px rgba(43,43,43,.18);will-change:transform,opacity,filter}
+  .res-track i{position:absolute;left:50%;top:50%;width:132px;aspect-ratio:3/5;margin:-110px 0 0 -66px;border-radius:6px;background:#eee center top/cover no-repeat;box-shadow:0 14px 30px rgba(43,43,43,.18);will-change:transform,opacity,filter}
   .res-quote{position:relative;z-index:3;max-width:620px;margin:-70px auto 30px;padding:28px 30px 24px;border-radius:24px;background:#fff;box-shadow:0 26px 60px rgba(43,43,43,.16);text-align:center}
   .res-badge{display:inline-block;margin-bottom:12px;padding:5px 12px;border-radius:999px;background:var(--grad);color:#fff;font-family:var(--font-title);font-weight:800;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
   .res-quote blockquote{margin:0;font-family:var(--font-title);font-weight:800;font-size:clamp(1.15rem,2.4vw,1.55rem);line-height:1.35;color:#2B2B2B}
@@ -1648,25 +1648,27 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   const stage = $("#resStage"), track = $("#resTrack"); if (!stage || !track) return;
   const pics = CAPA_TRABALHOS.flatMap(t => [img2(t, t.destaque), img2(t, 1)]);
   function img2(t, k){ return `img/capa/${t.id}-${k}.jpg`; }
-  const N = 16, items = [];
+  // como na referência: muitos cartões bem juntinhos numa linha que sobe para a direita,
+  // pequenos e nítidos lá no fundo, enormes e desfocados quando passam pela frente
+  const N = 28, items = [];
   for (let i = 0; i < N; i++) { const el = document.createElement("i"); el.style.backgroundImage = `url("${pics[i % pics.length]}")`; track.appendChild(el); items.push(el); }
   let off = 0, last = performance.now(), running = false;
   function place(){
     const W = stage.clientWidth, H = stage.clientHeight;
     for (let i = 0; i < N; i++) {
-      let u = ((i / N) + off) % 1;                // 0 = lá no fundo, 1 = bem perto
-      const e = u * u;
-      const x = (0.62 - 1.35 * u) * W, y = (-0.2 + 0.32 * u) * H, z = -1500 + 1900 * e;
-      const blur = Math.max(0, (z - 120) / 60), o = Math.min(1, u * 6) * (u > 0.94 ? (1 - u) / 0.06 : 1);
+      const u = ((i / N) + off) % 1;              // 0 = lá no fundo, 1 = passando pela frente
+      const e = Math.pow(u, 2.3);
+      const x = (0.5 - 1.25 * Math.pow(u, 1.15)) * W, y = (-0.17 + 0.26 * u) * H, z = -1700 + 2300 * e;
+      const blur = Math.max(0, (z + 220) / 38);
+      const o = Math.min(1, u * 8) * (u > 0.93 ? (1 - u) / 0.07 : 1);
       const el = items[i];
-      el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,${z.toFixed(1)}px) rotateY(-28deg)`;
-      el.style.filter = blur > 0.3 ? `blur(${Math.min(14, blur).toFixed(1)}px)` : "none";
+      el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,${z.toFixed(1)}px) rotateY(-24deg)`;
+      el.style.filter = blur > 0.3 ? `blur(${Math.min(22, blur).toFixed(1)}px) saturate(1.25)` : "none";
       el.style.opacity = o.toFixed(3);
       el.style.zIndex = Math.round(u * 100);
     }
   }
-  function frame(now){ if (!running) return; const dt = Math.min(.05, (now - last) / 1000); last = now; off = (off + dt * 0.035) % 1; place(); requestAnimationFrame(frame); }
-  place();
+  function frame(now){ if (!running) return; const dt = Math.min(.05, (now - last) / 1000); last = now; off = (off + dt * 0.055) % 1; place(); requestAnimationFrame(frame); }  place();
   if (reduceMotion) return;
   if ("IntersectionObserver" in window) {
     new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting && !running) { running = true; last = performance.now(); requestAnimationFrame(frame); } else if (!en.isIntersecting) running = false; }), { threshold: 0.05 }).observe(stage);
