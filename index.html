@@ -900,6 +900,29 @@
   /* bolinhas dos processos: círculo perfeito, sem a faixinha de cor diferente nas laterais (o degradê não se repete por baixo da borda) */
   #processo .step-num{box-sizing:border-box;flex:none;width:56px!important;height:56px!important;aspect-ratio:1;border:2px solid #C72D67;background-color:#fff;background-origin:border-box;background-clip:border-box}
   #processo .step.open .step-num,#processo .step:hover .step-num{border:0;background:linear-gradient(135deg,#C72D67,#EA70A5) border-box}
+  /* depoimentos: mesma fonte em todos (sem negrito nos de destaque) */
+  .dep-top blockquote{font-family:var(--font-body)!important;font-weight:500!important;font-size:.95rem!important}
+  /* print real do feedback da Marjory, como um "recorte" colado no cartão */
+  .res-print{display:block;width:100%;max-width:480px;height:auto;margin:4px auto 0;border-radius:18px;box-shadow:0 22px 40px -22px rgba(43,43,43,.45),0 2px 6px rgba(43,43,43,.08);transform:rotate(-1.2deg);border:6px solid #fff}
+  /* crachá: foto limpa, sem brilho por cima */
+  .idc-front.holo::after,.idc-front.holo::before{display:none!important}
+  /* O QUE VOCÊ RECEBE no formato tradicional: só o texto, separado por partes */
+  #recebe:not(.deckmode) .features{grid-template-columns:repeat(3,1fr);gap:0 40px;max-width:1040px;margin:0 auto}
+  #recebe:not(.deckmode) .feature{grid-column:auto!important;background:none!important;border:0!important;border-top:1px solid rgba(43,43,43,.12)!important;border-radius:0!important;box-shadow:none!important;padding:22px 0 26px!important;transform:none!important}
+  #recebe:not(.deckmode) .feature .mock{display:none}
+  #recebe:not(.deckmode) .feature h3{font-size:1.08rem;margin-bottom:8px}
+  #recebe:not(.deckmode) .feature h3::before{border-radius:50%}
+  #recebe:not(.deckmode) .feature p{font-size:.92rem;line-height:1.6}
+  @media (max-width:900px){#recebe:not(.deckmode) .features{grid-template-columns:1fr 1fr;gap:0 18px}#recebe:not(.deckmode) .feature{padding:16px 0 18px!important}#recebe:not(.deckmode) .feature h3{font-size:.9rem}#recebe:not(.deckmode) .feature p{font-size:.8rem}}
+  /* COMPARADOR antes x depois com acabamento realista */
+  .cmp{border:0!important;border-radius:26px!important;box-shadow:0 40px 70px -36px rgba(43,43,43,.55),0 0 0 8px #fff,0 0 0 9px rgba(43,43,43,.06)!important}
+  .cmp-tag{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .cmp-l{background:rgba(43,43,43,.6)!important}
+  .cmp-text{padding:28px 28px 24px;border-radius:24px;background:rgb(247,245,248);border:1px solid rgba(43,43,43,.06);box-shadow:0 30px 50px -30px rgba(43,43,43,.4),0 2px 6px rgba(43,43,43,.05)}
+  .cmp-tabs button{background:#fff;border:1px solid rgba(43,43,43,.1);box-shadow:0 4px 10px rgba(43,43,43,.06)}
+  .cmp-tabs button[aria-selected="true"]{background:#2B2B2B;color:#fff;border-color:#2B2B2B}
+  .cmp-track{background:rgba(43,43,43,.08)}
+  .cmp-thumb{background:#2B2B2B;box-shadow:0 4px 10px rgba(43,43,43,.25)}
   /* Animação de entrada */
   .js .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
   .js .reveal.visible{opacity:1;transform:none}
@@ -1172,7 +1195,7 @@
         <div class="res-stage" id="resStage" aria-hidden="true"><div class="res-track" id="resTrack"></div></div>
         <figure class="res-quote reveal">
           <span class="res-badge">Feedback real de cliente</span>
-          <blockquote>“Lu! Meu portfólio nem está 100% pronto, e mesmo assim já coloquei em campanha e <mark>já fui aceita</mark> 😍”</blockquote>
+          <img class="res-print" src="img/print-marjory.jpg" alt="Print da mensagem: Lu! Meu portfólio nem está 100% pronto, e mesmo assim já coloquei em campanha e já fui aceita" width="1024" height="276" loading="lazy">
           <figcaption><b>Marjory</b> · creator UGC, São Paulo</figcaption>
         </figure>
         <div class="center reveal"><a href="#" class="btn btn-pink js-wa">Quero esse resultado</a></div>
@@ -1195,12 +1218,9 @@
     <div class="container">
       <div class="center reveal">
         <span class="eyebrow">Feedbacks</span>
-        <div class="big-proof"><b>+90</b></div>
-        <h2 class="section-title" id="feedbacks-title">Clientes <em>satisfeitas</em></h2>
+        <h2 class="section-title" id="feedbacks-title">Mais de <em>90 clientes</em> satisfeitas</h2>
         <p class="section-lead">O que as creators dizem depois de receber o portfólio.</p>
       </div>
-      <!-- Os prints de feedback vêm do array FEEDBACKS no script (substituídos pela faixa de depoimentos escritos) -->
-      <div class="feedbacks" id="feedbackList" hidden></div>
     </div>
     <!-- Depoimentos escritos andando da direita para a esquerda (array DEPOIMENTOS no script) -->
     <div class="dep-wrap" aria-label="Depoimentos de clientes">
@@ -1342,7 +1362,7 @@ const DEPOIMENTOS = [
   { nome:"Paula Regina", sub:"Creator UGC", texto:"Tá perfeito! Conseguiu me dar mais personalidade, transmitir mais. A ideia de colocar uma cor foi perfeita." },
   { nome:"Van Hollanda", sub:"Creator UGC", texto:"Muitíssimo obrigada, ficou lindo, impecável. Muito bom seu trabalho! Vou recomendar com certeza pra várias pessoas.", destaque:true },
   { nome:"Duda Piassi", sub:"Creator de viagem", texto:"Nuuu, amei! Arrasou demais, Lu. Você é muito criativa. Quem tem o dom, tem!" },
-  { nome:"Creator UGC", sub:"Nicho sem glúten", texto:"Você não só fez o nosso portfólio, você também deu dicas e me orientou. Eu tava bem perdida e, graças a você, agora consigo ter uma visão melhor.", destaque:true },
+  { nome:"Fernanda", sub:"Creator UGC · sem glúten", texto:"Você não só fez o nosso portfólio, você também deu dicas e me orientou. Eu tava bem perdida e, graças a você, agora consigo ter uma visão melhor.", destaque:true },
   { nome:"Gabriela", sub:"Creator UGC", texto:"Ficou perfeito, ficou lindo! Você foi super profissional. Eu nunca tinha feito nesse formato, tá profissional assim. Amei!" },
   { nome:"Marjory", sub:"Creator UGC", texto:"Dá pra ver o quanto você colocou carinho nesse projeto. Tenho certeza que esse portfólio vai render frutos lindos 💗" },
   { nome:"Day Floriano", sub:"Creator UGC", texto:"Meu Deus, eu amei! Ficou maravilhoso!!" },
@@ -1408,7 +1428,7 @@ const COMPARADOR = [
   { nome:"Mayara Romaniw",  antes:"img/antes-mayara.jpg",        depois:"img/depois-mayara.jpg",        link:"https://lariwiechetek.my.canva.site/portf-lio-mayara" },
   { nome:"Yasmim Natatizi", antes:"img/antes-yasmim.jpg",        depois:"img/depois-yasmim.jpg?v=2",        link:"https://lariwiechetek.my.canva.site/portf-lio-yasmin" },
   { nome:"Raissa Zipolato", antes:"img/antes-raissa-full.jpg",   depois:"img/depois-raissa-full.jpg",   link:"https://lariwiechetek.my.canva.site/portf-lio-raissa" },
-  { nome:"Gislaine Kröger", antes:"img/antes-gislaine-full.jpg", depois:"img/depois-gislaine-full.jpg", link:"https://lariwiechetek.my.canva.site/dahaxiwf2pi" }
+  { nome:"Gislaine Kröger", antes:"img/antes-gislaine-full.jpg", depois:"img/depois-gislaine-full.jpg?v=2", link:"https://lariwiechetek.my.canva.site/dahaxiwf2pi" }
 ];
 const ANTES_DEPOIS = [
   { nome:"Rayca Drovetti",   antes:"img/antes-rayca.jpg",    depois:"img/depois-rayca.mp4",    capa:"img/depois-rayca-capa.jpg" },
@@ -2077,7 +2097,7 @@ $("#examples").innerHTML = EXAMPLES.map((e, i) => {
 $("#forWho").innerHTML = FOR_WHO.map(t => `<li class="glass reveal"><span class="arrow" aria-hidden="true">→</span><span>${esc(t)}</span></li>`).join("");
 
 /* Feedbacks */
-$("#feedbackList").innerHTML = FEEDBACKS.map((f, i) =>
+if ($("#feedbackList")) $("#feedbackList").innerHTML = FEEDBACKS.map((f, i) =>
   `<div class="feedback glass reveal">${mediaBlock(f.cover, "print do feedback 9:16", f.alt, i % 2 ? "alt" : "")}</div>`).join("");
 
 /* Processo */
