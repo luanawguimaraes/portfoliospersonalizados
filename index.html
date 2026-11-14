@@ -653,7 +653,7 @@
   .idcard[hidden]{display:none}
   .about-visual.cartao{margin-bottom:46px}
   .about-visual.cartao .voice{bottom:-50px;right:-34px}
-  @media (max-width:900px){.about-visual.cartao{margin-bottom:70px}.about-visual.cartao .voice{right:-6px;bottom:-74px}}
+  @media (max-width:900px){.about-visual.cartao{margin-bottom:64px}.about-visual.cartao .voice{right:50%;transform:translateX(50%);width:260px;bottom:-66px}.idc-top b{font-size:.7rem}.idc-top small{font-size:.58rem}.idc-info{padding:10px 14px 2px}.idc-foot{padding:6px 14px 12px}.idc-hint{font-size:.5rem}}
   .idcard{position:relative;z-index:2;aspect-ratio:4/5.4;perspective:1400px;cursor:pointer;outline:none}
   .idc-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.2,.85,.25,1);transform:rotate(-2deg)}
   .idcard.flip .idc-inner{transform:rotateY(180deg) rotate(2deg)}
@@ -737,7 +737,7 @@
   html{overflow-x:hidden}
   body{overflow-x:clip}
   /* Cartão do Sobre menor no celular */
-  @media (max-width:900px){.about-visual{max-width:290px}.idc-info b{font-size:1.05rem}.idc-top{padding:24px 16px 10px}.idc-photo{margin:12px 16px 0}.idc-back{padding:32px 18px 18px}.idc-list li{font-size:.8rem;padding:8px 12px}}
+  @media (max-width:900px){.about-visual{max-width:235px}.idc-info b{font-size:1.05rem}.idc-top{padding:24px 16px 10px}.idc-photo{margin:12px 16px 0}.idc-back{padding:32px 18px 18px}.idc-list li{font-size:.8rem;padding:8px 12px}}
 
   /* O QUE VOCÊ RECEBE: grade em mosaico (bento), 2 colunas no celular */
   #recebe .features{grid-template-columns:repeat(3,1fr);gap:16px}
@@ -817,7 +817,7 @@
   #recebe.deckmode .deck .feature .mock{display:none}
   #recebe.deckmode .deck .feature::after{display:block}
   .dk-top,.dk-foot{position:relative;z-index:6;display:flex;justify-content:space-between;align-items:center;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgb(142,135,146)}
-  .dk-photo{position:relative;z-index:3;flex:1;min-height:0;margin:10px 0 12px;border-radius:14px;background:#eee center 18%/cover no-repeat;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+  .dk-photo{position:relative;z-index:3;flex:1;min-height:0;margin:10px 0 12px;border-radius:14px;background:#eee center 30%/cover no-repeat;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
   #recebe.deckmode .deck .feature h3{position:relative;z-index:6;font-size:1.15rem;margin-bottom:4px}
   #recebe.deckmode .deck .feature h3::before{display:none}
   #recebe.deckmode .deck .feature p{position:relative;z-index:6;font-size:.84rem;margin-bottom:10px}
@@ -1905,7 +1905,8 @@ $("#features").innerHTML = FEATURES.map((f, i) => `
   const sec = $("#recebe"), deck = $("#features"); if (!sec || !deck) return;
   sec.classList.add("deckmode"); deck.classList.add("deck");
   const cards = [...deck.querySelectorAll(".feature")];
-  const FOTOS = ["img/capa/julia-4.jpg", "img/capa/camila-santos-2.jpg", "img/capa/mari-bicalho-3.jpg", "img/capa/mayara-3.jpg", "img/capa/duda-2.jpg", "img/capa/manoela-5.jpg"];
+  // fotos horizontais recortadas sob medida para a moldura da carta
+  const FOTOS = ["img/dk-julia.jpg", "img/dk-camila.jpg", "img/dk-mari.jpg", "img/dk-mayara.jpg", "img/dk-duda.jpg?v=2", "img/dk-yasmim.jpg"];
   cards.forEach((c, i) => {
     c.classList.remove("reveal"); c.classList.add("holo");
     c.insertAdjacentHTML("afterbegin", `<div class="dk-top"><span>Benefício ${pad(i + 1)}</span><span>Luana G.</span></div><div class="dk-photo" style="background-image:url(&quot;${FOTOS[i] || FOTOS[0]}&quot;)"></div>`);
