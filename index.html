@@ -950,7 +950,7 @@ const WHATSAPP_MSG = "Oi, Luana! Vi o seu site e quero criar o meu portfólio pe
 /* Frases das faixas que rolam pela tela */
 const RIBBON = [
   "Portfólio personalizado", "Entrega em até 15 dias úteis", "Ajustes inclusos",
-  "Pacotes Canva, Essencial e Premium", "+90 creators atendidas", "Estratégico e profissional"
+  "+90 creators atendidas", "Estratégico e profissional"
 ];
 
 /* Bloco "Se você não aguenta mais…" */
@@ -1358,11 +1358,8 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   } else { visible = true; start(); }
 })();
 /* Faixas */
-const ribbonOf = list => list.map(t => `<span>${esc(t)}</span>`).join("");
-const ribbonHTML = ribbonOf(RIBBON);
-// a primeira faixa (logo abaixo de "Se você não aguenta mais") não fala de pacotes
-const ribbon1HTML = ribbonOf(RIBBON.filter(t => !/pacotes/i.test(t)));
-[["#ribbon1", ribbon1HTML], ["#ribbon2", ribbonHTML], ["#ribbon3", ribbonHTML]].forEach(([id, h]) => { $(id).innerHTML = h + (reduceMotion ? "" : h); });
+const ribbonHTML = RIBBON.map(t => `<span>${esc(t)}</span>`).join("");
+["#ribbon1","#ribbon2","#ribbon3"].forEach(id => { $(id).innerHTML = ribbonHTML + (reduceMotion ? "" : ribbonHTML); });
 
 /* Dores e desejos */
 $("#pains").innerHTML  = PAINS.map(t => `<li><span class="mark" aria-hidden="true">✕</span><span>${esc(t)}</span></li>`).join("");
