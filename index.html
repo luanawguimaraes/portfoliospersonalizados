@@ -594,14 +594,12 @@
   .stage.anel .cloud i{border:2px solid #fff;box-shadow:0 10px 22px rgba(43,43,43,.18)}
   .stage.anel .feat{left:36.5%;width:27%;top:17%}
   .stage.anel .feat-tags{left:36.5%;width:27%;top:17%}
-  /* TESTE: igual à referência (index.html?capa=ref): fundo limpo, sem brilho, cartões pequenos e textos finos */
-  .stage.refmode{background:none}
-  .stage.refmode .cloud i{border-radius:3px;box-shadow:0 4px 12px rgba(43,43,43,.1)}
-  .stage.refmode .feat,.stage.refmode .feat-tags{display:none}
+  /* Abertura da capa: textos finos em volta do anel, que somem quando a nuvem aparece */
   .ref-label{position:absolute;z-index:3;top:45%;transform:translateY(-50%);font-family:"Open Sans",sans-serif;font-size:.66rem;color:#2B2B2B;letter-spacing:.01em;transition:opacity .6s ease;pointer-events:none;white-space:nowrap}
-  .ref-l{left:0}.ref-c{left:50%;transform:translate(-50%,-50%);font-weight:700}.ref-r{right:0}
+  .ref-l{left:14px}.ref-c{left:50%;transform:translate(-50%,-50%);font-weight:700}.ref-r{right:14px}
+  @media (max-width:900px){.ref-label{font-size:.58rem}.ref-l{left:18px}.ref-r{right:18px}}
   .stage.ref-cloud .ref-label{opacity:0}
-  /* TESTE: cartão de designer que vira (index.html?sobre=cartao) */
+  /* Cartão de designer que vira (Sobre) */
   .about-visual.cartao .about-photo,.about-visual.cartao .about-sticker{display:none}
   .about-visual.cartao .about-back{transform:rotate(6deg) translate(18px,14px)}
   .idcard[hidden]{display:none}
@@ -878,7 +876,7 @@
           <img src="img/luana-sobre.jpg" alt="Luana Guimarães apoiada no encosto de uma cadeira" loading="lazy" width="800" height="1000">
         </div>
         <span class="about-sticker" aria-hidden="true">Designer de portfólios ✦</span>
-        <!-- TESTE: cartão de designer que vira (aparece com index.html?sobre=cartao) -->
+        <!-- Cartão de designer que vira (a foto antiga abre com index.html?sobre=foto) -->
         <div class="idcard" id="idcard" hidden tabindex="0" role="button" aria-label="Cartão da Luana: toque para ver o verso">
           <div class="idc-inner">
             <div class="idc-face idc-front">
@@ -1333,8 +1331,8 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   const pics = all.map((_, i) => all[(i * step) % all.length]);
   const anel = /[?&]capa=anel/.test(location.search);   // TESTE: anel de cartões (index.html?capa=anel)
   if (anel) stage.classList.add("anel");
-  // TESTE: igual à referência (index.html?capa=ref): anel com 10 trabalhos > todos se juntam no centro > explodem numa nuvem 3D
-  const refMode = /[?&]capa=ref/.test(location.search);
+  // Abertura (inspirada na referência): anel com 10 trabalhos > todos se juntam no centro > explodem na nuvem 3D, onde os destaques começam
+  const refMode = !anel && !CAPA_COM_FOTO && !/[?&]capa=classica/.test(location.search);   // padrão: abertura da referência e depois a nuvem com destaques
   if (refMode) {
     stage.classList.add("refmode");
     [["ref-l", "Luana Guimarães"], ["ref-c", "L.G"], ["ref-r", "Portfólios para creators"]].forEach(([c, txt]) => { const s = document.createElement("span"); s.className = "ref-label " + c; s.textContent = txt; stage.appendChild(s); });
@@ -1349,7 +1347,7 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   }
   const soNuvem = !CAPA_COM_FOTO;
   let W = 0, H = 0, iw = 0, ih = 0;
-  const measure = () => { W = stage.clientWidth; H = stage.clientHeight; iw = W * (refMode ? 0.085 : anel ? 0.105 : 0.13); ih = iw * 5 / 3; };
+  const measure = () => { W = stage.clientWidth; H = stage.clientHeight; iw = W * (anel ? 0.105 : 0.13); ih = iw * 5 / 3; };
   measure(); window.addEventListener("resize", measure);
 
   let ang = 0.6, vel = 0, op = 1, opTarget = 1, intro = reduceMotion ? 1 : 0, last = performance.now(), running = false;
@@ -1378,11 +1376,11 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
       let x, y, s, o, ry;
       if (t < 3.5) {
         x = lerp(inRing ? xR : cx, cx, kJoin); y = lerp(inRing ? yR : cy, cy, kJoin);
-        s = lerp(0.62, 0.95, kJoin); ry = lerp(inRing ? ryR : 0, 0, kJoin);
+        s = lerp(0.42, 0.72, kJoin); ry = lerp(inRing ? ryR : 0, 0, kJoin);
         o = inRing ? (i === 0 || kJoin < 1 ? 1 : 0) * Math.min(1, t * 2.5) : 0;
         if (kJoin >= 1 && i !== 0) o = 0;
       } else {
-        x = lerp(cx, cxC, kBurst); y = lerp(cy, cyC, kBurst); s = lerp(0.95, sC, kBurst); ry = 0;
+        x = lerp(cx, cxC, kBurst); y = lerp(cy, cyC, kBurst); s = lerp(0.72, sC, kBurst); ry = 0;
         o = lerp(i === 0 ? 1 : 0, oC, kBurst);
       }
       el.style.transform = `translate(${x - iw / 2}px,${y - ih / 2}px) perspective(700px) rotateY(${ry.toFixed(1)}deg) scale(${s.toFixed(3)})`;
@@ -1453,7 +1451,7 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
     tagsBox.classList.remove("on"); feat.classList.remove("on"); opTarget = 1; idx++;
     timer = setTimeout(() => showFeat(idx % CAPA_TRABALHOS.length), 1700);
   }
-  function startCycle(){ if (refMode) return; if (!timer) timer = setTimeout(() => showFeat(idx % CAPA_TRABALHOS.length), 1900); }
+  function startCycle(){ if (!timer) timer = setTimeout(() => showFeat(idx % CAPA_TRABALHOS.length), refMode ? 5600 : 1900); }
 
   // passar o mouse no destaque: o portfólio inteiro rola dentro dele
   function resetFull(){ fFull.classList.remove("on"); fFullImg.style.transition = "none"; fFullImg.style.transform = "translateY(0)"; }
@@ -1600,9 +1598,9 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
     }), { threshold: 0.35 }).observe(cmp);
   } else { visible = true; start(); }
 })();
-/* TESTE: cartão de designer que vira, no lugar da foto do Sobre (index.html?sobre=cartao) */
+/* Cartão de designer que vira, no lugar da foto do Sobre (a versão antiga com foto abre com ?sobre=foto) */
 (function(){
-  if (!/[?&]sobre=cartao/.test(location.search)) return;
+  if (/[?&]sobre=foto/.test(location.search)) return;   // cartão é o padrão; a foto antiga abre com ?sobre=foto
   const card = $("#idcard"), vis = card && card.closest(".about-visual"); if (!card) return;
   vis.classList.add("cartao"); card.hidden = false;
   const toggle = () => card.classList.toggle("flip");
