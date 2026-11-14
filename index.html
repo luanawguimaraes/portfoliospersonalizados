@@ -909,6 +909,8 @@
   .dep-wrap{gap:0}
   .dep-row{padding:16px 0 50px;margin-bottom:-22px}
   .dep-row:last-child{margin-bottom:0}
+  /* reflexo dos botões fica sempre dentro do botão (link inline não corta o que passa da borda) */
+  .nav-links .nav-cta{display:inline-block}
   /* MENU no celular: "Área da cliente" e "Quero o meu" separados, um embaixo do outro */
   @media (max-width:900px){
     .nav-links .nav-client,.nav-links .nav-cta{display:flex;justify-content:center;align-items:center;padding-top:13px;padding-bottom:13px}
