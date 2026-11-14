@@ -599,6 +599,19 @@
   .ref-l{left:14px}.ref-r{right:14px;color:var(--pink)}
   @media (max-width:900px){.ref-label{font-size:.78rem}.ref-l{left:18px}.ref-r{right:18px}}
   .stage.ref-cloud .ref-label{opacity:0}
+  /* Resultados: fileira de portfólios em perspectiva vindo do fundo, com feedback em destaque por cima */
+  .res-head{text-align:center;max-width:760px;margin:0 auto}
+  .res-head .section-lead{margin-left:auto;margin-right:auto;margin-bottom:0}
+  .res-stage{position:relative;height:clamp(300px,42vw,460px);margin:10px -20px 0;perspective:1100px;perspective-origin:60% 40%;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  .res-track{position:absolute;inset:0;transform-style:preserve-3d}
+  .res-track i{position:absolute;left:50%;top:50%;width:150px;aspect-ratio:3/5;margin:-125px 0 0 -75px;border-radius:10px;background:#eee center top/cover no-repeat;box-shadow:0 14px 30px rgba(43,43,43,.18);will-change:transform,opacity,filter}
+  .res-quote{position:relative;z-index:3;max-width:620px;margin:-70px auto 30px;padding:28px 30px 24px;border-radius:24px;background:#fff;box-shadow:0 26px 60px rgba(43,43,43,.16);text-align:center}
+  .res-badge{display:inline-block;margin-bottom:12px;padding:5px 12px;border-radius:999px;background:var(--grad);color:#fff;font-family:var(--font-title);font-weight:800;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
+  .res-quote blockquote{margin:0;font-family:var(--font-title);font-weight:800;font-size:clamp(1.15rem,2.4vw,1.55rem);line-height:1.35;color:#2B2B2B}
+  .res-quote mark{color:inherit;padding:0 .1em;background:linear-gradient(transparent 58%,rgba(234,112,165,.45) 58%,rgba(234,112,165,.45) 92%,transparent 92%)}
+  .res-quote figcaption{margin-top:14px;font-size:.84rem;color:var(--muted)}
+  .res-quote figcaption b{color:var(--pink)}
+  @media (max-width:900px){.res-stage{margin:6px -16px 0;height:300px}.res-track i{width:110px;margin:-92px 0 0 -55px}.res-quote{margin-top:-50px;padding:22px 18px 18px}}
   /* Frase do Sobre: "bonito" riscado à mão e "posicionar você" grifado com marca-texto, animados quando aparecem */
   body .light .about-quote.q-new{position:relative;margin-top:30px;padding:26px 28px 26px 74px;border:0;border-radius:22px;background:#fff;box-shadow:0 18px 44px rgba(43,43,43,.1);color:#2B2B2B;font-size:clamp(1.15rem,2.2vw,1.45rem);line-height:1.35}
   .about-quote.q-new::before{content:"“";position:absolute;left:20px;top:6px;font-family:Georgia,serif;font-size:4.6rem;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -973,28 +986,21 @@
       <!-- Os exemplos vêm do array EXAMPLES no script -->
       <div class="examples" id="examples"></div>
 
-      <div class="ba-wrap">
-        <div class="reveal">
-          <span class="eyebrow">Antes x depois</span>
+      <!-- RESULTADOS: fileira de portfólios em perspectiva (como a referência Deimos) + feedback real em destaque -->
+      <div class="res-wrap">
+        <div class="res-head reveal">
+          <span class="eyebrow">Resultados</span>
           <h2 class="section-title">A diferença que um portfólio <em>estratégico</em> faz</h2>
-          <p class="section-lead" style="margin-bottom:24px">Veja como um bom posicionamento visual transforma completamente a forma como uma creator é percebida pelas marcas. Escolha uma cliente:</p>
-          <!-- Botões das clientes: vêm do array ANTES_DEPOIS no script -->
-          <div class="ba-tabs" id="baTabs" role="tablist" aria-label="Escolha a cliente"></div>
-          <a href="#" class="btn btn-pink js-wa">Quero esse resultado</a>
+          <p class="section-lead">Portfólios pensados para posicionar, que começam a trabalhar pela creator antes mesmo de ficarem prontos.</p>
         </div>
-        <!-- ANTES (imagem longa que rola sozinha) x DEPOIS (vídeo do portfólio novo) -->
-        <div class="ba2 reveal" id="ba2">
-          <figure class="ba-phone">
-            <span class="ba-tag">Antes</span>
-            <div class="ba-screen"><img id="baAntes" class="ba-scroll" src="" alt="" loading="lazy"></div>
-          </figure>
-          <figure class="ba-phone is-after">
-            <span class="ba-tag">Depois</span>
-            <div class="ba-screen"><video id="baDepois" muted autoplay loop playsinline preload="metadata" aria-label=""></video></div>
-          </figure>
-        </div>
-      </div>
-    </div>
+        <div class="res-stage" id="resStage" aria-hidden="true"><div class="res-track" id="resTrack"></div></div>
+        <figure class="res-quote reveal">
+          <span class="res-badge">Feedback real de cliente</span>
+          <blockquote>“Lu! Meu portfólio nem está 100% pronto, e mesmo assim já coloquei em campanha e <mark>já fui aceita</mark> 😍”</blockquote>
+          <figcaption><b>Marjory</b> · creator UGC, São Paulo</figcaption>
+        </figure>
+        <div class="center reveal"><a href="#" class="btn btn-pink js-wa">Quero esse resultado</a></div>
+      </div>    </div>
   </section>
 
   <!-- ===================== 7. PARA QUEM É ===================== -->
@@ -1637,6 +1643,35 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   }
 })();
 
+/* Resultados: portfólios andando em perspectiva (do fundo à direita até a frente à esquerda, desfocando quando chegam perto) */
+(function(){
+  const stage = $("#resStage"), track = $("#resTrack"); if (!stage || !track) return;
+  const pics = CAPA_TRABALHOS.flatMap(t => [img2(t, t.destaque), img2(t, 1)]);
+  function img2(t, k){ return `img/capa/${t.id}-${k}.jpg`; }
+  const N = 16, items = [];
+  for (let i = 0; i < N; i++) { const el = document.createElement("i"); el.style.backgroundImage = `url("${pics[i % pics.length]}")`; track.appendChild(el); items.push(el); }
+  let off = 0, last = performance.now(), running = false;
+  function place(){
+    const W = stage.clientWidth, H = stage.clientHeight;
+    for (let i = 0; i < N; i++) {
+      let u = ((i / N) + off) % 1;                // 0 = lá no fundo, 1 = bem perto
+      const e = u * u;
+      const x = (0.62 - 1.35 * u) * W, y = (-0.2 + 0.32 * u) * H, z = -1500 + 1900 * e;
+      const blur = Math.max(0, (z - 120) / 60), o = Math.min(1, u * 6) * (u > 0.94 ? (1 - u) / 0.06 : 1);
+      const el = items[i];
+      el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,${z.toFixed(1)}px) rotateY(-28deg)`;
+      el.style.filter = blur > 0.3 ? `blur(${Math.min(14, blur).toFixed(1)}px)` : "none";
+      el.style.opacity = o.toFixed(3);
+      el.style.zIndex = Math.round(u * 100);
+    }
+  }
+  function frame(now){ if (!running) return; const dt = Math.min(.05, (now - last) / 1000); last = now; off = (off + dt * 0.035) % 1; place(); requestAnimationFrame(frame); }
+  place();
+  if (reduceMotion) return;
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting && !running) { running = true; last = performance.now(); requestAnimationFrame(frame); } else if (!en.isIntersecting) running = false; }), { threshold: 0.05 }).observe(stage);
+  } else { running = true; requestAnimationFrame(frame); }
+})();
 /* Frase do Sobre: risca e grifa quando aparece na tela */
 (function(){
   const q = $("#aboutQuote"); if (!q) return;
@@ -1761,6 +1796,7 @@ $("#faq").innerHTML = FAQ.map((f, i) => `
 /* Antes x depois: troca de cliente, rolagem automática do "antes" e vídeo do "depois" */
 (function(){
   const tabs = $("#baTabs"), img = $("#baAntes"), vid = $("#baDepois");
+  if (!tabs || !img || !vid) return;   // seção antiga substituída pelos resultados
   tabs.innerHTML = ANTES_DEPOIS.map((c, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-i="${i}">${esc(c.nome)}</button>`).join("");
   let visible = false;
   function fitScroll(){
