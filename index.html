@@ -903,26 +903,37 @@
   /* depoimentos: mesma fonte em todos (sem negrito nos de destaque) */
   .dep-top blockquote{font-family:var(--font-body)!important;font-weight:500!important;font-size:.95rem!important}
   /* print real do feedback da Marjory, como um "recorte" colado no cartão */
-  .res-print{display:block;width:100%;max-width:480px;height:auto;margin:4px auto 0;border-radius:18px;box-shadow:0 22px 40px -22px rgba(43,43,43,.45),0 2px 6px rgba(43,43,43,.08);transform:rotate(-1.2deg);border:6px solid #fff}
+  /* SOMBRAS sem recorte: espaço extra embaixo das fileiras para a sombra terminar suave */
+  .res-stage{box-sizing:content-box;padding-bottom:56px;margin-bottom:-56px}
+  .res-track{bottom:56px}
+  .dep-wrap{gap:0}
+  .dep-row{padding:16px 0 50px;margin-bottom:-22px}
+  @media (max-width:900px){.examples{padding-bottom:48px!important;margin-bottom:-20px!important}}
+  @media (min-width:901px){.res-quote{max-width:440px;margin:-250px 5% 34px auto;text-align:left;padding:26px 28px 22px}.res-quote blockquote{font-size:1.28rem}}
   /* crachá: foto limpa, sem brilho por cima */
   .idc-front.holo::after,.idc-front.holo::before{display:none!important}
   /* O QUE VOCÊ RECEBE no formato tradicional: só o texto, separado por partes */
-  #recebe:not(.deckmode) .features{grid-template-columns:repeat(3,1fr);gap:0 40px;max-width:1040px;margin:0 auto}
-  #recebe:not(.deckmode) .feature{grid-column:auto!important;background:none!important;border:0!important;border-top:1px solid rgba(43,43,43,.12)!important;border-radius:0!important;box-shadow:none!important;padding:22px 0 26px!important;transform:none!important}
+  #recebe:not(.deckmode) .features{grid-template-columns:repeat(3,1fr);gap:18px;max-width:1040px;margin:0 auto}
+  #recebe:not(.deckmode) .feature{grid-column:auto!important;background:rgb(247,245,248)!important;border:1px solid rgba(43,43,43,.06)!important;border-radius:20px!important;box-shadow:0 18px 34px -24px rgba(43,43,43,.35),0 2px 6px rgba(43,43,43,.04)!important;padding:24px 22px 22px!important;transform:none!important}
   #recebe:not(.deckmode) .feature .mock{display:none}
   #recebe:not(.deckmode) .feature h3{font-size:1.08rem;margin-bottom:8px}
   #recebe:not(.deckmode) .feature h3::before{border-radius:50%}
   #recebe:not(.deckmode) .feature p{font-size:.92rem;line-height:1.6}
-  @media (max-width:900px){#recebe:not(.deckmode) .features{grid-template-columns:1fr 1fr;gap:0 18px}#recebe:not(.deckmode) .feature{padding:16px 0 18px!important}#recebe:not(.deckmode) .feature h3{font-size:.9rem}#recebe:not(.deckmode) .feature p{font-size:.8rem}}
+  @media (max-width:900px){#recebe:not(.deckmode) .features{grid-template-columns:1fr 1fr;gap:10px}#recebe:not(.deckmode) .feature{padding:16px 14px 16px!important;border-radius:16px!important}#recebe:not(.deckmode) .feature h3{font-size:.9rem}#recebe:not(.deckmode) .feature p{font-size:.8rem}}
   /* COMPARADOR antes x depois com acabamento realista */
   .cmp{border:0!important;border-radius:26px!important;box-shadow:0 40px 70px -36px rgba(43,43,43,.55),0 0 0 8px #fff,0 0 0 9px rgba(43,43,43,.06)!important}
   .cmp-tag{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
   .cmp-l{background:rgba(43,43,43,.6)!important}
-  .cmp-text{padding:28px 28px 24px;border-radius:24px;background:rgb(247,245,248);border:1px solid rgba(43,43,43,.06);box-shadow:0 30px 50px -30px rgba(43,43,43,.4),0 2px 6px rgba(43,43,43,.05)}
   .cmp-tabs button{background:#fff;border:1px solid rgba(43,43,43,.1);box-shadow:0 4px 10px rgba(43,43,43,.06)}
   .cmp-tabs button[aria-selected="true"]{background:#2B2B2B;color:#fff;border-color:#2B2B2B}
   .cmp-track{background:rgba(43,43,43,.08)}
-  .cmp-thumb{background:#2B2B2B;box-shadow:0 4px 10px rgba(43,43,43,.25)}
+  .cmp-track{background:rgba(199,45,103,.12)}
+  .cmp-thumb{overflow:hidden;background:linear-gradient(180deg,#EA70A5,#C72D67);box-shadow:0 6px 14px rgba(199,45,103,.38),inset 0 1px 0 rgba(255,255,255,.45)}
+  .cmp-thumb::after{content:"";position:absolute;left:-20%;right:-20%;height:40%;top:-50%;background:linear-gradient(180deg,transparent,rgba(255,255,255,.75),transparent);transform:skewY(-18deg);animation:thumbShine 3.2s ease-in-out infinite}
+  .cmp-track::before{content:"";position:absolute;top:-10px;bottom:-10px;left:-16px;right:-16px}
+  @media (hover:none){.cmp-thumb{left:-6px;right:-6px;min-height:46px}}
+  @keyframes thumbShine{0%{top:-50%}55%,100%{top:130%}}
+  @media (prefers-reduced-motion:reduce){.cmp-thumb::after{display:none}}
   /* Animação de entrada */
   .js .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
   .js .reveal.visible{opacity:1;transform:none}
@@ -1148,14 +1159,13 @@
       </div>
       <div class="about-text reveal">
         <span class="eyebrow">Quem vai criar o seu portfólio</span>
-        <h2 class="section-title" id="sobre-title">Prazer, eu sou a <em>Luana</em></h2>
-        <p>Sou <strong>formada em Marketing</strong> e já criei portfólios para <strong>mais de 90 creators</strong>.</p>
+        <h2 class="section-title" id="sobre-title">Seu portfólio não precisa ser só bonito. Ele precisa <em>posicionar você.</em></h2>
+        <p>Prazer, eu sou a <strong>Luana</strong>! Sou <strong>formada em Marketing</strong> e já criei portfólios para <strong>mais de 90 creators</strong>.</p>
         <p>Meu trabalho é transformar o seu portfólio em uma apresentação estratégica do seu conteúdo: organizada, personalizada e pensada para aumentar a percepção de profissionalismo e autoridade diante das marcas.</p>
         <div class="about-stats">
           <span class="pill glass"><b>+90</b> portfólios criados</span>
           <span class="pill glass">Formação em <b>Marketing</b></span>
         </div>
-        <blockquote class="about-quote q-new" id="aboutQuote"><span class="q-line1">Seu portfólio não precisa ser só <s class="q-strike">bonito</s>.</span><span class="q-line2">Ele precisa <mark class="q-mark">posicionar você.</mark></span><span class="q-tip" aria-hidden="true">✎ passe o lápis no “bonito”</span></blockquote>
       </div>
     </div>
   </section>
@@ -1195,7 +1205,7 @@
         <div class="res-stage" id="resStage" aria-hidden="true"><div class="res-track" id="resTrack"></div></div>
         <figure class="res-quote reveal">
           <span class="res-badge">Feedback real de cliente</span>
-          <img class="res-print" src="img/print-marjory.jpg" alt="Print da mensagem: Lu! Meu portfólio nem está 100% pronto, e mesmo assim já coloquei em campanha e já fui aceita" width="1024" height="276" loading="lazy">
+          <blockquote>“Lu! Meu portfólio nem está 100% pronto, e mesmo assim já coloquei em campanha e <mark>já fui aceita</mark> 😍”</blockquote>
           <figcaption><b>Marjory</b> · creator UGC, São Paulo</figcaption>
         </figure>
         <div class="center reveal"><a href="#" class="btn btn-pink js-wa">Quero esse resultado</a></div>
@@ -1828,10 +1838,18 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   });
   let drag = false;
   const at = e => { const r = cmp.getBoundingClientRect(); set((e.clientX - r.left) / r.width * 100); };
-  cmp.addEventListener("pointerdown", e => { drag = true; cmp.classList.remove("hint"); try { cmp.setPointerCapture(e.pointerId); } catch (_) {} at(e); });
-  cmp.addEventListener("pointermove", e => { if (drag) at(e); });
-  cmp.addEventListener("pointerup", () => drag = false);
-  cmp.addEventListener("pointercancel", () => drag = false);
+  // no celular: só move a linha se o dedo andar para os lados; deslizar para cima/baixo rola a página normalmente
+  let pend = null;
+  const go = e => { drag = true; pend = null; cmp.classList.remove("hint"); try { cmp.setPointerCapture(e.pointerId); } catch (_) {} at(e); };
+  cmp.addEventListener("pointerdown", e => { if (e.pointerType === "mouse") go(e); else pend = { x: e.clientX, y: e.clientY }; });
+  cmp.addEventListener("pointermove", e => {
+    if (drag) { at(e); return; }
+    if (!pend) return;
+    const dx = Math.abs(e.clientX - pend.x), dy = Math.abs(e.clientY - pend.y);
+    if (dx > 10 && dx > dy * 1.4) go(e); else if (dy > 10) pend = null;
+  });
+  cmp.addEventListener("pointerup", e => { if (pend && e.pointerType !== "mouse") go(e); drag = false; pend = null; });
+  cmp.addEventListener("pointercancel", () => { drag = false; pend = null; });
   range.addEventListener("input", () => { cmp.classList.remove("hint"); set(+range.value); });
   // movimento de dica: mostra que dá para arrastar
   function hint(){
@@ -1876,7 +1894,7 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   }
   let off = 0, speed = 0.085, target = 0.085, time = 0, last = performance.now(), running = false;
   function place(){
-    const W = stage.clientWidth, H = stage.clientHeight, base = Math.min(150, W * 0.2);
+    const W = stage.clientWidth, H = track.clientHeight, base = Math.min(150, W * 0.2);
     for (let i = 0; i < N; i++) {
       const u = ((i / N) + off) % 1;                       // 0 = pequenininho à direita, 1 = grande na frente à esquerda
       const g = Math.pow(u, 2.1);
