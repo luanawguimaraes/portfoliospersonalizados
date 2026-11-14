@@ -653,7 +653,7 @@
   .idcard[hidden]{display:none}
   .about-visual.cartao{margin-bottom:46px}
   .about-visual.cartao .voice{bottom:-50px;right:-34px}
-  @media (max-width:900px){.about-visual.cartao .voice{right:-6px;bottom:-54px}}
+  @media (max-width:900px){.about-visual.cartao{margin-bottom:70px}.about-visual.cartao .voice{right:-6px;bottom:-74px}}
   .idcard{position:relative;z-index:2;aspect-ratio:4/5.4;perspective:1400px;cursor:pointer;outline:none}
   .idc-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.2,.85,.25,1);transform:rotate(-2deg)}
   .idcard.flip .idc-inner{transform:rotateY(180deg) rotate(2deg)}
@@ -805,6 +805,37 @@
     #recebe.deckmode .deck .feature .mock{height:160px!important}
     .deck-ctrl,.deck-hint{grid-column:1}
   }
+  /* Acabamento realista (igual aos cartões do portfólio da Luana): cartão claro, sombra natural e brilho holográfico que segue o mouse */
+  .holo::before{content:"";position:absolute;inset:0;z-index:4;border-radius:inherit;pointer-events:none;mix-blend-mode:multiply;opacity:.38;transition:opacity .4s;
+    background:linear-gradient(125deg,#FFC9E0 0%,#CADBFF 22%,#FFF0B3 44%,#C4F1E1 66%,#E8C9FF 84%,#FFC9E0 100%) var(--mx,30%) var(--my,30%)/260% 260%}
+  .holo::after{content:"";position:absolute;inset:0;z-index:5;border-radius:inherit;pointer-events:none;mix-blend-mode:soft-light;opacity:.9;
+    background:radial-gradient(circle at var(--mx,30%) var(--my,30%),rgba(255,255,255,.9),rgba(255,255,255,0) 55%)}
+  .holo:hover::before{opacity:.62}
+  /* cartas do baralho */
+  #recebe.deckmode .deck .feature{background:rgb(247,245,248)!important;border:1px solid rgba(43,43,43,.06)!important;border-radius:20px;padding:16px 16px 14px;display:flex;flex-direction:column;
+    box-shadow:0 30px 50px -28px rgba(43,43,43,.45),0 2px 6px rgba(43,43,43,.06)!important}
+  #recebe.deckmode .deck .feature .mock{display:none}
+  #recebe.deckmode .deck .feature::after{display:block}
+  .dk-top,.dk-foot{position:relative;z-index:6;display:flex;justify-content:space-between;align-items:center;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgb(142,135,146)}
+  .dk-photo{position:relative;z-index:3;flex:1;min-height:0;margin:10px 0 12px;border-radius:14px;background:#eee center 18%/cover no-repeat;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+  #recebe.deckmode .deck .feature h3{position:relative;z-index:6;font-size:1.15rem;margin-bottom:4px}
+  #recebe.deckmode .deck .feature h3::before{display:none}
+  #recebe.deckmode .deck .feature p{position:relative;z-index:6;font-size:.84rem;margin-bottom:10px}
+  .dk-foot{padding-top:10px;border-top:1px solid rgba(43,43,43,.1);color:#2B2B2B}
+  .dk-foot i{width:24px;height:24px;border-radius:50%;background:#2B2B2B;display:grid;place-items:center;color:#fff;font-style:normal;font-size:.75rem;letter-spacing:0}
+  @media (max-width:900px){#recebe.deckmode .features.deck{height:400px}#recebe.deckmode .deck .feature p{font-size:.78rem}}
+  /* cartão do Sobre: plástico com brilho holográfico, presilha metálica e verso iridescente */
+  .idcard::before{content:"";position:absolute;z-index:6;left:50%;top:-12px;width:30px;height:20px;border-radius:9px 9px 5px 5px;transform:translateX(-50%);background:linear-gradient(#ECE9EE,#C9C3CC);box-shadow:inset 0 -2px 0 rgba(0,0,0,.08),0 2px 4px rgba(0,0,0,.12)}
+  .idc-face{border:1px solid rgba(43,43,43,.06);box-shadow:0 34px 60px -30px rgba(43,43,43,.5),0 2px 6px rgba(43,43,43,.06)!important}
+  .idc-front{background:rgb(247,245,248)}
+  .idc-front.holo::before{opacity:.16}.idc-front.holo::after{opacity:.45}.idcard:hover .idc-front.holo::before{opacity:.32}
+  .idc-back{background:linear-gradient(125deg,#FFD3E6 0%,#DCE6FF 22%,#FFF3C4 44%,#D5F5EA 66%,#F1D6FF 84%,#FFD3E6 100%) var(--mx,30%) var(--my,30%)/260% 260%!important;color:#2B2B2B!important}
+  .idc-back .idc-kicker{color:#8e8792;opacity:1}
+  .idc-back .idc-list li{background:rgba(255,255,255,.6);color:#2B2B2B}
+  .idc-back .idc-list b{color:var(--pink)}
+  .idc-back .idc-tags li{background:#2B2B2B;color:#fff}
+  .idc-back .idc-sign{border-top-color:rgba(43,43,43,.15)}
+  .idc-back .idc-sign small{color:#8e8792}
   /* Animação de entrada */
   .js .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
   .js .reveal.visible{opacity:1;transform:none}
@@ -996,7 +1027,7 @@
         <!-- Cartão de designer que vira (a foto antiga abre com index.html?sobre=foto) -->
         <div class="idcard" id="idcard" hidden tabindex="0" role="button" aria-label="Cartão da Luana: toque para ver o verso">
           <div class="idc-inner">
-            <div class="idc-face idc-front">
+            <div class="idc-face idc-front holo">
               <i class="idc-slot" aria-hidden="true"></i>
               <div class="idc-top"><b>Luana Guimarães</b><small>Estúdio de portfólios</small></div>
               <div class="idc-photo"><img src="img/luana-sobre.jpg" alt="" loading="lazy"></div>
@@ -1004,7 +1035,7 @@
               <div class="idc-foot"><span>ID · 0090</span><i class="idc-bar" aria-hidden="true"></i></div>
               <span class="idc-hint" aria-hidden="true">toque para virar ↻</span>
             </div>
-            <div class="idc-face idc-back">
+            <div class="idc-face idc-back holo">
               <i class="idc-slot" aria-hidden="true"></i>
               <span class="idc-kicker">Credenciais</span>
               <ul class="idc-list">
@@ -1874,7 +1905,13 @@ $("#features").innerHTML = FEATURES.map((f, i) => `
   const sec = $("#recebe"), deck = $("#features"); if (!sec || !deck) return;
   sec.classList.add("deckmode"); deck.classList.add("deck");
   const cards = [...deck.querySelectorAll(".feature")];
-  cards.forEach(c => c.classList.remove("reveal"));
+  const FOTOS = ["img/capa/julia-4.jpg", "img/capa/camila-santos-2.jpg", "img/capa/mari-bicalho-3.jpg", "img/capa/mayara-3.jpg", "img/capa/duda-2.jpg", "img/capa/manoela-5.jpg"];
+  cards.forEach((c, i) => {
+    c.classList.remove("reveal"); c.classList.add("holo");
+    c.insertAdjacentHTML("afterbegin", `<div class="dk-top"><span>Benefício ${pad(i + 1)}</span><span>Luana G.</span></div><div class="dk-photo" style="background-image:url(&quot;${FOTOS[i] || FOTOS[0]}&quot;)"></div>`);
+    c.insertAdjacentHTML("beforeend", `<div class="dk-foot"><span>Portfólio personalizado</span><i aria-hidden="true">→</i></div>`);
+    holoFollow(c);
+  });
   const ctrl = document.createElement("div"); ctrl.className = "deck-ctrl";
   ctrl.innerHTML = `<button type="button" class="deck-btn" data-d="-1" aria-label="Carta anterior">‹</button><span class="deck-count" aria-live="polite"></span><button type="button" class="deck-btn" data-d="1" aria-label="Próxima carta">›</button>`;
   deck.after(ctrl);
@@ -1922,6 +1959,12 @@ $("#features").innerHTML = FEATURES.map((f, i) => `
     io.observe(deck);
   }
 })();
+/* Brilho holográfico que segue o dedo/mouse nos cartões realistas */
+function holoFollow(el, target){
+  const set = e => { const r = (target || el).getBoundingClientRect(); const x = ((e.clientX - r.left) / r.width) * 100, y = ((e.clientY - r.top) / r.height) * 100; el.style.setProperty("--mx", x.toFixed(1) + "%"); el.style.setProperty("--my", y.toFixed(1) + "%"); };
+  el.addEventListener("pointermove", set);
+}
+(function(){ const c = $("#idcard"); if (!c) return; holoFollow(c); c.querySelectorAll(".idc-face").forEach(f => holoFollow(f, c)); })();
 /* Exemplos */
 $("#examples").innerHTML = EXAMPLES.map((e, i) => {
   const inner = `${mediaBlock(e.cover, "print do portfólio 9:16", "Portfólio de " + e.name, i % 2 ? "alt" : "")}
