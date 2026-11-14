@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Comparar testes | Luana Guimarães</title>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#FEF8E7;color:#2B2B2B;font-family:"Open Sans",system-ui,sans-serif;padding:28px 16px 60px}
+  header{max-width:1200px;margin:0 auto 26px;text-align:center}
+  h1{font-family:Mulish,sans-serif;font-weight:900;font-size:clamp(1.6rem,4vw,2.4rem);margin:0 0 8px}
+  h1 em{font-style:normal;color:#C72D67}
+  header p{margin:0;color:#555050}
+  .tabs{display:flex;justify-content:center;gap:8px;margin:18px 0 0;flex-wrap:wrap}
+  .tabs button{padding:10px 18px;border-radius:999px;border:1.5px solid rgba(199,45,103,.35);background:#fff;font-family:Mulish,sans-serif;font-weight:800;cursor:pointer}
+  .tabs button[aria-selected="true"]{background:linear-gradient(90deg,#C72D67,#EA70A5);color:#fff;border-color:transparent}
+  .views{display:none;max-width:1400px;margin:0 auto;grid-template-columns:1fr 1fr;gap:18px}
+  .views.on{display:grid}
+  .col h2{font-family:Mulish,sans-serif;font-weight:900;font-size:1rem;margin:0 0 8px;display:flex;align-items:center;gap:8px}
+  .col h2 b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#2B2B2B;color:#fff;font-size:.8rem}
+  .col.test h2 b{background:linear-gradient(90deg,#C72D67,#EA70A5)}
+  .frame{position:relative;height:720px;border-radius:18px;overflow:hidden;border:4px solid #fff;box-shadow:0 18px 40px rgba(43,43,43,.14);background:#fff}
+  .frame iframe{position:absolute;left:0;top:0;width:1280px;height:1040px;border:0;transform-origin:0 0}
+  .open{display:inline-block;margin-top:8px;font-family:Mulish,sans-serif;font-weight:800;font-size:.82rem;color:#C72D67;text-decoration:none}
+  @media (max-width:820px){.views{grid-template-columns:1fr}.frame{height:620px}}
+</style>
+</head>
+<body>
+  <header>
+    <h1>Comparar os <em>testes</em></h1>
+    <p>À esquerda, como o site está hoje. À direita, o teste. Dá para mexer nos dois (arrastar, passar o mouse, clicar).</p>
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" aria-selected="true" data-v="capa">Capa: nuvem x anel</button>
+      <button type="button" role="tab" aria-selected="false" data-v="sobre">Sobre: foto x cartão</button>
+    </div>
+  </header>
+
+  <section class="views on" id="v-capa">
+    <div class="col"><h2><b>A</b>Atual: nuvem de trabalhos</h2><div class="frame"><iframe data-src="index.html?cmp=1" title="Capa atual"></iframe></div><a class="open" href="index.html" target="_blank">Abrir em tela cheia ↗</a></div>
+    <div class="col test"><h2><b>B</b>Teste: anel de cartões</h2><div class="frame"><iframe data-src="index.html?capa=anel&cmp=1" title="Capa com anel"></iframe></div><a class="open" href="index.html?capa=anel" target="_blank">Abrir em tela cheia ↗</a></div>
+  </section>
+
+  <section class="views" id="v-sobre">
+    <div class="col"><h2><b>A</b>Atual: foto com moldura</h2><div class="frame"><iframe data-src="index.html?cmp=1#sobre" title="Sobre atual"></iframe></div><a class="open" href="index.html#sobre" target="_blank">Abrir em tela cheia ↗</a></div>
+    <div class="col test"><h2><b>B</b>Teste: cartão que vira</h2><div class="frame"><iframe data-src="index.html?sobre=cartao&cmp=1#sobre" title="Sobre com cartão"></iframe></div><a class="open" href="index.html?sobre=cartao#sobre" target="_blank">Abrir em tela cheia ↗</a></div>
+  </section>
+
+<script>
+  // cada quadro mostra o site em largura de computador (1280px), reduzido para caber
+  function fit(){ document.querySelectorAll(".frame").forEach(f => { const i = f.querySelector("iframe"); const s = f.clientWidth / 1280; i.style.transform = `scale(${s})`; i.style.height = (f.clientHeight / s) + "px"; }); }
+  function load(view){ document.querySelectorAll(`#v-${view} iframe`).forEach(i => { if (!i.src) i.src = i.dataset.src; }); }
+  document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => {
+    document.querySelectorAll(".tabs button").forEach(x => x.setAttribute("aria-selected", x === b));
+    document.querySelectorAll(".views").forEach(v => v.classList.toggle("on", v.id === "v-" + b.dataset.v));
+    load(b.dataset.v); fit();
+  }));
+  window.addEventListener("resize", fit); load("capa"); fit();
+</script>
+</body>
+</html>
