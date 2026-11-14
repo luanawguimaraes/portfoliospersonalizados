@@ -33,6 +33,7 @@
     <p>À esquerda, como o site está hoje. À direita, o teste. Dá para mexer nos dois (arrastar, passar o mouse, clicar).</p>
     <div class="tabs" role="tablist">
       <button type="button" role="tab" aria-selected="true" data-v="capa">Capa: nuvem x anel</button>
+      <button type="button" role="tab" aria-selected="false" data-v="ref">Capa: nuvem x igual à referência</button>
       <button type="button" role="tab" aria-selected="false" data-v="sobre">Sobre: foto x cartão</button>
     </div>
   </header>
@@ -40,6 +41,11 @@
   <section class="views on" id="v-capa">
     <div class="col"><h2><b>A</b>Atual: nuvem de trabalhos</h2><div class="frame"><iframe data-src="index.html?cmp=1" title="Capa atual"></iframe></div><a class="open" href="index.html" target="_blank">Abrir em tela cheia ↗</a></div>
     <div class="col test"><h2><b>B</b>Teste: anel de cartões</h2><div class="frame"><iframe data-src="index.html?capa=anel&cmp=1" title="Capa com anel"></iframe></div><a class="open" href="index.html?capa=anel" target="_blank">Abrir em tela cheia ↗</a></div>
+  </section>
+
+  <section class="views" id="v-ref">
+    <div class="col"><h2><b>A</b>Atual: nuvem de trabalhos</h2><div class="frame"><iframe data-src="index.html?cmp=2" title="Capa atual"></iframe></div><a class="open" href="index.html" target="_blank">Abrir em tela cheia ↗</a></div>
+    <div class="col test"><h2><b>B</b>Teste: igual à referência</h2><div class="frame"><iframe data-src="index.html?capa=ref&cmp=1" title="Capa igual à referência"></iframe></div><a class="open" href="index.html?capa=ref" target="_blank">Abrir em tela cheia ↗</a></div>
   </section>
 
   <section class="views" id="v-sobre">
@@ -50,7 +56,8 @@
 <script>
   // cada quadro mostra o site em largura de computador (1280px), reduzido para caber
   function fit(){ document.querySelectorAll(".frame").forEach(f => { const i = f.querySelector("iframe"); const s = f.clientWidth / 1280; i.style.transform = `scale(${s})`; i.style.height = (f.clientHeight / s) + "px"; }); }
-  function load(view){ document.querySelectorAll(`#v-${view} iframe`).forEach(i => { if (!i.src) i.src = i.dataset.src; }); }
+  // recarrega o quadro ao abrir a aba, para a animação de entrada começar do início
+  function load(view){ document.querySelectorAll(`#v-${view} iframe`).forEach(i => { i.src = i.dataset.src + "&t=" + Date.now(); }); }
   document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => {
     document.querySelectorAll(".tabs button").forEach(x => x.setAttribute("aria-selected", x === b));
     document.querySelectorAll(".views").forEach(v => v.classList.toggle("on", v.id === "v-" + b.dataset.v));

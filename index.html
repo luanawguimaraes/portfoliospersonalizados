@@ -594,6 +594,13 @@
   .stage.anel .cloud i{border:2px solid #fff;box-shadow:0 10px 22px rgba(43,43,43,.18)}
   .stage.anel .feat{left:36.5%;width:27%;top:17%}
   .stage.anel .feat-tags{left:36.5%;width:27%;top:17%}
+  /* TESTE: igual à referência (index.html?capa=ref): fundo limpo, sem brilho, cartões pequenos e textos finos */
+  .stage.refmode{background:none}
+  .stage.refmode .cloud i{border-radius:3px;box-shadow:0 4px 12px rgba(43,43,43,.1)}
+  .stage.refmode .feat,.stage.refmode .feat-tags{display:none}
+  .ref-label{position:absolute;z-index:3;top:45%;transform:translateY(-50%);font-family:"Open Sans",sans-serif;font-size:.66rem;color:#2B2B2B;letter-spacing:.01em;transition:opacity .6s ease;pointer-events:none;white-space:nowrap}
+  .ref-l{left:0}.ref-c{left:50%;transform:translate(-50%,-50%);font-weight:700}.ref-r{right:0}
+  .stage.ref-cloud .ref-label{opacity:0}
   /* TESTE: cartão de designer que vira (index.html?sobre=cartao) */
   .about-visual.cartao .about-photo,.about-visual.cartao .about-sticker{display:none}
   .about-visual.cartao .about-back{transform:rotate(6deg) translate(18px,14px)}
@@ -1326,6 +1333,12 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   const pics = all.map((_, i) => all[(i * step) % all.length]);
   const anel = /[?&]capa=anel/.test(location.search);   // TESTE: anel de cartões (index.html?capa=anel)
   if (anel) stage.classList.add("anel");
+  // TESTE: igual à referência (index.html?capa=ref): anel com 10 trabalhos > todos se juntam no centro > explodem numa nuvem 3D
+  const refMode = /[?&]capa=ref/.test(location.search);
+  if (refMode) {
+    stage.classList.add("refmode");
+    [["ref-l", "Luana Guimarães"], ["ref-c", "L.G"], ["ref-r", "Portfólios para creators"]].forEach(([c, txt]) => { const s = document.createElement("span"); s.className = "ref-label " + c; s.textContent = txt; stage.appendChild(s); });
+  }
   const N = anel ? 18 : Math.min(48, Math.max(22, pics.length)), items = [], pts = [];
   for (let i = 0; i < N; i++) {
     const p = pics[i % pics.length], el = document.createElement("i");
@@ -1336,12 +1349,47 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   }
   const soNuvem = !CAPA_COM_FOTO;
   let W = 0, H = 0, iw = 0, ih = 0;
-  const measure = () => { W = stage.clientWidth; H = stage.clientHeight; iw = W * (anel ? 0.105 : 0.13); ih = iw * 5 / 3; };
+  const measure = () => { W = stage.clientWidth; H = stage.clientHeight; iw = W * (refMode ? 0.085 : anel ? 0.105 : 0.13); ih = iw * 5 / 3; };
   measure(); window.addEventListener("resize", measure);
 
   let ang = 0.6, vel = 0, op = 1, opTarget = 1, intro = reduceMotion ? 1 : 0, last = performance.now(), running = false;
   let hovering = false, dragging = false;
   const ease = x => 1 - Math.pow(1 - x, 3);
+  let refT0 = null;
+  const lerp = (a, b, k) => a + (b - a) * k, clamp01 = x => Math.max(0, Math.min(1, x)), eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  function drawRef(){
+    const now = performance.now(); if (refT0 === null) refT0 = now;
+    const t = (now - refT0) / 1000, cx = W * 0.5, cy = H * 0.45, RING = 10;
+    const kIn = eio(clamp01(t / 0.8));               // anel se abre do centro
+    const kJoin = eio(clamp01((t - 2.6) / 0.7));     // todos vão para o centro
+    const kBurst = eio(clamp01((t - 3.5) / 1.3));    // explodem na nuvem 3D
+    stage.classList.toggle("ref-cloud", t > 3.3);
+    const Rr = W * 0.27 * kIn, rot = t * 0.55;
+    const R = W * 0.46, tilt = -0.32, ca = Math.cos(ang), sa = Math.sin(ang), ct = Math.cos(tilt), st = Math.sin(tilt);
+    for (let i = 0; i < N; i++) {
+      const el = items[i];
+      // posição na nuvem 3D
+      const p = pts[i], x1 = p.x * ca + p.z * sa, z1 = -p.x * sa + p.z * ca;
+      const y2 = p.y * ct - z1 * st, z2 = p.y * st + z1 * ct, d = (z2 + 1) / 2;
+      const cxC = cx + x1 * R, cyC = cy + y2 * R * 0.82, sC = 0.5 + 0.5 * d, oC = 0.3 + 0.7 * d;
+      // posição no anel (só os 10 primeiros aparecem nele)
+      const a = rot + i / RING * Math.PI * 2, inRing = i < RING;
+      const xR = cx + Math.cos(a) * Rr, yR = cy + Math.sin(a) * Rr * 0.92, ryR = ((a * 180 / Math.PI) * 2 + i * 9) % 360;
+      let x, y, s, o, ry;
+      if (t < 3.5) {
+        x = lerp(inRing ? xR : cx, cx, kJoin); y = lerp(inRing ? yR : cy, cy, kJoin);
+        s = lerp(0.62, 0.95, kJoin); ry = lerp(inRing ? ryR : 0, 0, kJoin);
+        o = inRing ? (i === 0 || kJoin < 1 ? 1 : 0) * Math.min(1, t * 2.5) : 0;
+        if (kJoin >= 1 && i !== 0) o = 0;
+      } else {
+        x = lerp(cx, cxC, kBurst); y = lerp(cy, cyC, kBurst); s = lerp(0.95, sC, kBurst); ry = 0;
+        o = lerp(i === 0 ? 1 : 0, oC, kBurst);
+      }
+      el.style.transform = `translate(${x - iw / 2}px,${y - ih / 2}px) perspective(700px) rotateY(${ry.toFixed(1)}deg) scale(${s.toFixed(3)})`;
+      el.style.opacity = (o * op).toFixed(3);
+      el.style.zIndex = t < 3.5 ? 100 + (i === 0 ? 50 : 0) : 100 + Math.round(z2 * 100);
+    }
+  }
   function drawAnel(e){
     // anel plano em volta do centro; cada cartão gira em torno de si (como moeda) enquanto anda no círculo
     const R = W * 0.43 * (0.05 + 0.95 * e), cx = W * 0.5, cy = H * 0.45, spin = (1 - e) * 2.4;
@@ -1357,6 +1405,7 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
   }
   function draw(){
     const e = ease(Math.min(1, intro));
+    if (refMode) { drawRef(); return; }
     if (anel) { drawAnel(e); return; }
     const R = W * (soNuvem ? 0.46 : 0.43) * (0.08 + 0.92 * e), cx = W * 0.5, cy = H * (soNuvem ? 0.45 : 0.4);
     const tilt = -0.32, ca = Math.cos(ang), sa = Math.sin(ang), ct = Math.cos(tilt), st = Math.sin(tilt);
@@ -1404,7 +1453,7 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
     tagsBox.classList.remove("on"); feat.classList.remove("on"); opTarget = 1; idx++;
     timer = setTimeout(() => showFeat(idx % CAPA_TRABALHOS.length), 1700);
   }
-  function startCycle(){ if (!timer) timer = setTimeout(() => showFeat(idx % CAPA_TRABALHOS.length), 1900); }
+  function startCycle(){ if (refMode) return; if (!timer) timer = setTimeout(() => showFeat(idx % CAPA_TRABALHOS.length), 1900); }
 
   // passar o mouse no destaque: o portfólio inteiro rola dentro dele
   function resetFull(){ fFull.classList.remove("on"); fFullImg.style.transition = "none"; fFullImg.style.transform = "translateY(0)"; }
