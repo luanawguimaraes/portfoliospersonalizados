@@ -599,6 +599,19 @@
   .ref-l{left:14px}.ref-r{right:14px;color:var(--pink)}
   @media (max-width:900px){.ref-label{font-size:.78rem}.ref-l{left:18px}.ref-r{right:18px}}
   .stage.ref-cloud .ref-label{opacity:0}
+  /* Frase do Sobre: "bonito" riscado à mão e "posicionar você" grifado com marca-texto, animados quando aparecem */
+  body .light .about-quote.q-new{position:relative;margin-top:30px;padding:26px 28px 26px 74px;border:0;border-radius:22px;background:#fff;box-shadow:0 18px 44px rgba(43,43,43,.1);color:#2B2B2B;font-size:clamp(1.15rem,2.2vw,1.45rem);line-height:1.35}
+  .about-quote.q-new::before{content:"“";position:absolute;left:20px;top:6px;font-family:Georgia,serif;font-size:4.6rem;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .about-quote.q-new span{display:block}
+  .q-line1{font-weight:600;color:#555050;font-size:.86em;margin-bottom:4px}
+  .q-line2{font-weight:900;letter-spacing:-.01em}
+  .q-strike{position:relative;text-decoration:none;color:#9a9090}
+  .q-strike::after{content:"";position:absolute;left:-4%;right:-4%;top:52%;height:3px;border-radius:3px;background:var(--pink);transform:rotate(-6deg) scaleX(0);transform-origin:left center;transition:transform .55s cubic-bezier(.6,0,.2,1) .25s}
+  .q-mark{color:inherit;padding:0 .12em;background:linear-gradient(transparent 58%,rgba(234,112,165,.42) 58%,rgba(234,112,165,.42) 92%,transparent 92%) no-repeat 0 0/0% 100%;transition:background-size .8s cubic-bezier(.6,0,.2,1) .85s}
+  .about-quote.in .q-strike::after{transform:rotate(-6deg) scaleX(1)}
+  .about-quote.in .q-mark{background-size:100% 100%}
+  @media (prefers-reduced-motion:reduce){.q-strike::after{transition:none;transform:rotate(-6deg) scaleX(1)}.q-mark{transition:none;background-size:100% 100%}}
+
   /* Cartão de designer que vira (Sobre) */
   .about-visual.cartao .about-photo,.about-visual.cartao .about-sticker{display:none}
   .about-visual.cartao .about-back{transform:rotate(6deg) translate(18px,14px)}
@@ -920,7 +933,7 @@
           <span class="pill glass"><b>+90</b> portfólios criados</span>
           <span class="pill glass">Formação em <b>Marketing</b></span>
         </div>
-        <blockquote class="about-quote glass">Seu portfólio não precisa ser só bonito. <em>Ele precisa posicionar você.</em></blockquote>
+        <blockquote class="about-quote q-new" id="aboutQuote"><span class="q-line1">Seu portfólio não precisa ser só <s class="q-strike">bonito</s>.</span><span class="q-line2">Ele precisa <mark class="q-mark">posicionar você.</mark></span></blockquote>
       </div>
     </div>
   </section>
@@ -1612,6 +1625,14 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
     const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { card.classList.add("wiggle"); setTimeout(() => card.classList.remove("wiggle"), 1500); io.disconnect(); } }), { threshold: .6 });
     io.observe(card);
   }
+})();
+
+/* Frase do Sobre: risca e grifa quando aparece na tela */
+(function(){
+  const q = $("#aboutQuote"); if (!q) return;
+  if (!("IntersectionObserver" in window)) { q.classList.add("in"); return; }
+  const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { q.classList.add("in"); io.disconnect(); } }), { threshold: .7 });
+  io.observe(q);
 })();
 
 /* Áudio de cliente em cima da foto do Sobre (estilo mensagem de voz) */
