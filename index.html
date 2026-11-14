@@ -519,6 +519,11 @@
   .voice-time{flex:none;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
   @media (max-width:900px){.voice{right:-8px;bottom:18px}.about-sticker{left:-6px}}
 
+  /* O que você recebe: subtítulo em uma linha no computador e cartões sem a mancha de degradê no canto */
+  #recebe .section-lead{max-width:none}
+  @media (min-width:901px){#recebe .section-lead{white-space:nowrap}}
+  #recebe .feature::after{display:none}
+
   /* "Se você não aguenta mais" e "Imagine se": tudo um pouco menor */
   #dores .two-cols{gap:20px;max-width:1040px;margin-left:auto;margin-right:auto;margin-top:clamp(56px,8vw,96px)}
   #dores .list-card{padding:28px 26px}
