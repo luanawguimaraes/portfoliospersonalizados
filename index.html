@@ -590,6 +590,45 @@
   @media (min-width:901px){#recebe .section-lead{white-space:nowrap}}
   #recebe .feature::after{display:none}
 
+  /* TESTE: cartão de designer que vira (index.html?sobre=cartao) */
+  .about-visual.cartao .about-photo,.about-visual.cartao .about-sticker{display:none}
+  .about-visual.cartao .about-back{transform:rotate(6deg) translate(18px,14px)}
+  .idcard[hidden]{display:none}
+  .about-visual.cartao{margin-bottom:46px}
+  .about-visual.cartao .voice{bottom:-50px;right:-34px}
+  @media (max-width:900px){.about-visual.cartao .voice{right:-6px;bottom:-54px}}
+  .idcard{position:relative;z-index:2;aspect-ratio:4/5.4;perspective:1400px;cursor:pointer;outline:none}
+  .idc-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.2,.85,.25,1);transform:rotate(-2deg)}
+  .idcard.flip .idc-inner{transform:rotateY(180deg) rotate(2deg)}
+  @media (hover:hover){.idcard:hover .idc-inner{transform:rotateY(180deg) rotate(2deg)}}
+  .idcard.wiggle .idc-inner{animation:idWiggle 1.4s ease-in-out}
+  @keyframes idWiggle{0%,100%{transform:rotate(-2deg)}25%{transform:rotate(-2deg) rotateY(-18deg)}55%{transform:rotate(-2deg) rotateY(12deg)}80%{transform:rotate(-2deg) rotateY(-5deg)}}
+  .idcard:focus-visible .idc-inner{box-shadow:0 0 0 3px var(--pink)}
+  .idc-face{position:absolute;inset:0;border-radius:22px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fff;box-shadow:0 28px 60px rgba(43,43,43,.22);display:flex;flex-direction:column}
+  .idc-slot{position:absolute;z-index:3;top:12px;left:50%;width:54px;height:9px;margin-left:-27px;border-radius:999px;background:rgba(43,43,43,.18);box-shadow:inset 0 1px 2px rgba(0,0,0,.25)}
+  .idc-front .idc-top{padding:30px 20px 14px;background:var(--grad);color:#fff;text-align:center}
+  .idc-top b{display:block;font-family:var(--font-title);font-weight:900;font-size:.82rem;letter-spacing:.24em;text-transform:uppercase}
+  .idc-top small{display:block;margin-top:2px;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+  .idc-photo{flex:1;margin:16px 20px 0;border-radius:14px;overflow:hidden;background:#f3e6ea}
+  .idc-photo img{width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block}
+  .idc-info{padding:14px 20px 4px;text-align:left}
+  .idc-info b{display:block;font-family:var(--font-title);font-weight:900;font-size:1.25rem;color:#2B2B2B;line-height:1.1}
+  .idc-info span{font-size:.78rem;font-weight:700;color:var(--pink);letter-spacing:.04em}
+  .idc-foot{display:flex;align-items:center;justify-content:space-between;padding:8px 20px 18px;font-family:var(--font-title);font-weight:800;font-size:.68rem;letter-spacing:.14em;color:var(--muted)}
+  .idc-bar{width:42%;height:22px;background:repeating-linear-gradient(90deg,#2B2B2B 0 2px,transparent 2px 4px,#2B2B2B 4px 5px,transparent 5px 8px,#2B2B2B 8px 11px,transparent 11px 12px)}
+  .idc-hint{position:absolute;right:14px;top:40%;transform:rotate(90deg);transform-origin:right top;font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.95);background:var(--grad);padding:4px 8px;border-radius:999px;box-shadow:0 4px 10px rgba(199,45,103,.3)}
+  .idc-back{transform:rotateY(180deg);background:linear-gradient(160deg,#C72D67,#EA70A5);color:#fff;padding:40px 24px 22px}
+  .idc-kicker{display:block;margin:6px 0 10px;font-family:var(--font-title);font-weight:800;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  .idc-list{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:8px}
+  .idc-list li{padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.16);font-size:.9rem}
+  .idc-list b{font-family:var(--font-title);font-weight:900}
+  .idc-tags{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+  .idc-tags li{padding:6px 11px;border-radius:999px;background:#fff;color:var(--pink);font-family:var(--font-title);font-weight:800;font-size:.72rem}
+  .idc-sign{margin-top:auto;padding-top:14px;border-top:1px solid rgba(255,255,255,.35)}
+  .idc-sign em{display:block;font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:1.5rem;line-height:1}
+  .idc-sign small{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  @media (prefers-reduced-motion:reduce){.idc-inner{transition:none}.idcard.wiggle .idc-inner{animation:none}}
+
   /* "Se você não aguenta mais" e "Imagine se": tudo um pouco menor */
   #dores .two-cols{gap:20px;max-width:1040px;margin-left:auto;margin-right:auto;margin-top:clamp(56px,8vw,96px)}
   #dores .list-card{padding:28px 26px}
@@ -828,6 +867,30 @@
           <img src="img/luana-sobre.jpg" alt="Luana Guimarães apoiada no encosto de uma cadeira" loading="lazy" width="800" height="1000">
         </div>
         <span class="about-sticker" aria-hidden="true">Designer de portfólios ✦</span>
+        <!-- TESTE: cartão de designer que vira (aparece com index.html?sobre=cartao) -->
+        <div class="idcard" id="idcard" hidden tabindex="0" role="button" aria-label="Cartão da Luana: toque para ver o verso">
+          <div class="idc-inner">
+            <div class="idc-face idc-front">
+              <i class="idc-slot" aria-hidden="true"></i>
+              <div class="idc-top"><b>Luana Guimarães</b><small>Estúdio de portfólios</small></div>
+              <div class="idc-photo"><img src="img/luana-sobre.jpg" alt="" loading="lazy"></div>
+              <div class="idc-info"><b>Luana Guimarães</b><span>Designer de portfólios</span></div>
+              <div class="idc-foot"><span>ID · 0090</span><i class="idc-bar" aria-hidden="true"></i></div>
+              <span class="idc-hint" aria-hidden="true">toque para virar ↻</span>
+            </div>
+            <div class="idc-face idc-back">
+              <i class="idc-slot" aria-hidden="true"></i>
+              <span class="idc-kicker">Credenciais</span>
+              <ul class="idc-list">
+                <li><b>+90</b> portfólios criados</li>
+                <li>Formação em <b>Marketing</b></li>
+              </ul>
+              <span class="idc-kicker">Formatos que eu crio</span>
+              <ul class="idc-tags"><li>Site real</li><li>Canva que imita site</li><li>Portfólio Canva</li></ul>
+              <div class="idc-sign"><em>Luana Guimarães</em><small>designer responsável</small></div>
+            </div>
+          </div>
+        </div>
         <!-- ÁUDIO DE CLIENTE: aparece quando AUDIO_CLIENTE (no script) tiver o arquivo -->
         <div class="voice" id="voice" hidden>
           <button type="button" class="voice-play" id="voicePlay" aria-label="Ouvir o áudio de uma cliente"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5v14l11-7z"/><path class="i-pause" d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
@@ -1468,6 +1531,21 @@ const CAPA_COM_FOTO = /[?&]capa=foto/.test(location.search);
     }), { threshold: 0.35 }).observe(cmp);
   } else { visible = true; start(); }
 })();
+/* TESTE: cartão de designer que vira, no lugar da foto do Sobre (index.html?sobre=cartao) */
+(function(){
+  if (!/[?&]sobre=cartao/.test(location.search)) return;
+  const card = $("#idcard"), vis = card && card.closest(".about-visual"); if (!card) return;
+  vis.classList.add("cartao"); card.hidden = false;
+  const toggle = () => card.classList.toggle("flip");
+  card.addEventListener("click", e => { if (!window.matchMedia("(hover:hover)").matches) toggle(); });
+  card.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+  // balançadinha quando aparece na tela, para mostrar que dá para mexer
+  if (!reduceMotion && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { card.classList.add("wiggle"); setTimeout(() => card.classList.remove("wiggle"), 1500); io.disconnect(); } }), { threshold: .6 });
+    io.observe(card);
+  }
+})();
+
 /* Áudio de cliente em cima da foto do Sobre (estilo mensagem de voz) */
 (function(){
   const box = $("#voice"); if (!box || !AUDIO_CLIENTE) return;
