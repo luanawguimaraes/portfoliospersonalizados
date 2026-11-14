@@ -909,6 +909,12 @@
   .dep-wrap{gap:0}
   .dep-row{padding:16px 0 50px;margin-bottom:-22px}
   .dep-row:last-child{margin-bottom:0}
+  /* MENU no celular: "Área da cliente" e "Quero o meu" separados, um embaixo do outro */
+  @media (max-width:900px){
+    .nav-links .nav-client,.nav-links .nav-cta{display:flex;justify-content:center;align-items:center;padding-top:13px;padding-bottom:13px}
+    .nav-links .nav-client{margin-top:14px}
+    .nav-links .nav-cta{margin-top:14px}
+  }
   .pkg-price{display:flex;align-items:flex-start;gap:4px;margin:-6px 0 18px;font-family:var(--font-title);color:#2B2B2B;line-height:1}
   .pkg-price small{font-weight:800;font-size:1rem;margin-top:6px}
   .pkg-price b{font-weight:900;font-size:2.6rem;letter-spacing:-.02em}
